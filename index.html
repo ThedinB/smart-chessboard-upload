@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nahrání firmwaru – Tadeášova chytrá šachovnice</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f0f0f0; }
+    h1 { color: #333; }
+    button { padding: 10px 20px; background-color: #333; color: white; border: none; cursor: pointer; font-size: 16px; }
+    button:hover { background-color: #555; }
+    p { color: #333; max-width: 600px; margin: 10px auto; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Nahrání firmwaru – Tadeášova chytrá šachovnice</h1>
+  <p>Ahoj, děkuji za podporu! Tady nahraješ firmware do svého Arduina (Uno nebo Nano), aby šachovnice fungovala. Firmware je chráněný – neuvidíš zdrojový kód, ale vše potřebné se nahraje automaticky.</p>
+  <p><strong>Návod:</strong><br>
+    1. Připoj své Arduino k počítači přes USB.<br>
+    2. Použij prohlížeč Chrome nebo Edge (jiné nemusí fungovat).<br>
+    3. Klikni na tlačítko níže a vyber své Arduino v okně, které se objeví.<br>
+    4. Počkej, až se firmware nahraje (trvá to 10–20 sekund).<br>
+    5. Hotovo! Pokračuj podle PDF návodu z tvého balíčku.
+  </p>
+  <button onclick="uploadFirmware()">Nahrát firmware</button>
+  <p id="message" class="error"></p>
+
+  <script>
+    async function uploadFirmware() {
+      const messageElement = document.getElementById('message');
+      try {
+        // Požádat o přístup k sériovému portu
+        const port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 115200 });
+
+        // Načíst .bin soubor (musí být ve stejném repozitáři)
+        const response = await fetch('SmartChessboardFirmware_v1.bin');
+        if (!response.ok) throw new Error('Nepodařilo se načíst firmware. Kontaktuj mě na tadeas.chess@gmail.com.');
+        const firmware = await response.arrayBuffer();
+        const data = new Uint8Array(firmware);
+
+        // Nahrát firmware do Arduina
+        const writer = port.writable.getWriter();
+        await writer.write(data);
+        writer.releaseLock();
+
+        await port.close();
+        messageElement.style.color = 'green';
+        messageElement.textContent = 'Firmware byl úspěšně nahrán! Připoj šachovnici podle návodu.';
+      } catch (error) {
+        messageElement.textContent = 'Chyba: ' + error.message + ' (Zkontroluj připojení Arduina a použij Chrome/Edge.)';
+      }
+    }
+  </script>
+</body>
+</html>
