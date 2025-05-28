@@ -295,6 +295,22 @@
         <p>Pokud problémy přetrvávají, neváhej mě kontaktovat na <a href="mailto:tadeas.chess@gmail.com">tadeas.chess@gmail.com</a> s popisem problému a výpisem z příkazového řádku.</p>
       </div>
     </section>
+    <section class="command-generator-section">
+      <h2>Generátor příkazu pro nahrání (AVRDUDE)</h2>
+      <p>Pro zjednodušení si zde můžete nechat vygenerovat přesný příkaz pro nahrání firmwaru. Stačí zadat COM port vašeho Arduina Mega.</p>
+      
+      <div style="margin-bottom: 15px;">
+        <label for="comPortInput" style="font-weight: bold; margin-right: 10px;">Zadejte váš COM port (např. COM5):</label>
+        <input type="text" id="comPortInput" placeholder="COMX" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc; width: 100px;">
+      </div>
+      
+      <button onclick="generateAvrdudeCommand()" class="download-button" style="background: var(--secondary-color); margin-bottom:15px;">Vygenerovat příkaz</button>
+      
+      <p style="font-weight: bold;">Váš příkaz k nahrání (zkopírujte jej celý):</p>
+      <pre style="background-color: #333; color: #f0f0f0; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em; border: 1px solid #444; text-align: left; min-height: 50px;"
+      ><code id="avrdudeCommandOutput" style="background-color:transparent; color: #f0f0f0; padding:0;">Sem zadejte COM port a klikněte na tlačítko "Vygenerovat příkaz"...</code></pre>
+    </section>
+    
 
   </div>
 
@@ -303,9 +319,30 @@
   </footer>
 
   <script>
+    function generateAvrdudeCommand() {
+        const comPort = document.getElementById('comPortInput').value.trim().toUpperCase();
+        const firmwareFile = 'SmartChessboardFirmware_v1.bin';
+        const commandOutputElement = document.getElementById('avrdudeCommandOutput');
+
+        if (!comPort) {
+            commandOutputElement.textContent = 'Prosím, zadejte platný COM port (např. COM5).';
+            return;
+        }
+        
+        if (!comPort.startsWith('COM') || isNaN(parseInt(comPort.substring(3)))) {
+             commandOutputElement.textContent = 'Nesprávný formát COM portu. Zadejte např. COM5.';
+             return;
+        }
+
+        const command = `avrdude -C avrdude.conf -v -p atmega2560 -c wiring -P ${comPort} -b 115200 -D -U flash:w:${firmwareFile}:r`;
+        commandOutputElement.textContent = command;
+    }
+
     // Skript pro vložení aktuálního roku do patičky
     document.getElementById('currentYear').textContent = new Date().getFullYear();
   </script>
+
+  
 
 </body>
 </html>
