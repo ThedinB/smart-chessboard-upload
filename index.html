@@ -1022,6 +1022,118 @@
           </div>
         </div>
       </div>
+
+      <!-- Přidej tohle do sekce firmware před </section> -->
+<div class="content-section" id="web-installer">
+  <h3>NEJLEHČÍ VARIANTA: Webový nahrávač (Chrome/Edge)</h3>
+  
+  <div class="alert alert-info">
+    <i class="fas fa-info-circle"></i>
+    <div>
+      <strong>Novinka:</strong> Tento nástroj umožňuje nahrát firmware přímo z prohlížeče bez příkazové řádky!
+    </div>
+  </div>
+
+  <ol>
+    <li>Připoj Arduino Mega přes USB</li>
+    <li>Klikni na "Vybrat firmware" a zvol stažený .bin soubor</li>
+    <li>Klikni na "Připojit Arduino" a vyber správný port (obvykle "Arduino Mega")</li>
+    <li>Až se připojí, klikni na "Nahrát firmware"</li>
+    <li>Počkej na potvrzení o úspěšném nahrání</li>
+  </ol>
+
+  <div id="web-serial-controls" style="margin: 20px 0;">
+    <input type="file" id="firmwareFile" accept=".bin" style="display: none;">
+    <button onclick="document.getElementById('firmwareFile').click()" class="button">
+      <i class="fas fa-file-upload"></i> Vybrat firmware
+    </button>
+    <span id="fileInfo" style="margin-left: 10px; color: #666;">Žádný soubor nevybrán</span>
+    
+    <div style="margin-top: 15px;">
+      <button id="connectButton" class="button" disabled>
+        <i class="fas fa-plug"></i> Připojit Arduino
+      </button>
+      <button id="uploadButton" class="button" disabled>
+        <i class="fas fa-upload"></i> Nahrát firmware
+      </button>
+    </div>
+  </div>
+
+  <div id="web-serial-output" class="code-block" style="min-height: 100px; background-color: #1a1a1a; color: #f0f0f0;">
+    <p>Zde se objeví průběh nahrávání...</p>
+  </div>
+
+  <div class="alert alert-warning">
+    <i class="fas fa-exclamation-triangle"></i>
+    <div>
+      <strong>Pozor:</strong> Pokud se Arduino nepodaří připojit, zkus:
+      <ul>
+        <li>Zavřít Arduino IDE a jiné programy používající COM port</li>
+        <li>Použít jiný USB kabel/port</li>
+        <li>Na Arduinu krátce zmáčknout reset před připojením</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+// WebSerial nahrávač
+let port;
+let firmwareBinary;
+const baudRate = 115200;
+
+document.getElementById('firmwareFile').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    firmwareBinary = new Uint8Array(e.target.result);
+    document.getElementById('fileInfo').textContent = `Vybrán: ${file.name} (${Math.round(file.size/1024)} KB)`;
+    document.getElementById('connectButton').disabled = false;
+  };
+  reader.readAsArrayBuffer(file);
+});
+
+document.getElementById('connectButton').addEventListener('click', async function() {
+  try {
+    port = await navigator.serial.requestPort();
+    await port.open({ baudRate });
+    logMessage('✅ Arduino připojeno!');
+    document.getElementById('uploadButton').disabled = false;
+  } catch (error) {
+    logMessage(`❌ Chyba při připojování: ${error.message}`);
+  }
+});
+
+document.getElementById('uploadButton').addEventListener('click', async function() {
+  if (!port || !firmwareBinary) return;
+  
+  try {
+    logMessage('⏳ Spouštím nahrávání...');
+    logMessage('⚠️ Připrav se na reset Arduina!');
+    
+    // Čekáme na stisk resetu
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    const writer = port.writable.getWriter();
+    await writer.write(firmwareBinary);
+    writer.releaseLock();
+    
+    logMessage('🎉 Firmware úspěšně nahrán!');
+    logMessage('Můžeš Arduino restartovat.');
+  } catch (error) {
+    logMessage(`❌ Chyba při nahrávání: ${error.message}`);
+    logMessage('Zkus zmáčknout reset na Arduinu během nahrávání.');
+  }
+});
+
+function logMessage(message) {
+  const output = document.getElementById('web-serial-output');
+  output.innerHTML += `<p>${message}</p>`;
+  output.scrollTop = output.scrollHeight;
+}
+</script>
     </section>
 
     <section id="gallery" class="content-section">
