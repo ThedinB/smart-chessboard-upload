@@ -4,333 +4,471 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Firmware – Tadeášova Chytrá Šachovnice</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #333;
-      --secondary-color: #555;
-      --accent-color: #4CAF50;
-      --background-color: #f4f4f4;
-      --container-background: #ffffff;
-      --text-color: #333;
-      --light-text-color: #ffffff;
-      --error-color: #D8000C;
-      --success-color: #270;
-      --info-color: #00529B;
-      --border-radius: 5px;
-      --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      --bg-color: #f0f2f5; /* Světle šedé pozadí celé stránky */
+      --container-bg: #ffffff; /* Bílé pozadí kontejneru */
+      --text-color: #333333; /* Hlavní barva textu */
+      --heading-color: #1a1a1a; /* Barva nadpisů */
+      --primary-accent: #007bff; /* Hlavní akcentní barva (modrá) */
+      --secondary-accent: #0056b3; /* Tmavší modrá pro hover */
+      --light-accent: #e7f3ff; /* Velmi světlá modrá pro pozadí některých prvků */
+      --border-color: #dee2e6; /* Barva ohraničení */
+      --code-bg: #282c34; /* Tmavé pozadí pro bloky kódu */
+      --code-text: #abb2bf; /* Barva textu v blocích kódu */
+      --success-bg: #d4edda;
+      --success-text: #155724;
+      --error-bg: #f8d7da;
+      --error-text: #721c24;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --font-main: 'Roboto', sans-serif;
+      --font-logo: 'Orbitron', sans-serif; /* Speciální font pro logo/nadpis */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      font-family: 'Roboto', Arial, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-      background-color: var(--background-color);
+      font-family: var(--font-main);
+      line-height: 1.7;
+      background-color: var(--bg-color);
       color: var(--text-color);
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
-      box-sizing: border-box;
     }
 
-    .container {
-      background-color: var(--container-background);
+    .site-container {
+      width: 100%;
+      max-width: 900px; /* Širší kontejner pro lepší čitelnost návodu */
+      margin: 30px auto;
+    }
+
+    .logo-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo-header h1 {
+      font-family: var(--font-logo);
+      font-size: 2.8em;
+      color: var(--heading-color);
+      margin: 0;
+      letter-spacing: 1px;
+    }
+    .logo-header h1 .accent-text {
+        color: var(--primary-accent);
+    }
+
+
+    .content-section {
+      background-color: var(--container-bg);
       padding: 30px 40px;
       border-radius: var(--border-radius);
       box-shadow: var(--box-shadow);
-      text-align: center;
-      max-width: 800px; /* Trochu širší pro delší návod */
-      width: 100%;
-      margin-top: 30px;
       margin-bottom: 30px;
     }
 
-    header h1 {
-      color: var(--primary-color);
-      margin-bottom: 0.5em;
-      font-size: 2.2em;
-      border-bottom: 2px solid var(--accent-color);
-      padding-bottom: 0.5em;
+    .content-section h2 {
+      font-family: var(--font-main);
+      font-weight: 700;
+      font-size: 1.8em;
+      color: var(--heading-color);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary-accent);
       display: inline-block;
-    }
-
-    .intro-text, .instructions-section h2, .instructions-title, .instructions ol li, .instructions ul li, .download-section p {
-      color: var(--text-color);
-      font-size: 1.1em;
-      margin-bottom: 1em;
-    }
-
-    .instructions-section h2 {
-        font-size: 1.8em;
-        margin-top: 30px;
-        margin-bottom: 15px;
     }
     
-    .instructions {
-      text-align: left;
-      background-color: #e9e9e9;
-      padding: 20px;
-      border-radius: var(--border-radius);
-      margin: 20px auto;
-      border-left: 5px solid var(--accent-color);
+    .content-section p, .content-section ul, .content-section ol {
+      font-size: 1.05em;
+      margin-bottom: 1.2em;
+      color: #555; /* Mírně světlejší text pro lepší kontrast s nadpisy */
+    }
+    .content-section ul, .content-section ol {
+        padding-left: 25px;
+    }
+    .content-section li {
+        margin-bottom: 0.5em;
+    }
+    .content-section strong {
+        color: var(--heading-color);
+        font-weight: 700;
+    }
+    .content-section code {
+      background-color: #e9ecef;
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      font-size: 0.9em;
+      color: #c7254e; /* Barva pro inline kód */
     }
 
-    .instructions-title {
-      font-weight: bold;
-      font-size: 1.2em;
-      margin-top: 1.5em;
-      margin-bottom: 0.8em;
-      color: var(--primary-color);
-    }
-    .instructions-title:first-child {
-        margin-top: 0;
-    }
-
-
-    .instructions ol, .instructions ul {
-      padding-left: 25px; /* Odsazení seznamů */
-      margin: 0 0 1em 0;
-    }
-
-    .instructions ol li, .instructions ul li {
-      margin-bottom: 0.6em;
-    }
-    .instructions ol li::marker {
-        font-weight: bold;
-        color: var(--accent-color);
-    }
-    .instructions ul {
-        list-style-type: disc; /* Typ odrážek pro ul */
-    }
-    .instructions ul ul { /* Vnořený seznam */
-        list-style-type: circle;
-        margin-top: 0.5em;
-    }
-
-
-    .download-section {
-        margin-top: 20px;
-        margin-bottom: 30px;
-    }
-    .download-section h2 {
-        font-size: 1.8em;
-        margin-bottom: 15px;
-    }
-
-    .download-button {
+    .button {
       display: inline-block;
-      padding: 12px 25px;
-      background: linear-gradient(135deg, var(--accent-color) 0%, #3e8e41 100%);
-      color: var(--light-text-color);
+      padding: 12px 28px;
+      background-color: var(--primary-accent);
+      color: white;
       border: none;
       cursor: pointer;
       font-size: 1.1em;
-      font-weight: bold;
+      font-weight: 700;
       border-radius: var(--border-radius);
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: 10px; /* Menší margin nad tlačítkem */
+      transition: background-color 0.2s ease, transform 0.2s ease;
       text-decoration: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-top: 10px;
     }
-
-    .download-button:hover, .download-button:focus {
-      background: linear-gradient(135deg, #3e8e41 0%, var(--accent-color) 100%);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    .button:hover, .button:focus {
+      background-color: var(--secondary-accent);
       transform: translateY(-2px);
-      color: var(--light-text-color);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      color: white;
     }
-    .download-button:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    .button .icon {
+        vertical-align: middle;
+        margin-right: 8px;
+        height: 1.1em;
+        position: relative;
+        top: -1px;
     }
 
-    pre { /* Styl pro bloky s kódem */
-        background-color: #333; /* Tmavší pozadí pro kód */
-        color: #f0f0f0; /* Světlejší text kódu */
-        padding: 15px;
+    .accordion-item {
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      margin-bottom: 15px;
+      overflow: hidden; /* Pro zaoblené rohy u obsahu */
+    }
+    .accordion-button {
+      background-color: #f8f9fa; /* Světlejší než hlavní kontejner */
+      color: var(--heading-color);
+      cursor: pointer;
+      padding: 15px 20px;
+      width: 100%;
+      text-align: left;
+      border: none;
+      outline: none;
+      font-size: 1.2em;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .accordion-button:hover {
+      background-color: var(--light-accent);
+    }
+    .accordion-button::after { /* Šipka */
+      content: '\25BC'; /* Unicode šipka dolů */
+      font-size: 0.8em;
+      color: var(--primary-accent);
+      transition: transform 0.3s ease;
+    }
+    .accordion-button.active::after {
+      transform: rotate(180deg); /* Šipka nahoru */
+    }
+    .accordion-content {
+      padding: 0px 20px; /* Padding se přidá po rozbalení */
+      background-color: white;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, padding 0.3s ease-out; /* Plynulá animace */
+    }
+    .accordion-content.active {
+        padding: 20px; /* Padding se přidá, až když je aktivní */
+    }
+    .accordion-content p:last-child,
+    .accordion-content ol:last-child,
+    .accordion-content ul:last-child {
+        margin-bottom: 0;
+    }
+
+
+    .form-group {
+        margin: 20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .form-group label {
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--heading-color);
+    }
+    .form-group input[type="text"] {
+        padding: 10px;
+        border-radius: var(--border-radius);
+        border: 1px solid var(--border-color);
+        width: 100%;
+        max-width: 250px; /* Omezí šířku inputu */
+        font-size: 1em;
+    }
+
+    .code-block {
+        background-color: var(--code-bg);
+        color: var(--code-text);
+        padding: 20px;
         border-radius: var(--border-radius);
         overflow-x: auto;
-        font-size: 0.9em;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.95em;
+        line-height: 1.5;
+        margin: 15px 0;
         border: 1px solid #444;
+        text-align: left; /* Zajistí zarovnání kódu doleva */
     }
-    code { /* Styl pro inline kód */
-        background-color: #e0e0e0;
-        padding: 0.2em 0.4em;
-        border-radius: 3px;
-        font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    .code-block code {
+        background-color: transparent !important;
+        color: inherit !important;
+        padding: 0 !important;
+        font-size: inherit !important;
     }
 
 
-    footer {
-      margin-top: auto; /* Odsune patičku dolů, pokud je málo obsahu */
-      padding: 20px;
-      color: #777;
+    .site-footer {
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 40px;
+      color: #6c757d;
       font-size: 0.9em;
-      text-align: center; /* Centrování textu v patičce */
-      width:100%;
+      border-top: 1px solid var(--border-color);
     }
-    footer a {
-        color: var(--accent-color);
-        text-decoration: none;
+    .site-footer a {
+      color: var(--primary-accent);
+      text-decoration: none;
+      font-weight: 700;
     }
-    footer a:hover {
-        text-decoration: underline;
-    }
-
-    .icon {
-        vertical-align: middle;
-        margin-right: 8px; /* Větší mezera vedle ikony */
-        height: 1.2em; 
+    .site-footer a:hover {
+      text-decoration: underline;
     }
 
-    @media (max-width: 768px) { /* Úpravy pro menší obrazovky */
-      .container {
+    @media (max-width: 768px) {
+      .logo-header h1 {
+        font-size: 2em;
+      }
+      .content-section {
         padding: 20px;
-        margin-top: 10px;
       }
-      header h1 {
-        font-size: 1.8em;
-      }
-      .intro-text, .instructions-section h2, .instructions ol li, .instructions ul li, .download-section p {
-        font-size: 1em;
-      }
-      .download-section h2, .instructions-section h2 {
+      .content-section h2 {
         font-size: 1.5em;
       }
-      pre {
-        font-size: 0.85em;
+      .content-section p, .content-section ul, .content-section ol, .button {
+        font-size: 1em;
+      }
+      .accordion-button {
+        font-size: 1.1em;
+      }
+      .form-group input[type="text"] {
+        max-width: 100%;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1>Firmware pro Chytrou Šachovnici</h1>
+  <div class="site-container">
+    <header class="logo-header">
+      <!-- Jednoduché textové logo, můžete později nahradit obrázkem -->
+      <h1>Tadeášova <span class="accent-text">Chytrá Šachovnice</span></h1>
+      <p style="font-size:1.1em; color: #555; margin-top:10px;">Vítejte na stránce pro podporu mého studentského projektu!</p>
     </header>
 
-    <section class="intro-section">
-      <p class="intro-text">
-        Vítej! Děkuji ti za podporu mého projektu chytré šachovnice. Na této stránce si můžeš stáhnout nejnovější verzi firmwaru a najdeš zde návod, jak jej nahrát do svého Arduina Mega.
-      </p>
-    </section>
+    <main>
+      <section class="content-section" id="intro">
+        <h2>O projektu a firmwaru</h2>
+        <p>Děkuji vám za podporu mého projektu chytré šachovnice! Jsem Tadeáš, student se zájmem o elektroniku a šachy, a toto je můj pokus vytvořit dostupnou a rozšiřitelnou inteligentní šachovnici.</p>
+        <p>Na této stránce si můžete stáhnout firmware pro řídicí jednotku Arduino Mega a najdete zde podrobný návod, jak jej do Arduina nahrát. Tento firmware je výsledkem mé práce a umožňuje základní funkčnost šachovnice. Zdrojový kód neposkytuji, ale tento zkompilovaný <code>.bin</code> soubor obsahuje vše potřebné.</p>
+      </section>
 
-    <section class="download-section">
-      <h2>Stažení Firmwaru</h2>
-      <p>Kliknutím na tlačítko níže si stáhni soubor <code>SmartChessboardFirmware_v1.bin</code>.</p>
-      <a href="SmartChessboardFirmware_v1.bin" class="download-button" download>
-        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
-        Stáhnout Firmware
-      </a>
-      <p style="font-size: 0.9em; margin-top: 15px;"><em>Po stažení souboru pokračuj podle níže uvedeného návodu.</em></p>
-    </section>
+      <section class="content-section" id="download">
+        <h2>Krok 1: Stažení Firmwaru</h2>
+        <p>Prosím, stáhněte si nejnovější verzi firmwaru pro vaši šachovnici kliknutím na tlačítko níže. Jedná se o soubor <code>SmartChessboardFirmware_v1.bin</code>.</p>
+        <a href="SmartChessboardFirmware_v1.bin" class="button" download>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M0 0h24v24H0z" fill="none"/><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+          Stáhnout Firmware
+        </a>
+        <p style="font-size: 0.9em; margin-top: 15px;"><em>Po úspěšném stažení souboru pokračujte Krokem 2.</em></p>
+      </section>
 
-    <section class="instructions-section">
-      <h2>Návod k nahrání firmwaru (pomocí AVRDUDE)</h2>
-      <div class="instructions">
-        <p class="instructions-title">Co budeš potřebovat:</p>
-        <ul>
-          <li>Nainstalované <strong>Arduino IDE</strong> (pokud nemáš, stáhni z <a href="https://www.arduino.cc/en/software" target="_blank" rel="noopener noreferrer">oficiálních stránek arduino.cc</a>).</li>
-          <li>Stažený soubor firmwaru <code>SmartChessboardFirmware_v1.bin</code> (z odkazu výše).</li>
-          <li>Tvé Arduino Mega připojené k počítači přes USB kabel.</li>
-        </ul>
-
-        <p class="instructions-title">Krok 1: Zjištění COM portu tvého Arduina Mega</p>
-        <ol>
-          <li>Otevři <strong>Správce zařízení</strong> ve Windows. (Nejrychleji: klikni pravým tlačítkem na tlačítko Start a vyber "Správce zařízení").</li>
-          <li>V okně Správce zařízení rozbal sekci nadepsanou "Porty (COM a LPT)".</li>
-          <li>Najdi položku, která odpovídá tvému Arduinu Mega. Může se jmenovat například "Arduino Mega 2560 (COM<strong>X</strong>)" nebo "USB Serial Port (COM<strong>X</strong>)". Důležité je číslo portu **X** (např. COM3, COM8, atd.). **Toto číslo si poznamenej.**</li>
-        </ol>
-
-        <p class="instructions-title">Krok 2: Příprava souborů a Příkazového řádku</p>
-        <ol>
-          <li>Pro zjednodušení si na disku vytvoř novou složku, například <code>C:\SachyFirmware\</code>.</li>
-          <li>Do této nově vytvořené složky (<code>C:\SachyFirmware\</code>) zkopíruj následující tři soubory:
-            <ul>
-              <li>Stažený firmware: <code>SmartChessboardFirmware_v1.bin</code>.</li>
-              <li>Program <code>avrdude.exe</code>. Najdeš ho v instalační složce Arduino IDE, typicky v:
-                <br><code>C:\Program Files (x86)\Arduino\hardware\tools\avr\bin\avrdude.exe</code></li>
-              <li>Konfigurační soubor <code>avrdude.conf</code>. Najdeš ho také v instalaci Arduino IDE, typicky v:
-                <br><code>C:\Program Files (x86)\Arduino\hardware\tools\avr\etc\avrdude.conf</code></li>
-            </ul>
-          </li>
-          <li>Otevři <strong>Příkazový řádek</strong>. (Do vyhledávacího pole Windows napiš <code>cmd</code> a spusť aplikaci "Příkazový řádek").</li>
-          <li>V okně Příkazového řádku přejdi do složky, kterou sis vytvořil v bodě 1 (např. <code>C:\SachyFirmware\</code>). Zadej příkaz:
-            <br><code>cd C:\SachyFirmware\</code>
-            <br>(Pokud jsi složku vytvořil jinde nebo ji jinak pojmenoval, nahraď cestu správně). Stiskni Enter. Prompt by se měl změnit a ukazovat tuto složku.
-          </li>
-        </ol>
+      <section class="content-section" id="command-generator">
+        <h2>Krok 2: Příprava příkazu pro nahrání (AVRDUDE)</h2>
+        <p>Pro zjednodušení si zde můžete nechat vygenerovat přesný příkaz pro nahrání firmwaru pomocí nástroje <code>avrdude</code>. Stačí zadat COM port, ke kterému je připojeno vaše Arduino Mega.</p>
         
-        <p class="instructions-title">Krok 3: Spuštění příkazu pro nahrání firmwaru</p>
-        <ol>
-          <li>Ujisti se, že tvé Arduino Mega je stále připojené k počítači přes USB.</li>
-          <li>Zkopíruj celý následující příkaz. Ve svém textovém editoru (nebo přímo v příkazovém řádku) **nahraď <code>COMX</code> skutečným číslem COM portu**, které jsi zjistil v Kroku 1.
-            <pre><code>avrdude -C avrdude.conf -v -p atmega2560 -c wiring -P COMX -b 115200 -D -U flash:w:SmartChessboardFirmware_v1.bin:r</code></pre>
-          </li>
-          <li>Vlož upravený příkaz do Příkazového řádku.</li>
-          <li><strong>VELMI DŮLEŽITÝ KROK:</strong> Připrav se! Ihned po stisknutí klávesy <strong>Enter</strong> pro spuštění příkazu (nebo těsně před jeho stisknutím) **krátce stiskni resetovací tlačítko** na tvém Arduinu Mega. Správné načasování resetu je klíčové pro to, aby se spustil bootloader a `avrdude` se s ním mohl spojit.</li>
-          <li>Sleduj výstup v Příkazovém řádku. Pokud se vše podařilo, uvidíš text informující o procesu nahrávání (reading, writing, verifying) a na konci by se měla objevit zpráva jako <code>avrdude done. Thank you.</code></li>
-        </ol>
+        <div class="form-group">
+          <label for="comPortInput">Zadejte váš COM port (např. <code>COM5</code>):</label>
+          <input type="text" id="comPortInput" placeholder="COMX">
+        </div>
+        
+        <button onclick="generateAvrdudeCommand()" class="button" style="background-color: var(--secondary-accent);">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+            Vygenerovat příkaz
+        </button>
+        
+        <p style="font-weight: bold; margin-top: 20px;">Váš příkaz k nahrání (zkopírujte jej celý):</p>
+        <div class="code-block">
+            <code id="avrdudeCommandOutput">Zde se zobrazí příkaz po zadání COM portu a kliknutí na tlačítko...</code>
+        </div>
+      </section>
 
-        <p class="instructions-title">Co dělat při problémech?</p>
-        <ul>
-          <li><strong><code>'avrdude' is not recognized...</code></strong>: Nejsi ve složce, kde je <code>avrdude.exe</code>, nebo jsi příkaz nenapsal přesně. Zkus použít <code>.\avrdude</code> (pokud jsi ve složce s ním).</li>
-          <li><strong><code>can't open config file "avrdude.conf"</code></strong>: Program <code>avrdude.exe</code> nemůže najít soubor <code>avrdude.conf</code>. Ujisti se, že oba soubory jsou ve stejné složce, ze které spouštíš příkaz, a že v příkazu je <code>-C avrdude.conf</code>.</li>
-          <li><strong><code>programmer is not responding</code></strong> nebo <strong><code>stk500v2_ReceiveMessage(): timeout</code></strong>:
+      <section class="content-section" id="instructions">
+        <h2>Krok 3: Detailní návod k nahrání firmwaru</h2>
+        <p>Následující kroky vás provedou procesem nahrání staženého <code>.bin</code> souboru do vašeho Arduina Mega pomocí nástroje <code>avrdude</code>.</p>
+
+        <div class="accordion-item">
+          <button class="accordion-button">Co budete potřebovat?</button>
+          <div class="accordion-content">
             <ul>
-                <li>Znovu zkontroluj, zda máš v příkazu správné číslo <strong>COM portu</strong>.</li>
-                <li>Ujisti se, že <strong>Arduino IDE nebo jiný program, který by mohl používat sériový port, je zavřený</strong>.</li>
-                <li>Zkus <strong>jinak načasovat stisk resetovacího tlačítka</strong> (trochu dříve, trochu později).</li>
-                <li>Zkus v příkazu změnit baud rate <code>-b 115200</code> na <code>-b 57600</code>.</li>
-                <li>Zkus v příkazu změnit typ programátoru <code>-c wiring</code> na <code>-c stk500v2</code>.</li>
+              <li>Nainstalované <strong>Arduino IDE</strong>. Pokud jej nemáte, stáhněte si jej zdarma z <a href="https://www.arduino.cc/en/software" target="_blank" rel="noopener noreferrer">oficiálních stránek arduino.cc</a>. Instalace Arduino IDE zajistí i potřebné ovladače.</li>
+              <li>Stažený soubor firmwaru <code>SmartChessboardFirmware_v1.bin</code> (z Kroku 1).</li>
+              <li>Vaše Arduino Mega deska, připojená k počítači přes USB kabel.</li>
             </ul>
-          </li>
-        </ul>
-        <p>Pokud problémy přetrvávají, neváhej mě kontaktovat na <a href="mailto:tadeas.chess@gmail.com">tadeas.chess@gmail.com</a> s popisem problému a výpisem z příkazového řádku.</p>
-      </div>
-    </section>
-    <section class="command-generator-section">
-      <h2>Generátor příkazu pro nahrání (AVRDUDE)</h2>
-      <p>Pro zjednodušení si zde můžete nechat vygenerovat přesný příkaz pro nahrání firmwaru. Stačí zadat COM port vašeho Arduina Mega.</p>
-      
-      <div style="margin-bottom: 15px;">
-        <label for="comPortInput" style="font-weight: bold; margin-right: 10px;">Zadejte váš COM port (např. COM5):</label>
-        <input type="text" id="comPortInput" placeholder="COMX" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc; width: 100px;">
-      </div>
-      
-      <button onclick="generateAvrdudeCommand()" class="download-button" style="background: var(--secondary-color); margin-bottom:15px;">Vygenerovat příkaz</button>
-      
-      <p style="font-weight: bold;">Váš příkaz k nahrání (zkopírujte jej celý):</p>
-      <pre style="background-color: #333; color: #f0f0f0; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em; border: 1px solid #444; text-align: left; min-height: 50px;"
-      ><code id="avrdudeCommandOutput" style="background-color:transparent; color: #f0f0f0; padding:0;">Sem zadejte COM port a klikněte na tlačítko "Vygenerovat příkaz"...</code></pre>
-    </section>
-    
+          </div>
+        </div>
 
+        <div class="accordion-item">
+          <button class="accordion-button">Část A: Zjištění COM portu Arduina</button>
+          <div class="accordion-content">
+            <ol>
+              <li>Připojte Arduino Mega k vašemu počítači.</li>
+              <li>Otevřete <strong>Správce zařízení</strong> ve Windows. (Návod: klikněte pravým tlačítkem na tlačítko Start a z menu vyberte "Správce zařízení").</li>
+              <li>Ve Správci zařízení rozbalte kategorii nazvanou "Porty (COM a LPT)".</li>
+              <li>Měli byste zde vidět položku odpovídající vašemu Arduinu, například "Arduino Mega 2560 (COM<strong>X</strong>)" nebo "USB Serial Port (COM<strong>X</strong>)". Číslo **X** je číslo vašeho COM portu. **Toto číslo si pečlivě poznamenejte**, budete ho potřebovat pro generátor příkazu a pro samotné nahrávání.</li>
+            </ol>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-button">Část B: Příprava souborů a Příkazového řádku</button>
+          <div class="accordion-content">
+            <ol>
+              <li><strong>Vytvořte novou složku</strong> na vašem počítači, kam si uložíte potřebné soubory. Pro jednoduchost ji můžete pojmenovat například <code>SachyUploader</code> a umístit ji třeba na Plochu nebo do Dokumentů.</li>
+              <li>Do této nově vytvořené složky (např. <code>SachyUploader</code>) **zkopírujte následující tři soubory**:
+                <ul>
+                  <li>Stažený firmware: <code>SmartChessboardFirmware_v1.bin</code> (který jste stáhli v Kroku 1).</li>
+                  <li>Program <code>avrdude.exe</code>. Tento program je součástí instalace Arduino IDE. Typicky ho najdete v cestě:<br><code>C:\Program Files (x86)\Arduino\hardware\tools\avr\bin\avrdude.exe</code></li>
+                  <li>Konfigurační soubor <code>avrdude.conf</code>. Ten také najdete v instalaci Arduino IDE, typicky v cestě:<br><code>C:\Program Files (x86)\Arduino\hardware\tools\avr\etc\avrdude.conf</code></li>
+                </ul>
+                <p><em>Po tomto kroku byste tedy měli mít ve vaší složce <code>SachyUploader</code> tři soubory: <code>SmartChessboardFirmware_v1.bin</code>, <code>avrdude.exe</code> a <code>avrdude.conf</code>.</em></p>
+              </li>
+              <li>Otevřete <strong>Příkazový řádek</strong>. (Návod: Do vyhledávacího pole Windows napište <code>cmd</code> a spusťte aplikaci "Příkazový řádek").</li>
+              <li>V okně Příkazového řádku musíte **přejít do složky**, kterou jste si vytvořili a kam jste nakopírovali soubory. Použijte příkaz <code>cd</code> následovaný cestou k vaší složce. Například, pokud je vaše složka <code>C:\Users\VaseJmeno\Desktop\SachyUploader\</code>, zadáte:
+                <div class="code-block"><code>cd C:\Users\VaseJmeno\Desktop\SachyUploader\</code></div>
+                (Cestu samozřejmě upravte podle toho, kam jste si složku uložili). Stiskněte Enter. Prompt (text před kurzorem) v Příkazovém řádku by se měl změnit a ukazovat cestu k vaší složce.
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-button">Část C: Nahrání firmwaru pomocí vygenerovaného příkazu</button>
+          <div class="accordion-content">
+            <ol>
+              <li>Ujistěte se, že Arduino Mega je stále připojeno k počítači a že máte otevřený Příkazový řádek ve správné složce (viz Část B).</li>
+              <li>Vraťte se na této webové stránce do "Kroku 2: Příprava příkazu pro nahrání". Zadejte tam zjištěný COM port a klikněte na "Vygenerovat příkaz".</li>
+              <li><strong>Zkopírujte celý vygenerovaný příkaz</strong> z textového pole pod tlačítkem.</li>
+              <li>Vložte tento zkopírovaný příkaz do okna Příkazového řádku. (V Příkazovém řádku se často vkládá kliknutím pravým tlačítkem myši).</li>
+              <li><strong>NEŽ STISKNETE ENTER – PŘIPRAVTE SE!</strong></li>
+              <li>**VELMI DŮLEŽITÝ KROK:** Ihned po stisknutí klávesy <strong>Enter</strong> (kterou spustíte příkaz v Příkazovém řádku), nebo jen zlomek sekundy předtím, **krátce stiskněte resetovací tlačítko** na vaší desce Arduino Mega. Toto je naprosto klíčové pro správnou komunikaci s bootloaderem Arduina. Někdy je potřeba si správné načasování párkrát vyzkoušet.</li>
+              <li>Pokud je vše v pořádku, `avrdude` začne komunikovat s Arduinem a nahrávat firmware. Uvidíte textový výstup popisující proces (např. čtení, zápis, ověřování paměti).</li>
+              <li>Po úspěšném nahrání by se na konci výpisu měla objevit zpráva jako <code>avrdude done. Thank you.</code> Gratuluji, firmware je nahrán!</li>
+            </ol>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-button">Část D: Řešení běžných problémů</button>
+          <div class="accordion-content">
+            <p>Pokud se nahrávání firmwaru nedaří, zde jsou některé běžné problémy a jejich možná řešení:</p>
+            <ul>
+              <li><strong>Chyba: <code>'avrdude' is not recognized as an internal or external command...</code></strong>
+                <ul>
+                  <li>Nejste v Příkazovém řádku ve složce, kde máte soubor <code>avrdude.exe</code>. Ujistěte se, že jste pomocí příkazu <code>cd</code> přešli do správné složky.</li>
+                  <li>Případně zkuste před příkaz <code>avrdude</code> napsat <code>.\</code> (tečka a zpětné lomítko), např. <code>.\avrdude -C ...</code></li>
+                </ul>
+              </li>
+              <li><strong>Chyba: <code>can't open config file "avrdude.conf"</code></strong>
+                <ul>
+                  <li>Program <code>avrdude.exe</code> nemůže najít konfigurační soubor <code>avrdude.conf</code>. Ujistěte se, že oba soubory (<code>avrdude.exe</code> i <code>avrdude.conf</code>) jsou ve stejné složce, ze které spouštíte příkaz, a že v příkazu je správně parametr <code>-C avrdude.conf</code>.</li>
+                </ul>
+              </li>
+              <li><strong>Chyba: <code>programmer is not responding</code>, <code>stk500_getsync() attempt X of 10: not in sync: resp=0xYY</code>, nebo <code>timeout</code></strong>
+                <ul>
+                  <li>Nejčastější příčina. Zkontrolujte následující:
+                      <ul>
+                        <li>Je v příkazu zadané <strong>správné číslo COM portu</strong> (parametr <code>-P</code>)?</li>
+                        <li>Je <strong>Arduino IDE nebo jiný program</strong>, který by mohl používat sériový port (např. Sériový Monitor), **zavřený**?</li>
+                        <li>Zkusili jste <strong>jinak načasovat stisk resetovacího tlačítka</strong>? Někdy je potřeba ho stisknout přesně ve chvíli, kdy `avrdude` začíná hledat zařízení.</li>
+                        <li>Pro Arduino Mega je standardní baud rate pro bootloader <code>115200</code> (parametr <code>-b</code>) a typ programátoru <code>wiring</code> (parametr <code>-c</code>). Zkuste případně typ programátoru změnit na <code>stk500v2</code>, tedy <code>-c stk500v2</code>. Velmi vzácně může být potřeba jiná baud rate, např. <code>57600</code>.</li>
+                        <li>Není problém s USB kabelem nebo USB portem na počítači? Zkuste jiný kabel/port.</li>
+                      </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <p>Pokud ani po vyzkoušení těchto tipů nahrávání nefunguje, neváhejte mě kontaktovat na <a href="mailto:tadeas.chess@gmail.com">tadeas.chess@gmail.com</a>. Přiložte prosím co nejpřesnější popis problému a celý textový výstup, který vám Příkazový řádek zobrazil.</p>
+          </div>
+        </div>
+
+      </section>
+    </main>
   </div>
 
-  <footer>
-    <p>© <span id="currentYear"></span> Tadeášova Chytrá Šachovnice. Pro podporu piš na <a href="mailto:tadeas.chess@gmail.com">tadeas.chess@gmail.com</a>.</p>
+  <footer class="site-footer">
+    <p>© <span id="currentYear"></span> Tadeášova Chytrá Šachovnice. Vytvořeno s vášní pro šachy a elektroniku.</p>
+    <p>Pro podporu a dotazy pište na: <a href="mailto:tadeas.chess@gmail.com">tadeas.chess@gmail.com</a></p>
   </footer>
 
   <script>
+    // Skript pro rozbalovací akordeon
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    accordionButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        button.classList.toggle('active');
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+          content.classList.remove('active');
+        } else {
+          // Nejprve zavřít ostatní otevřené panely (volitelné, pokud chceš, aby mohl být otevřen jen jeden)
+          // accordionButtons.forEach(otherButton => {
+          //   if (otherButton !== button) {
+          //     otherButton.classList.remove('active');
+          //     otherButton.nextElementSibling.style.maxHeight = null;
+          //     otherButton.nextElementSibling.classList.remove('active');
+          //   }
+          // });
+          content.style.maxHeight = content.scrollHeight + "px";
+          content.classList.add('active');
+        } 
+      });
+    });
+
+    // Skript pro generátor příkazu AVRDUDE
     function generateAvrdudeCommand() {
-        const comPort = document.getElementById('comPortInput').value.trim().toUpperCase();
-        const firmwareFile = 'SmartChessboardFirmware_v1.bin';
+        const comPortInput = document.getElementById('comPortInput');
+        const comPort = comPortInput.value.trim().toUpperCase();
+        const firmwareFile = 'SmartChessboardFirmware_v1.bin'; // Ujisti se, že název souboru odpovídá
         const commandOutputElement = document.getElementById('avrdudeCommandOutput');
 
         if (!comPort) {
             commandOutputElement.textContent = 'Prosím, zadejte platný COM port (např. COM5).';
+            comPortInput.focus();
             return;
         }
         
-        if (!comPort.startsWith('COM') || isNaN(parseInt(comPort.substring(3)))) {
-             commandOutputElement.textContent = 'Nesprávný formát COM portu. Zadejte např. COM5.';
+        // Jednoduchá validace formátu COM portu
+        if (!/^COM[0-9]+$/i.test(comPort)) {
+             commandOutputElement.textContent = 'Nesprávný formát COM portu. Zadejte jej ve tvaru COM následovaném číslem (např. COM5).';
+             comPortInput.focus();
              return;
         }
 
@@ -341,8 +479,6 @@
     // Skript pro vložení aktuálního roku do patičky
     document.getElementById('currentYear').textContent = new Date().getFullYear();
   </script>
-
-  
 
 </body>
 </html>
