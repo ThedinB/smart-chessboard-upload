@@ -493,22 +493,12 @@
 
   <script>
     // Vylepšený systém kódů s lepším zabezpečením
-    const validCodes = {
-      // Kódy se generují jako SHA256 hash z "CHESS-EMAIL-DATUM"
-      'a1b2c3d4e5f6...': { 
-        email: 'backer1@example.com', 
-        downloads: 0,
-        max_downloads: 3,
-        expires: '2023-12-31'
-      },
-      'f6e5d4c3b2a1...': {
-        email: 'backer2@example.com',
-        downloads: 0,
-        max_downloads: 3,
-        expires: '2023-12-31'
-      }
-    };
-
+// Najdi tento kód v backers.html a uprav:
+const validCodes = {
+  '7UGOKYA0GZ': { email: 'backer1@email.com', downloads: 0, max_downloads: 3 },
+  '9R5B4SR405': { email: 'backer2@email.com', downloads: 0, max_downloads: 3 },
+  '7MV3MFUAC5': { email: 'backer10@email.com', downloads: 0, max_downloads: 3 }
+};
     // Kontrola platnosti kódu
     function isValidCode(code) {
       const now = new Date();
