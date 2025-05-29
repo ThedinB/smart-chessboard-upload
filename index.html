@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exkluzivní přístup | Tadeášova Chytrá Šachovnice</title>
+  <title>Tadeášova Chytrá Šachovnice | Revoluce v šachovém hraní</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -44,6 +44,9 @@
       color: var(--text-light);
       padding: 20px 0;
       box-shadow: var(--box-shadow);
+      position: fixed;
+      width: 100%;
+      z-index: 100;
     }
 
     .header-content {
@@ -74,13 +77,80 @@
       color: var(--secondary-accent);
     }
 
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav li {
+      margin-left: 30px;
+    }
+
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      padding: 5px 0;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--secondary-accent);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: var(--secondary-accent);
+      bottom: 0;
+      left: 0;
+      transition: var(--transition);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--secondary-accent);
+      color: var(--text-light);
+      padding: 12px 30px;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(26, 188, 156, 0.4);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid var(--secondary-accent);
+      color: var(--secondary-accent);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--secondary-accent);
+      color: var(--text-light);
+    }
+
     /* Hero Section */
     .hero {
       background: url('https://images.unsplash.com/photo-1543092587-d8b8feaf4f1f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-      height: 500px;
+      height: 100vh;
       display: flex;
       align-items: center;
       position: relative;
+      padding-top: 80px;
     }
 
     .hero::before {
@@ -111,83 +181,14 @@
       margin-bottom: 30px;
     }
 
-    .btn {
-      display: inline-block;
-      background-color: var(--secondary-accent);
-      color: var(--text-light);
-      padding: 12px 30px;
-      border-radius: var(--border-radius);
-      text-decoration: none;
-      font-weight: 600;
-      transition: var(--transition);
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(26, 188, 156, 0.4);
-    }
-
-    /* Access Section */
-    .access-section {
-      padding: 80px 0;
-      text-align: center;
-    }
-
-    .access-container {
-      background-color: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      padding: 40px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .access-container h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: var(--primary-accent);
-    }
-
-    .access-container p {
-      margin-bottom: 30px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-      text-align: left;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 12px 15px;
-      border: 1px solid #ddd;
-      border-radius: var(--border-radius);
-      font-size: 1rem;
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--secondary-accent);
-      box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2);
-    }
-
-    /* Content Section (visible after auth) */
-    .content-section {
-      display: none;
-      padding: 60px 0;
+    /* Features Section */
+    .features-section {
+      padding: 100px 0;
     }
 
     .section-header {
       text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 60px;
     }
 
     .section-header h2 {
@@ -203,11 +204,10 @@
       margin: 0 auto;
     }
 
-    .features {
+    .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
-      margin-bottom: 50px;
     }
 
     .feature-card {
@@ -234,33 +234,94 @@
       color: var(--primary-accent);
     }
 
-    /* Download Section */
-    .download-section {
-      background-color: var(--primary-accent);
-      color: white;
-      padding: 60px 0;
-      text-align: center;
-      border-radius: var(--border-radius);
-      margin: 40px 0;
+    /* Gallery Section */
+    .gallery-section {
+      padding: 80px 0;
+      background-color: #f0f2f5;
     }
 
-    .download-section h2 {
-      font-size: 2rem;
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .gallery-item {
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      height: 250px;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary-accent) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-size: 2.5rem;
       margin-bottom: 20px;
     }
 
-    .download-section p {
+    .cta-section p {
+      font-size: 1.2rem;
       margin-bottom: 30px;
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
     }
 
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Backers Section */
+    .backers-section {
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .backers-logos {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .backer-logo {
+      height: 60px;
+      opacity: 0.7;
+      transition: var(--transition);
+    }
+
+    .backer-logo:hover {
+      opacity: 1;
+    }
+
     /* Footer */
     .main-footer {
       background-color: var(--primary-dark);
       color: white;
-      padding: 50px 0 20px;
+      padding: 60px 0 20px;
     }
 
     .footer-content {
@@ -326,41 +387,51 @@
     }
 
     /* Responsive */
+    @media (max-width: 992px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      nav ul {
+        display: none;
+      }
+    }
+
     @media (max-width: 768px) {
       .hero {
-        height: 400px;
+        height: auto;
+        padding: 120px 0 80px;
       }
       
       .hero h1 {
         font-size: 2.2rem;
       }
       
-      .header-content {
+      .btn-group {
         flex-direction: column;
-        text-align: center;
+        align-items: center;
       }
       
-      .logo {
-        margin-bottom: 20px;
-      }
-      
-      .access-container {
-        padding: 30px 20px;
+      .feature-card {
+        padding: 25px;
       }
     }
 
-    @media (max-width: 480px) {
-      .hero {
-        height: 350px;
-      }
-      
+    @media (max-width: 576px) {
       .hero h1 {
         font-size: 1.8rem;
       }
       
-      .btn {
-        width: 100%;
-        text-align: center;
+      .section-header h2 {
+        font-size: 2rem;
+      }
+      
+      .logo-text {
+        font-size: 1.5rem;
+      }
+      
+      .logo-icon {
+        font-size: 2rem;
       }
     }
   </style>
@@ -370,96 +441,148 @@
     <div class="container header-content">
       <a href="#" class="logo">
         <div class="logo-icon"><i class="fas fa-chess-queen"></i></div>
-        <div class="logo-text">Tadeášova <span>Chytrá Šachovnice</span></div>
+        <div class="logo-text">Chytrá <span>Šachovnice</span></div>
       </a>
       <nav>
-        <a href="https://www.indiegogo.com/" target="_blank" class="btn">
-          <i class="fas fa-external-link-alt"></i> Podpořte nás na Indiegogo
-        </a>
+        <ul>
+          <li><a href="#features">Funkce</a></li>
+          <li><a href="#gallery">Galerie</a></li>
+          <li><a href="#backers">Pro backery</a></li>
+          <li><a href="backers.html" class="btn btn-outline"><i class="fas fa-key"></i> Přístup pro backery</a></li>
+        </ul>
       </nav>
     </div>
   </header>
 
   <section class="hero">
     <div class="container hero-content">
-      <h1>Exkluzivní přístup pro naše backery</h1>
-      <p>Děkujeme za podporu na Indiegogo! Zadejte svůj unikátní přístupový kód pro stažení firmwaru.</p>
-      <a href="#access" class="btn"><i class="fas fa-key"></i> Zadat přístupový kód</a>
-    </div>
-  </section>
-
-  <section id="access" class="access-section">
-    <div class="container access-container">
-      <h2><i class="fas fa-lock"></i> Ověření přístupu</h2>
-      <p>Pro stažení exkluzivního firmwaru zadejte přístupový kód, který jste obdrželi jako backer na Indiegogo.</p>
-      
-      <form id="accessForm">
-        <div class="form-group">
-          <label for="accessCode">Přístupový kód</label>
-          <input type="text" id="accessCode" placeholder="Např. CHESS-2023-ABCD-5678" required>
-        </div>
-        <button type="submit" class="btn" style="width: 100%;">
-          <i class="fas fa-unlock"></i> Ověřit přístup
-        </button>
-      </form>
-      
-      <div id="accessMessage" style="margin-top: 20px; display: none;">
-        <!-- Zde se zobrazí zpráva o úspěchu/chybě -->
+      <h1>Revoluce v šachovém hraní</h1>
+      <p>Inteligentní šachovnice s automatickým rozpoznáváním tahů, online hraním a výukovými funkcemi. Podpořte náš projekt na Indiegogo a získejte exkluzivní přístup!</p>
+      <div class="btn-group">
+        <a href="https://www.indiegogo.com/" target="_blank" class="btn"><i class="fas fa-external-link-alt"></i> Podpořte nás</a>
+        <a href="#backers" class="btn btn-outline"><i class="fas fa-key"></i> Pro backery</a>
       </div>
     </div>
   </section>
 
-  <section id="content" class="content-section">
+  <section id="features" class="features-section">
     <div class="container">
       <div class="section-header">
-        <h2>Vítejte, backer!</h2>
-        <p>Děkujeme, že jste součástí našeho projektu. Zde najdete exkluzivní obsah a firmware pro vaši chytrou šachovnici.</p>
+        <h2>Proč si pořídit chytrou šachovnici?</h2>
+        <p>Kombinace tradičního šachového zážitku s moderními technologiemi</p>
       </div>
       
-      <div class="features">
+      <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-download"></i></div>
-          <h3>Stažení firmwaru</h3>
-          <p>Nejnovější verze firmwaru pro vaši chytrou šachovnici. Kompletní návod k instalaci níže.</p>
+          <div class="feature-icon"><i class="fas fa-chess"></i></div>
+          <h3>Automatické rozpoznávání tahů</h3>
+          <p>Šachovnice detekuje pohyb figur pomocí magnetických senzorů a přesně zaznamenává průběh hry.</p>
         </div>
         
         <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-book"></i></div>
-          <h3>Exkluzivní dokumentace</h3>
-          <p>Podrobný manuál s pokročilými funkcemi a tipy pro vaši šachovnici.</p>
+          <div class="feature-icon"><i class="fas fa-robot"></i></div>
+          <h3>Hra proti počítači</h3>
+          <p>Vestavěný šachový engine umožňuje hrát proti počítači na různých úrovních obtížnosti.</p>
         </div>
         
         <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-users"></i></div>
-          <h3>Backerská komunita</h3>
-          <p>Přístup do uzavřené skupiny pro backery, kde řešíme novinky a vylepšení.</p>
+          <div class="feature-icon"><i class="fas fa-network-wired"></i></div>
+          <h3>Online spojení</h3>
+          <p>Připojte se k online šachovým serverům a hrajte s protihráči z celého světa.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>Výukové funkce</h3>
+          <p>Analýza her, návrhy tahů a interaktivní lekce pro zlepšení vašich dovedností.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-history"></i></div>
+          <h3>Záznam her</h3>
+          <p>Uložte si celé partie do formátu PGN a sdílejte je s přáteli nebo trenérem.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+          <h3>Rychlá odpověď</h3>
+          <p>Okamžitá odezva na tahy s minimálním zpožděním díky optimalizovanému firmwaru.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="gallery-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Galerie projektu</h2>
+        <p>Prohlédněte si fotografie z vývoje naší chytré šachovnice</p>
+      </div>
+      
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1520170350703-34c53a986649?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Prototyp šachovnice">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1586165368502-1bad197a6461?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Elektronické součástky">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Arduino řídicí jednotka">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1523730205978-59fd1b2965e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Testování funkcí">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d85b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Finální produkt">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Hra v akci">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Chcete být mezi prvními majiteli?</h2>
+      <p>Podpořte náš projekt na Indiegogo a získejte exkluzivní výhody, včetně přednostního dodání a speciální edice šachovnice.</p>
+      <div class="btn-group">
+        <a href="https://www.indiegogo.com/" target="_blank" class="btn"><i class="fas fa-external-link-alt"></i> Podpořte nás na Indiegogo</a>
+        <a href="#backers" class="btn btn-outline"><i class="fas fa-question-circle"></i> Proč podpořit?</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="backers" class="backers-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Exkluzivní výhody pro backery</h2>
+        <p>Naši podporovatelé získávají speciální přístup k firmware a dalším výhodám</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-key"></i></div>
+          <h3>Předčasný přístup</h3>
+          <p>Backeři získají exkluzivní přístup k nejnovějšímu firmwaru ještě před oficiálním vydáním.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-code"></i></div>
+          <h3>Speciální funkce</h3>
+          <p>Verze pro backery obsahuje experimentální funkce, které nejsou v základní verzi.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-headset"></i></div>
+          <h3>Prioritní podpora</h3>
+          <p>Přímá komunikační linka s vývojovým týmem pro řešení problémů a návrhy vylepšení.</p>
         </div>
       </div>
       
-      <div class="download-section">
-        <h2><i class="fas fa-microchip"></i> Stáhnout firmware</h2>
-        <p>Stáhněte si nejnovější verzi firmwaru pro vaši chytrou šachovnici. Tento obsah je dostupný pouze pro naše backery z Indiegogo.</p>
-        <button id="downloadBtn" class="btn" style="background-color: white; color: var(--primary-accent);">
-          <i class="fas fa-download"></i> Stáhnout SmartChessboard_v1.0.bin
-        </button>
-        <p id="downloadCounter" style="margin-top: 15px; font-size: 0.9rem;">
-          Tento kód byl stažen: <span id="downloadCount">0</span> krát
-        </p>
-      </div>
-      
-      <div class="installation-guide">
-        <h3><i class="fas fa-wrench"></i> Návod k instalaci</h3>
-        <p>Postupujte podle těchto kroků pro nahrání firmwaru do vaší šachovnice:</p>
-        <ol style="margin-top: 15px; margin-left: 20px;">
-          <li>Připojte Arduino Mega k počítači přes USB</li>
-          <li>Stáhněte si Arduino IDE z <a href="https://www.arduino.cc/" target="_blank">oficiálních stránek</a></li>
-          <li>Otevřete Příkazový řádek (cmd) a přejděte do složky s firmwarem</li>
-          <li>Spusťte tento příkaz (nahraďte COMX vaším portem):</li>
-        </ol>
-        <div style="background: #1a1a1a; color: white; padding: 15px; border-radius: var(--border-radius); margin: 15px 0; font-family: monospace;">
-          avrdude -C avrdude.conf -v -p atmega2560 -c wiring -P COMX -b 115200 -D -U flash:w:SmartChessboard_v1.0.bin:i
-        </div>
-        <p><strong>Tip:</strong> Ihned po spuštění příkazu krátce zmáčkněte reset tlačítko na Arduinu.</p>
+      <div style="margin-top: 50px; text-align: center;">
+        <a href="backers.html" class="btn"><i class="fas fa-key"></i> Přístup pro backery</a>
+        <p style="margin-top: 15px;">Po podpoření projektu obdržíte unikátní přístupový kód</p>
       </div>
     </div>
   </section>
@@ -473,6 +596,7 @@
             <li><a href="#">Cíle projektu</a></li>
             <li><a href="#">Technologie</a></li>
             <li><a href="#">Roadmap</a></li>
+            <li><a href="#">O týmu</a></li>
           </ul>
         </div>
         
@@ -482,6 +606,7 @@
             <li><a href="#">Návody</a></li>
             <li><a href="#">FAQ</a></li>
             <li><a href="#">Kontakt</a></li>
+            <li><a href="backers.html">Pro backery</a></li>
           </ul>
         </div>
         
@@ -495,104 +620,30 @@
             <a href="#"><i class="fab fa-facebook-f"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
           </div>
         </div>
       </div>
       
       <div class="copyright">
         <p>&copy; <span id="currentYear"></span> Tadeášova Chytrá Šachovnice. Všechna práva vyhrazena.</p>
-        <p>Exkluzivní obsah pouze pro naše backery z Indiegogo.</p>
       </div>
     </div>
   </footer>
 
   <script>
-    // Simulace databáze kódů (v reálném nasazení by to bylo na serveru)
-    const validCodes = {
-      'CHESS-2023-ABCD-1234': { downloads: 0, active: true },
-      'CHESS-2023-EFGH-5678': { downloads: 0, active: true },
-      'CHESS-2023-IJKL-9012': { downloads: 0, active: true },
-      'CHESS-2023-MNOP-3456': { downloads: 0, active: true },
-      'CHESS-2023-QRST-7890': { downloads: 0, active: true }
-    };
-
-    // Ověření přístupového kódu
-    document.getElementById('accessForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const accessCode = document.getElementById('accessCode').value.trim().toUpperCase();
-      const accessMessage = document.getElementById('accessMessage');
-      
-      if (validCodes[accessCode] && validCodes[accessCode].active) {
-        accessMessage.innerHTML = `
-          <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: var(--border-radius);">
-            <i class="fas fa-check-circle"></i> <strong>Přístup povolen!</strong> Váš kód je platný. Nyní vidíte exkluzivní obsah.
-          </div>
-        `;
+    // Aktuální rok v patičce
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
         
-        // Uložení kódu do sessionStorage
-        sessionStorage.setItem('chessboardAccess', accessCode);
-        
-        // Zobrazení obsahu
-        document.getElementById('content').style.display = 'block';
-        
-        // Nastavení počtu stažení
-        document.getElementById('downloadCount').textContent = validCodes[accessCode].downloads;
-        
-        // Scroll k obsahu
-        setTimeout(() => {
-          document.getElementById('content').scrollIntoView({ behavior: 'smooth' });
-        }, 500);
-      } else {
-        accessMessage.innerHTML = `
-          <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: var(--border-radius);">
-            <i class="fas fa-times-circle"></i> <strong>Neplatný kód!</strong> Zkontrolujte, zda jste zadali správný přístupový kód z Indiegogo.
-          </div>
-        `;
-      }
-      
-      accessMessage.style.display = 'block';
-    });
-
-    // Stahování souboru
-    document.getElementById('downloadBtn').addEventListener('click', function() {
-      const accessCode = sessionStorage.getItem('chessboardAccess');
-      
-      if (accessCode && validCodes[accessCode]) {
-        // Zvýšení počtu stažení
-        validCodes[accessCode].downloads++;
-        document.getElementById('downloadCount').textContent = validCodes[accessCode].downloads;
-        
-        // Vytvoření a stažení souboru
-        const blob = new Blob(["Toto je simulovaný obsah firmwaru. V reálné implementaci by zde byl váš skutečný .bin soubor."], { type: 'application/octet-stream' });
-        const url = URL.createObjectURL(blob);
-        
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'SmartChessboard_v1.0.bin';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        // Zobrazení potvrzení
-        alert('Firmware byl úspěšně stažen! Děkujeme.');
-      } else {
-        alert('Pro stažení musíte mít platný přístupový kód.');
-      }
-    });
-
-    // Kontrola přihlášení při načtení stránky
-    window.addEventListener('DOMContentLoaded', function() {
-      const accessCode = sessionStorage.getItem('chessboardAccess');
-      
-      if (accessCode && validCodes[accessCode]) {
-        document.getElementById('content').style.display = 'block';
-        document.getElementById('accessCode').value = accessCode;
-        document.getElementById('downloadCount').textContent = validCodes[accessCode].downloads;
-      }
-      
-      // Aktuální rok v patičce
-      document.getElementById('currentYear').textContent = new Date().getFullYear();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
     });
   </script>
 </body>
