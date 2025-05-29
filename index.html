@@ -821,13 +821,13 @@
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-robot"></i></div>
           <h3>Hra proti počítači</h3>
-          <p>Vestavěný šachový engine umožňuje hrát proti počítači na různých úrovních obtížnosti.</p>
+          <p>Vestavěný šachový engine umožňuje hrát proti počítači na různých úrovních obtížnosti (v budoucích verzích).</p>
         </div>
         
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-network-wired"></i></div>
           <h3>Online spojení</h3>
-          <p>Připojte se k online šachovým serverům a hrajte s protihráči z celého světa.</p>
+          <p>Připojte se k online šachovým serverům a hrajte s protihráči z celého světa (plánované rozšíření).</p>
         </div>
       </div>
       
@@ -938,7 +938,7 @@
                 <li><strong>Zkopírujte celý vygenerovaný příkaz</strong> z textového pole pod tlačítkem.</li>
                 <li>Vložte tento zkopírovaný příkaz do okna Příkazového řádku. (V Příkazovém řádku se často vkládá kliknutím pravým tlačítkem myši).</li>
                 <li><strong>NEŽ STISKNETE ENTER – PŘIPRAVTE SE!</strong></li>
-                <li>**VELMI DŮLEŽITÝ KROK:** Ihned po stisknutí klávesy <strong>Enter</strong> (kterou spustíte příkaz v Příkazovém řádku), nebo jen zlomek sekundy předtím, **krátce stiskněte resetovací tlačítko** na vaší desce Arduino Mega. Toto je naprosto klíčové pro správnou komunikaci s bootloaderem Arduina. Někdy je potřeba si správné načasování párkrát vyzkoušet.</li>
+                <li>**VELMI DŮLEŽITÝ KROK:** Ihned po stisknutí klávesy <strong>Enter</strong> (kterou spustíte příkaz v Příkazovém řádku), nebo jen zlomek sekundy předtím, **krátce stiskněte resetovací tlačítko** na vaší desce Arduino Mega. Toto je naprosto klíčové pro správnou komunikaci s bootloaderem Arduina. Pokud to nefunguje, zkuste reset stisknout 2–3krát rychle za sebou během nahrávání – někdy je třeba najít správný okamžik.</li>
                 <li>Pokud je vše v pořádku, `avrdude` začne komunikovat s Arduinem a nahrávat firmware. Uvidíte textový výstup popisující proces (např. čtení, zápis, ověřování paměti).</li>
                 <li>Po úspěšném nahrání by se na konci výpisu měla objevit zpráva jako <code>avrdude done. Thank you.</code> Gratuluji, firmware je nahrán!</li>
               </ol>
@@ -1106,7 +1106,7 @@
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-comments"></i></div>
           <h3>Sociální sítě</h3>
-          <p>Sledujte projekt na Facebooku a Instagramu pro nejnovější aktualizace.</p>
+          <p>Sledujte projekt na sociálních sítích pro nejnovější aktualizace.</p>
           <div class="social-links">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
@@ -1159,111 +1159,11 @@
             <a href="#"><i class="fab fa-facebook-f"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="https://github.com/tadeaschess/smart-chessboard-upload"><i class="fab fa-github"></i></a>
           </div>
         </div>
       </div>
       
       <div class="copyright">
         <p>© <span id="currentYear"></span> Tadeášova Chytrá Šachovnice. Všechna práva vyhrazena.</p>
-        <p>Studentský projekt vytvořený s vášní pro šachy a elektroniku.</p>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Skript pro rozbalovací akordeon
-    document.querySelectorAll('.accordion-button').forEach(button => {
-      button.addEventListener('click', () => {
-        const content = button.nextElementSibling;
-        const icon = button.querySelector('i');
-        
-        button.classList.toggle('active');
-        icon.classList.toggle('fa-chevron-down');
-        icon.classList.toggle('fa-chevron-up');
-        
-        if (content.style.maxHeight) {
-          content.style.maxHeight = null;
-          content.classList.remove('active');
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-          content.classList.add('active');
-        }
-      });
-    });
-
-    // Skript pro generátor příkazu AVRDUDE
-    function generateAvrdudeCommand() {
-      const comPortInput = document.getElementById('comPortInput');
-      const comPort = comPortInput.value.trim().toUpperCase();
-      const firmwareFile = 'SmartChessboardFirmware_v1.bin';
-      const commandOutputElement = document.getElementById('avrdudeCommandOutput');
-
-      if (!comPort) {
-        commandOutputElement.textContent = 'Prosím, zadejte platný COM port (např. COM5).';
-        comPortInput.focus();
-        return;
-      }
-      
-      if (!/^COM[0-9]+$/i.test(comPort)) {
-        commandOutputElement.textContent = 'Nesprávný formát COM portu. Zadejte jej ve tvaru COM následovaném číslem (např. COM5).';
-        comPortInput.focus();
-        return;
-      }
-
-      const command = `avrdude -C avrdude.conf -v -p atmega2560 -c wiring -P ${comPort} -b 115200 -D -U flash:w:${firmwareFile}:i`;
-      commandOutputElement.textContent = command;
-      
-      // Vytvoření kopírovacího tlačítka, pokud ještě neexistuje
-      if (!document.getElementById('copyButton')) {
-        const copyButton = document.createElement('button');
-        copyButton.id = 'copyButton';
-        copyButton.className = 'button';
-        copyButton.style.marginTop = '10px';
-        copyButton.innerHTML = '<i class="fas fa-copy"></i> Kopírovat příkaz';
-        copyButton.onclick = function() {
-          navigator.clipboard.writeText(command).then(() => {
-            const originalText = copyButton.innerHTML;
-            copyButton.innerHTML = '<i class="fas fa-check"></i> Zkopírováno!';
-            setTimeout(() => {
-              copyButton.innerHTML = originalText;
-            }, 2000);
-          });
-        };
-        commandOutputElement.parentNode.insertAdjacentElement('afterend', copyButton);
-      }
-    }
-
-    // Skript pro taby
-    function openTab(evt, tabName) {
-      const tabContents = document.getElementsByClassName('tab-content');
-      for (let i = 0; i < tabContents.length; i++) {
-        tabContents[i].classList.remove('active');
-      }
-      
-      const tabButtons = document.getElementsByClassName('tab-button');
-      for (let i = 0; i < tabButtons.length; i++) {
-        tabButtons[i].classList.remove('active');
-      }
-      
-      document.getElementById(tabName).classList.add('active');
-      evt.currentTarget.classList.add('active');
-    }
-
-    // Skript pro vložení aktuálního roku do patičky
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-    // Smooth scrolling pro odkazy
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
-  </script>
-
-</body>
-</html>
+        <p>Studentský projekt vytvořený s vášní pro š
