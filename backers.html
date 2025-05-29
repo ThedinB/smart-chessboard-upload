@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <!-- Zachováme stejné meta tagy a styly jako v původním kódu -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exkluzivní přístup | Tadeášova Chytrá Šachovnice</title>
+  <title>Exkluzivní přístup | Smart Chessboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Zachováme všechny původní styly */
     :root {
       --primary-dark: #1a2a3a;
       --primary-accent: #2c3e50;
@@ -16,24 +14,415 @@
       --light-bg: #f5f7fa;
       --text-dark: #333;
       --text-light: #fff;
-      --border-radius: 8px;
+      --border-radius: 12px;
       --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s ease;
     }
-    /* ... (zbytek CSS zůstává stejný) ... */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Language Switcher */
+    .language-switcher {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+
+    .language-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      margin-left: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.9rem;
+    }
+
+    .language-btn:hover, .language-btn.active {
+      background: var(--secondary-accent);
+    }
+
+    /* Header */
+    .main-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-accent) 100%);
+      color: var(--text-light);
+      padding: 20px 0;
+      box-shadow: var(--box-shadow);
+      position: relative;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      font-size: 2.5rem;
+      color: var(--secondary-accent);
+      margin-right: 15px;
+    }
+
+    .logo-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .logo-text span {
+      color: var(--secondary-accent);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1543092587-d8b8feaf4f1f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      color: var(--text-light);
+      max-width: 800px;
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: var(--border-radius);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--secondary-accent);
+      color: var(--text-light);
+      padding: 15px 35px;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(26, 188, 156, 0.4);
+    }
+
+    /* Access Section */
+    .access-section {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .access-container {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 50px;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      top: -50px;
+    }
+
+    .access-container h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--primary-accent);
+    }
+
+    .access-container p {
+      margin-bottom: 30px;
+      color: #666;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: var(--primary-accent);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #ddd;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--secondary-accent);
+      box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2);
+    }
+
+    /* Content Section */
+    .content-section {
+      display: none;
+      padding: 0 0 60px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: var(--primary-accent);
+      margin-bottom: 15px;
+    }
+
+    .section-header p {
+      font-size: 1.1rem;
+      color: #666;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 40px 30px;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      color: var(--secondary-accent);
+      margin-bottom: 25px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--primary-accent);
+    }
+
+    /* Download Section */
+    .download-section {
+      background: linear-gradient(135deg, var(--primary-accent) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 60px 40px;
+      text-align: center;
+      border-radius: var(--border-radius);
+      margin: 40px 0;
+    }
+
+    .download-section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .download-section p {
+      margin-bottom: 30px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0.9;
+    }
+
+    .download-btn {
+      background-color: white;
+      color: var(--primary-accent);
+      font-size: 1.1rem;
+      padding: 15px 40px;
+      border-radius: 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    .download-info {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Steps Section */
+    .steps-section {
+      background-color: #f9f9f9;
+      padding: 60px;
+      border-radius: var(--border-radius);
+      margin-bottom: 50px;
+    }
+
+    .steps-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .step {
+      display: flex;
+      margin-bottom: 30px;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      background-color: var(--secondary-accent);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .step-content h3 {
+      color: var(--primary-accent);
+      margin-bottom: 10px;
+    }
+
+    .step-content p {
+      color: #666;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero {
+        height: 350px;
+      }
+      
+      .hero-content {
+        padding: 30px;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .access-container {
+        padding: 30px 20px;
+      }
+      
+      .steps-section {
+        padding: 40px 20px;
+      }
+      
+      .step {
+        flex-direction: column;
+      }
+      
+      .step-number {
+        margin-bottom: 15px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .section-header h2 {
+        font-size: 2rem;
+      }
+      
+      .language-switcher {
+        top: 15px;
+        right: 15px;
+      }
+      
+      .language-btn {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Zachováme stejnou hlavičku a hero sekci -->
+  <div class="language-switcher">
+    <button class="language-btn active" data-lang="cs">Čeština</button>
+    <button class="language-btn" data-lang="en">English</button>
+    <button class="language-btn" data-lang="es">Español</button>
+  </div>
+
   <header class="main-header">
     <div class="container header-content">
       <a href="index.html" class="logo">
         <div class="logo-icon"><i class="fas fa-chess-queen"></i></div>
-        <div class="logo-text">Chytrá <span>Šachovnice</span></div>
+        <div class="logo-text" data-translate="app_name">Chytrá <span>Šachovnice</span></div>
       </a>
       <nav>
         <a href="index.html" class="btn">
-          <i class="fas fa-arrow-left"></i> Zpět na hlavní stránku
+          <i class="fas fa-arrow-left"></i> <span data-translate="back_to_home">Zpět na hlavní stránku</span>
         </a>
       </nav>
     </div>
@@ -41,116 +430,141 @@
 
   <section class="hero">
     <div class="container hero-content">
-      <h1>Exkluzivní přístup pro backery</h1>
-      <p>Děkujeme za podporu na Indiegogo! Zadejte svůj unikátní přístupový kód pro stažení instalačního balíčku.</p>
+      <h1 data-translate="hero_title">Exkluzivní přístup pro backery</h1>
+      <p data-translate="hero_subtitle">Děkujeme za podporu na Indiegogo! Zadejte svůj unikátní přístupový kód pro stažení instalačního balíčku.</p>
     </div>
   </section>
 
   <section id="access" class="access-section">
     <div class="container access-container">
-      <h2><i class="fas fa-lock"></i> Ověření přístupu</h2>
-      <p>Pro stažení instalačního balíčku zadejte přístupový kód, který jste obdrželi jako backer na Indiegogo.</p>
+      <h2><i class="fas fa-lock"></i> <span data-translate="access_title">Ověření přístupu</span></h2>
+      <p data-translate="access_description">Pro stažení instalačního balíčku zadejte přístupový kód, který jste obdrželi jako backer na Indiegogo.</p>
       
       <form id="accessForm">
         <div class="form-group">
-          <label for="accessCode">Přístupový kód</label>
-          <input type="text" id="accessCode" placeholder="Např. 7UGOKYA0GZ" required>
+          <label for="accessCode" data-translate="access_code_label">Přístupový kód</label>
+          <input type="text" id="accessCode" placeholder="" required>
         </div>
         <button type="submit" class="btn" style="width: 100%;">
-          <i class="fas fa-unlock"></i> Ověřit přístup
+          <i class="fas fa-unlock"></i> <span data-translate="verify_button">Ověřit přístup</span>
         </button>
       </form>
       
-      <div id="accessMessage" style="margin-top: 20px; display: none;">
-        <!-- Zde se zobrazí zpráva o úspěchu/chybě -->
-      </div>
+      <div id="accessMessage" style="margin-top: 20px; display: none;"></div>
     </div>
   </section>
 
   <section id="content" class="content-section">
     <div class="container">
       <div class="section-header">
-        <h2>Vítejte, backer!</h2>
-        <p>Děkujeme, že jste součástí našeho projektu. Zde najdete instalační balíček pro vaši chytrou šachovnici.</p>
+        <h2 data-translate="welcome_title">Vítejte, backer!</h2>
+        <p data-translate="welcome_subtitle">Děkujeme, že jste součástí našeho projektu. Zde najdete instalační balíček pro vaši chytrou šachovnici.</p>
       </div>
       
       <div class="features">
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-download"></i></div>
-          <h3>Stažení instalačního balíčku</h3>
-          <p>Kompletní balíček obsahující instalátor a všechny potřebné soubory pro nahrání firmwaru.</p>
+          <h3 data-translate="feature1_title">Stažení instalačního balíčku</h3>
+          <p data-translate="feature1_text">Kompletní balíček obsahující instalátor a všechny potřebné soubory pro nahrání firmwaru.</p>
         </div>
         
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-book"></i></div>
-          <h3>Návod k instalaci</h3>
-          <p>Podrobný manuál s instrukcemi pro nahrání firmwaru na vaši šachovnici.</p>
+          <h3 data-translate="feature2_title">Návod k instalaci</h3>
+          <p data-translate="feature2_text">Podrobný manuál s instrukcemi pro nahrání firmwaru na vaši šachovnici.</p>
         </div>
         
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-users"></i></div>
-          <h3>Backerská podpora</h3>
-          <p>Přístup k prioritní podpoře pro backery v případě problémů s instalací.</p>
+          <h3 data-translate="feature3_title">Backerská podpora</h3>
+          <p data-translate="feature3_text">Přístup k prioritní podpoře pro backery v případě problémů s instalací.</p>
         </div>
       </div>
       
       <div class="download-section">
-        <h2><i class="fas fa-download"></i> Stáhnout instalační balíček</h2>
-        <p>Stáhněte si kompletní balíček pro nahrání firmwaru na vaši šachovnici.</p>
-        <a id="downloadLink" href="#" class="btn" style="background-color: white; color: var(--primary-accent); display: none;">
-          <i class="fas fa-download"></i> Stáhnout ChessInstaller.zip
+        <h2><i class="fas fa-download"></i> <span data-translate="download_title">Stáhnout instalační balíček</span></h2>
+        <p data-translate="download_description">Stáhněte si kompletní balíček pro nahrání firmwaru na vaši šachovnici.</p>
+        <a id="downloadLink" href="#" class="btn download-btn">
+          <i class="fas fa-download"></i> <span data-translate="download_button">Stáhnout ChessInstaller.zip</span>
         </a>
-        <p id="downloadCounter" style="margin-top: 15px; font-size: 0.9rem;">
-          Tento kód byl použit: <span id="downloadCount">0</span> krát
-        </p>
+        <div class="download-info">
+          <span data-translate="download_size">Velikost: 15 MB</span> • 
+          <span data-translate="download_count">Počet stažení: </span><span id="downloadCount">0</span>
+        </div>
       </div>
       
-      <div class="installation-guide">
-        <h3><i class="fas fa-wrench"></i> Návod k instalaci</h3>
-        <p>Postupujte podle těchto kroků pro nahrání firmwaru:</p>
-        <ol style="margin-top: 15px; margin-left: 20px;">
-          <li>Stáhněte si <strong>ChessInstaller.zip</strong> a rozbalte do libovolné složky</li>
-          <li>Připojte Arduino Mega k počítači přes USB</li>
-          <li>Spusťte <strong>ChessInstaller.exe</strong></li>
-          <li>Postupujte podle instrukcí v instalátoru</li>
-          <li>Po dokončení restartujte šachovnici</li>
-        </ol>
-        
-        <div style="background: #f8f9fa; border-left: 4px solid var(--secondary-accent); padding: 15px; border-radius: var(--border-radius); margin: 15px 0;">
-          <h4><i class="fas fa-question-circle"></i> Problémy s instalací?</h4>
-          <p>Pokud narazíte na problémy, kontaktujte nás na <a href="mailto:tadeas.chess@gmail.com">tadeas.chess@gmail.com</a> s uvedením vašeho kódu a popisu problému.</p>
+      <div class="steps-section">
+        <div class="steps-container">
+          <h2 data-translate="installation_title"><i class="fas fa-wrench"></i> Návod k instalaci</h2>
+          <p data-translate="installation_subtitle" style="margin-bottom: 30px;">Postupujte podle těchto kroků pro nahrání firmwaru:</p>
+          
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3 data-translate="step1_title">Stažení balíčku</h3>
+              <p data-translate="step1_text">Stáhněte si ChessInstaller.zip a rozbalte do libovolné složky na vašem počítači.</p>
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3 data-translate="step2_title">Připojení šachovnice</h3>
+              <p data-translate="step2_text">Připojte Arduino Mega k počítači pomocí USB kabelu.</p>
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3 data-translate="step3_title">Spuštění instalátoru</h3>
+              <p data-translate="step3_text">Otevřete složku s rozbaleným balíčkem a spusťte ChessInstaller.exe.</p>
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h3 data-translate="step4_title">Dokončení instalace</h3>
+              <p data-translate="step4_text">Postupujte podle pokynů v instalátoru. Po dokončení restartujte šachovnici.</p>
+            </div>
+          </div>
         </div>
+      </div>
+      
+      <div style="background: #f8f9fa; border-left: 4px solid var(--secondary-accent); padding: 20px; border-radius: var(--border-radius);">
+        <h3><i class="fas fa-question-circle"></i> <span data-translate="help_title">Potřebujete pomoc?</span></h3>
+        <p data-translate="help_text">Pokud narazíte na problémy, kontaktujte nás na <a href="mailto:tadeas.chess@gmail.com">tadeas.chess@gmail.com</a> s uvedením vašeho kódu a popisu problému.</p>
       </div>
     </div>
   </section>
 
-  <!-- Zachováme stejný footer -->
   <footer class="main-footer">
     <div class="container">
       <div class="footer-content">
         <div class="footer-column">
-          <h3>O projektu</h3>
+          <h3 data-translate="footer_about">O projektu</h3>
           <ul>
-            <li><a href="index.html">Hlavní stránka</a></li>
-            <li><a href="index.html#features">Funkce</a></li>
-            <li><a href="index.html#gallery">Galerie</a></li>
+            <li><a href="index.html" data-translate="footer_home">Hlavní stránka</a></li>
+            <li><a href="index.html#features" data-translate="footer_features">Funkce</a></li>
+            <li><a href="index.html#gallery" data-translate="footer_gallery">Galerie</a></li>
           </ul>
         </div>
         
         <div class="footer-column">
-          <h3>Podpora</h3>
+          <h3 data-translate="footer_support">Podpora</h3>
           <ul>
-            <li><a href="#">Návody</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="mailto:tadeas.chess@gmail.com">Kontakt</a></li>
+            <li><a href="#" data-translate="footer_guides">Návody</a></li>
+            <li><a href="#" data-translate="footer_faq">FAQ</a></li>
+            <li><a href="mailto:tadeas.chess@gmail.com" data-translate="footer_contact">Kontakt</a></li>
           </ul>
         </div>
         
         <div class="footer-column">
-          <h3>Kontakt</h3>
+          <h3 data-translate="footer_contact">Kontakt</h3>
           <ul>
             <li><a href="mailto:tadeas.chess@gmail.com">tadeas.chess@gmail.com</a></li>
-            <li><a href="https://www.indiegogo.com/" target="_blank">Indiegogo stránka</a></li>
+            <li><a href="https://www.indiegogo.com/" target="_blank" data-translate="footer_indiegogo">Indiegogo stránka</a></li>
           </ul>
           <div class="social-links">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -161,64 +575,273 @@
       </div>
       
       <div class="copyright">
-        <p>&copy; <span id="currentYear"></span> Tadeášova Chytrá Šachovnice. Všechna práva vyhrazena.</p>
-        <p>Exkluzivní obsah pouze pro naše backery z Indiegogo.</p>
+        <p>&copy; <span id="currentYear"></span> <span data-translate="footer_copyright">Tadeášova Chytrá Šachovnice. Všechna práva vyhrazena.</span></p>
+        <p data-translate="footer_exclusive">Exkluzivní obsah pouze pro naše backery z Indiegogo.</p>
       </div>
     </div>
   </footer>
 
   <script>
-    // Seznam platných kódů
-    const BACKER_CODES = {
-      "7UGOKYA0GZ": { used: false, email: "backer1@example.com" },
-      "9R5B4SR405": { used: false, email: "backer2@example.com" },
-      "S5VX71J4LZ": { used: false, email: "backer3@example.com" }
-      // Přidej všechny kódy
+    // Překlady
+    const translations = {
+      'cs': {
+        'app_name': 'Chytrá <span>Šachovnice</span>',
+        'back_to_home': 'Zpět na hlavní stránku',
+        'hero_title': 'Exkluzivní přístup pro backery',
+        'hero_subtitle': 'Děkujeme za podporu na Indiegogo! Zadejte svůj unikátní přístupový kód pro stažení instalačního balíčku.',
+        'access_title': 'Ověření přístupu',
+        'access_description': 'Pro stažení instalačního balíčku zadejte přístupový kód, který jste obdrželi jako backer na Indiegogo.',
+        'access_code_label': 'Přístupový kód',
+        'access_code_placeholder': 'Např. 7UGOKYA0GZ',
+        'verify_button': 'Ověřit přístup',
+        'welcome_title': 'Vítejte, backer!',
+        'welcome_subtitle': 'Děkujeme, že jste součástí našeho projektu. Zde najdete instalační balíček pro vaši chytrou šachovnici.',
+        'feature1_title': 'Stažení instalačního balíčku',
+        'feature1_text': 'Kompletní balíček obsahující instalátor a všechny potřebné soubory pro nahrání firmwaru.',
+        'feature2_title': 'Návod k instalaci',
+        'feature2_text': 'Podrobný manuál s instrukcemi pro nahrání firmwaru na vaši šachovnici.',
+        'feature3_title': 'Backerská podpora',
+        'feature3_text': 'Přístup k prioritní podpoře pro backery v případě problémů s instalací.',
+        'download_title': 'Stáhnout instalační balíček',
+        'download_description': 'Stáhněte si kompletní balíček pro nahrání firmwaru na vaši šachovnici.',
+        'download_button': 'Stáhnout ChessInstaller.zip',
+        'download_size': 'Velikost: 15 MB',
+        'download_count': 'Počet stažení: ',
+        'installation_title': 'Návod k instalaci',
+        'installation_subtitle': 'Postupujte podle těchto kroků pro nahrání firmwaru:',
+        'step1_title': 'Stažení balíčku',
+        'step1_text': 'Stáhněte si ChessInstaller.zip a rozbalte do libovolné složky na vašem počítači.',
+        'step2_title': 'Připojení šachovnice',
+        'step2_text': 'Připojte Arduino Mega k počítači pomocí USB kabelu.',
+        'step3_title': 'Spuštění instalátoru',
+        'step3_text': 'Otevřete složku s rozbaleným balíčkem a spusťte ChessInstaller.exe.',
+        'step4_title': 'Dokončení instalace',
+        'step4_text': 'Postupujte podle pokynů v instalátoru. Po dokončení restartujte šachovnici.',
+        'help_title': 'Potřebujete pomoc?',
+        'help_text': 'Pokud narazíte na problémy, kontaktujte nás na tadeas.chess@gmail.com s uvedením vašeho kódu a popisu problému.',
+        'footer_about': 'O projektu',
+        'footer_home': 'Hlavní stránka',
+        'footer_features': 'Funkce',
+        'footer_gallery': 'Galerie',
+        'footer_support': 'Podpora',
+        'footer_guides': 'Návody',
+        'footer_faq': 'FAQ',
+        'footer_contact': 'Kontakt',
+        'footer_indiegogo': 'Indiegogo stránka',
+        'footer_copyright': 'Tadeášova Chytrá Šachovnice. Všechna práva vyhrazena.',
+        'footer_exclusive': 'Exkluzivní obsah pouze pro naše backery z Indiegogo.'
+      },
+      'en': {
+        'app_name': 'Smart <span>Chessboard</span>',
+        'back_to_home': 'Back to home',
+        'hero_title': 'Exclusive access for backers',
+        'hero_subtitle': 'Thank you for supporting us on Indiegogo! Enter your unique access code to download the installation package.',
+        'access_title': 'Access verification',
+        'access_description': 'To download the installation package, enter the access code you received as a backer on Indiegogo.',
+        'access_code_label': 'Access code',
+        'access_code_placeholder': 'E.g. 7UGOKYA0GZ',
+        'verify_button': 'Verify access',
+        'welcome_title': 'Welcome, backer!',
+        'welcome_subtitle': 'Thank you for being part of our project. Here you will find the installation package for your smart chessboard.',
+        'feature1_title': 'Download installation package',
+        'feature1_text': 'Complete package containing the installer and all necessary files for firmware upload.',
+        'feature2_title': 'Installation guide',
+        'feature2_text': 'Detailed manual with instructions for uploading firmware to your chessboard.',
+        'feature3_title': 'Backer support',
+        'feature3_text': 'Access to priority support for backers in case of installation problems.',
+        'download_title': 'Download installation package',
+        'download_description': 'Download the complete package to upload firmware to your chessboard.',
+        'download_button': 'Download ChessInstaller.zip',
+        'download_size': 'Size: 15 MB',
+        'download_count': 'Downloads: ',
+        'installation_title': 'Installation guide',
+        'installation_subtitle': 'Follow these steps to upload the firmware:',
+        'step1_title': 'Download the package',
+        'step1_text': 'Download ChessInstaller.zip and extract to any folder on your computer.',
+        'step2_title': 'Connect the chessboard',
+        'step2_text': 'Connect Arduino Mega to your computer using USB cable.',
+        'step3_title': 'Run the installer',
+        'step3_text': 'Open the folder with extracted package and run ChessInstaller.exe.',
+        'step4_title': 'Complete installation',
+        'step4_text': 'Follow the instructions in the installer. Restart the chessboard after completion.',
+        'help_title': 'Need help?',
+        'help_text': 'If you encounter any problems, contact us at tadeas.chess@gmail.com with your code and problem description.',
+        'footer_about': 'About',
+        'footer_home': 'Home',
+        'footer_features': 'Features',
+        'footer_gallery': 'Gallery',
+        'footer_support': 'Support',
+        'footer_guides': 'Guides',
+        'footer_faq': 'FAQ',
+        'footer_contact': 'Contact',
+        'footer_indiegogo': 'Indiegogo page',
+        'footer_copyright': 'Tadeáš\'s Smart Chessboard. All rights reserved.',
+        'footer_exclusive': 'Exclusive content for our Indiegogo backers only.'
+      },
+      'es': {
+        'app_name': 'Tablero de <span>Ajedrez Inteligente</span>',
+        'back_to_home': 'Volver al inicio',
+        'hero_title': 'Acceso exclusivo para patrocinadores',
+        'hero_subtitle': '¡Gracias por apoyarnos en Indiegogo! Ingrese su código de acceso único para descargar el paquete de instalación.',
+        'access_title': 'Verificación de acceso',
+        'access_description': 'Para descargar el paquete de instalación, ingrese el código de acceso que recibió como patrocinador en Indiegogo.',
+        'access_code_label': 'Código de acceso',
+        'access_code_placeholder': 'Ej. 7UGOKYA0GZ',
+        'verify_button': 'Verificar acceso',
+        'welcome_title': '¡Bienvenido, patrocinador!',
+        'welcome_subtitle': 'Gracias por ser parte de nuestro proyecto. Aquí encontrará el paquete de instalación para su tablero de ajedrez inteligente.',
+        'feature1_title': 'Descargar paquete de instalación',
+        'feature1_text': 'Paquete completo que contiene el instalador y todos los archivos necesarios para la carga del firmware.',
+        'feature2_title': 'Guía de instalación',
+        'feature2_text': 'Manual detallado con instrucciones para cargar el firmware en su tablero de ajedrez.',
+        'feature3_title': 'Soporte para patrocinadores',
+        'feature3_text': 'Acceso a soporte prioritario para patrocinadores en caso de problemas de instalación.',
+        'download_title': 'Descargar paquete de instalación',
+        'download_description': 'Descargue el paquete completo para cargar el firmware en su tablero de ajedrez.',
+        'download_button': 'Descargar ChessInstaller.zip',
+        'download_size': 'Tamaño: 15 MB',
+        'download_count': 'Descargas: ',
+        'installation_title': 'Guía de instalación',
+        'installation_subtitle': 'Siga estos pasos para cargar el firmware:',
+        'step1_title': 'Descargar el paquete',
+        'step1_text': 'Descargue ChessInstaller.zip y extraiga en cualquier carpeta de su computadora.',
+        'step2_title': 'Conectar el tablero',
+        'step2_text': 'Conecte Arduino Mega a su computadora usando cable USB.',
+        'step3_title': 'Ejecutar el instalador',
+        'step3_text': 'Abra la carpeta con el paquete extraído y ejecute ChessInstaller.exe.',
+        'step4_title': 'Completar instalación',
+        'step4_text': 'Siga las instrucciones del instalador. Reinicie el tablero después de completar.',
+        'help_title': '¿Necesita ayuda?',
+        'help_text': 'Si encuentra algún problema, contáctenos en tadeas.chess@gmail.com con su código y descripción del problema.',
+        'footer_about': 'Acerca de',
+        'footer_home': 'Inicio',
+        'footer_features': 'Características',
+        'footer_gallery': 'Galería',
+        'footer_support': 'Soporte',
+        'footer_guides': 'Guías',
+        'footer_faq': 'Preguntas',
+        'footer_contact': 'Contacto',
+        'footer_indiegogo': 'Página de Indiegogo',
+        'footer_copyright': 'Tablero de Ajedrez Inteligente de Tadeáš. Todos los derechos reservados.',
+        'footer_exclusive': 'Contenido exclusivo solo para nuestros patrocinadores de Indiegogo.'
+      }
     };
 
-    // Cesta k ZIP souboru
-    const DOWNLOAD_URL = "downloads/ChessInstaller.zip";
+    // Načtení platných kódů ze souboru
+    let validCodes = [];
     
-    // Počítadlo stažení
-    let downloadCount = 0;
-    
+    async function loadValidCodes() {
+      try {
+        const response = await fetch('valid_codes.txt');
+        const text = await response.text();
+        validCodes = text.split('\n')
+          .map(line => line.trim())
+          .filter(line => line.length > 0);
+        console.log('Načteno kódů:', validCodes.length);
+      } catch (error) {
+        console.error('Chyba při načítání kódů:', error);
+        // Záložní kódy pro případ chyby
+        validCodes = ["7UGOKYA0GZ", "9R5B4SR405", "S5VX71J4LZ"];
+      }
+    }
+
     // Ověření kódu
-    document.getElementById("accessForm").addEventListener("submit", function(e) {
+    document.getElementById("accessForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const code = document.getElementById("accessCode").value.trim().toUpperCase();
       const messageElement = document.getElementById("accessMessage");
       
-      if (BACKER_CODES[code]) {
-        if (!BACKER_CODES[code].used) {
-          // Platný kód
-          BACKER_CODES[code].used = true;
-          downloadCount++;
-          
-          // Zobrazíme obsah pro backery
-          document.getElementById("content").style.display = "block";
-          document.getElementById("access").style.display = "none";
-          
-          // Nastavíme odkaz ke stažení
-          document.getElementById("downloadLink").href = DOWNLOAD_URL;
-          document.getElementById("downloadLink").style.display = "inline-block";
-          document.getElementById("downloadCount").textContent = downloadCount;
-          
-          // Scroll na download sekci
-          document.getElementById("content").scrollIntoView({ behavior: 'smooth' });
-        } else {
-          // Kód již byl použit
-          messageElement.innerHTML = '<div style="color: #dc3545; background: #f8d7da; padding: 10px; border-radius: 4px;"><i class="fas fa-exclamation-circle"></i> Tento kód byl již použit. Pokud potřebujete pomoc, kontaktujte nás.</div>';
-          messageElement.style.display = "block";
-        }
+      await loadValidCodes(); // Načteme aktuální kódy
+      
+      if (validCodes.includes(code)) {
+        // Platný kód
+        localStorage.setItem('validatedCode', code);
+        
+        // Zobrazíme obsah pro backery
+        document.getElementById("content").style.display = "block";
+        document.getElementById("access").style.display = "none";
+        
+        // Nastavíme odkaz ke stažení
+        document.getElementById("downloadLink").href = "downloads/ChessInstaller.zip";
+        
+        // Aktualizujeme počítadlo stažení
+        let count = localStorage.getItem('downloadCount') || 0;
+        document.getElementById("downloadCount").textContent = count;
+        
+        // Scroll na download sekci
+        document.getElementById("content").scrollIntoView({ behavior: 'smooth' });
+        
+        // Skryjeme zprávu o chybě, pokud byla zobrazena
+        messageElement.style.display = "none";
       } else {
         // Neplatný kód
-        messageElement.innerHTML = '<div style="color: #dc3545; background: #f8d7da; padding: 10px; border-radius: 4px;"><i class="fas fa-exclamation-circle"></i> Neplatný přístupový kód. Zkontrolujte, prosím, zda jste zadali kód správně.</div>';
+        messageElement.innerHTML = `
+          <div style="color: #dc3545; background: #f8d7da; padding: 15px; border-radius: 8px;">
+            <i class="fas fa-exclamation-circle"></i> 
+            <span data-translate="invalid_code">Neplatný přístupový kód. Zkontrolujte, prosím, zda jste zadali kód správně.</span>
+          </div>
+        `;
         messageElement.style.display = "block";
+        translatePage(); // Překlad chybové zprávy
       }
+    });
+
+    // Přepínání jazyků
+    function translatePage() {
+      const lang = document.querySelector('.language-btn.active').dataset.lang;
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) {
+          if (element.innerHTML.includes('<span>')) {
+            // Zachováme HTML uvnitř (pro logo)
+            const temp = document.createElement('div');
+            temp.innerHTML = translations[lang][key];
+            if (temp.innerHTML.includes('<span>')) {
+              element.innerHTML = translations[lang][key];
+            } else {
+              element.textContent = translations[lang][key];
+            }
+          } else {
+            element.textContent = translations[lang][key];
+          }
+        }
+      });
+      
+      // Placeholder pro input
+      const placeholder = translations[lang]?.access_code_placeholder || 'E.g. 7UGOKYA0GZ';
+      document.getElementById('accessCode').placeholder = placeholder;
+    }
+
+    document.querySelectorAll('.language-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        translatePage();
+      });
     });
 
     // Aktuální rok v patičce
     document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Inicializace stránky
+    translatePage();
+    
+    // Pokud už byl kód ověřen dříve, zobrazíme rovnou obsah
+    if (localStorage.getItem('validatedCode')) {
+      document.getElementById("content").style.display = "block";
+      document.getElementById("access").style.display = "none";
+      document.getElementById("downloadLink").href = "downloads/ChessInstaller.zip";
+      let count = localStorage.getItem('downloadCount') || 0;
+      document.getElementById("downloadCount").textContent = count;
+    }
+    
+    // Simulace počítadla stažení (v reálném nasazení by to bylo z backendu)
+    document.getElementById('downloadLink').addEventListener('click', function() {
+      let count = parseInt(localStorage.getItem('downloadCount') || 0;
+      count++;
+      localStorage.setItem('downloadCount', count);
+      document.getElementById("downloadCount").textContent = count;
+    });
   </script>
 </body>
 </html>
