@@ -492,87 +492,163 @@
   </footer>
 
   <script>
-    // Simulace databáze kódů (v reálném nasazení by to bylo na serveru)
+    // Vylepšený systém kódů s lepším zabezpečením
     const validCodes = {
-      'CHESS-2023-ABCD-1234': { downloads: 0, active: true },
-      'CHESS-2023-EFGH-5678': { downloads: 0, active: true },
-      'CHESS-2023-IJKL-9012': { downloads: 0, active: true },
-      'CHESS-2023-MNOP-3456': { downloads: 0, active: true },
-      'CHESS-2023-QRST-7890': { downloads: 0, active: true }
+      // Kódy se generují jako SHA256 hash z "CHESS-EMAIL-DATUM"
+      'a1b2c3d4e5f6...': { 
+        email: 'backer1@example.com', 
+        downloads: 0,
+        max_downloads: 3,
+        expires: '2023-12-31'
+      },
+      'f6e5d4c3b2a1...': {
+        email: 'backer2@example.com',
+        downloads: 0,
+        max_downloads: 3,
+        expires: '2023-12-31'
+      }
     };
 
+    // Kontrola platnosti kódu
+    function isValidCode(code) {
+      const now = new Date();
+      const codeData = validCodes[code];
+      
+      if (!codeData) return false;
+      if (codeData.downloads >= codeData.max_downloads) return false;
+      if (new Date(codeData.expires) < now) return false;
+      
+      return true;
+    }
+
     // Ověření přístupového kódu
-    document.getElementById('accessForm').addEventListener('submit', function(e) {
+    document.getElementById('accessForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const accessCode = document.getElementById('accessCode').value.trim().toUpperCase();
+      const accessCode = document.getElementById('accessCode').value.trim();
       const accessMessage = document.getElementById('accessMessage');
       
-      if (validCodes[accessCode] && validCodes[accessCode].active) {
-        accessMessage.innerHTML = `
-          <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: var(--border-radius);">
-            <i class="fas fa-check-circle"></i> <strong>Přístup povolen!</strong> Váš kód je platný. Nyní vidíte exkluzivní obsah.
-          </div>
-        `;
-        
-        // Uložení kódu do sessionStorage
-        sessionStorage.setItem('chessboardAccess', accessCode);
-        
-        // Zobrazení obsahu
-        document.getElementById('content').style.display = 'block';
-        
-        // Nastavení počtu stažení
-        document.getElementById('downloadCount').textContent = validCodes[accessCode].downloads;
-        
-        // Scroll k obsahu
-        setTimeout(() => {
-          document.getElementById('content').scrollIntoView({ behavior: 'smooth' });
-        }, 500);
-      } else {
-        accessMessage.innerHTML = `
-          <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: var(--border-radius);">
-            <i class="fas fa-times-circle"></i> <strong>Neplatný kód!</strong> Zkontrolujte, zda jste zadali správný přístupový kód z Indiegogo.
-          </div>
-        `;
+      // Kontrola proti základním útokům
+      if (accessCode.length < 10 || accessCode.includes(' ')) {
+        showError('Neplatný formát kódu');
+        return;
       }
       
-      accessMessage.style.display = 'block';
+      // Simulace serverového ověření
+      await new Promise(resolve => setTimeout(resolve, 500)); // Umělé zpoždění
+      
+      if (isValidCode(accessCode)) {
+        const codeData = validCodes[accessCode];
+        accessMessage.innerHTML = `
+          <div class="alert-success">
+            <i class="fas fa-check-circle"></i> 
+            <strong>Přístup povolen!</strong> Vítejte, ${codeData.email}!
+          </div>
+        `;
+        
+        // Uložení do sessionStorage a localStorage
+        sessionStorage.setItem('chessboardAccess', accessCode);
+        localStorage.setItem('lastAccessCode', accessCode);
+        
+        showContent();
+      } else {
+        showError('Neplatný přístupový kód nebo kód expiroval');
+      }
     });
 
+    function showError(message) {
+      const accessMessage = document.getElementById('accessMessage');
+      accessMessage.innerHTML = `
+        <div class="alert-error">
+          <i class="fas fa-times-circle"></i> 
+          <strong>Chyba:</strong> ${message}
+        </div>
+      `;
+      accessMessage.style.display = 'block';
+    }
+
+    function showContent() {
+      document.getElementById('content').style.display = 'block';
+      document.getElementById('downloadCount').textContent = 
+        validCodes[sessionStorage.getItem('chessboardAccess')].downloads;
+      
+      // Skrýt přihlašovací formulář
+      document.getElementById('access').style.display = 'none';
+    }
+
     // Stahování souboru
-    document.getElementById('downloadBtn').addEventListener('click', function() {
+    document.getElementById('downloadBtn').addEventListener('click', async function() {
       const accessCode = sessionStorage.getItem('chessboardAccess');
       
-      if (accessCode && validCodes[accessCode]) {
-        // Zvýšení počtu stažení
-        validCodes[accessCode].downloads++;
-        document.getElementById('downloadCount').textContent = validCodes[accessCode].downloads;
+      if (!accessCode || !isValidCode(accessCode)) {
+        alert('Pro stažení se musíte znovu přihlásit');
+        window.location.reload();
+        return;
+      }
+      
+      // Zvýšení počtu stažení
+      validCodes[accessCode].downloads++;
+      document.getElementById('downloadCount').textContent = validCodes[accessCode].downloads;
+      
+      // 1. Stažení firmwaru
+      try {
+        const firmwareResponse = await fetch('download.php?code=' + encodeURIComponent(accessCode));
         
-        // Vytvoření odkazu pro stažení skutečného .bin souboru
-        const a = document.createElement('a');
-        a.href = 'SmartChessboard_v1.0.bin'; // Cesta k vašemu skutečnému souboru
-        a.download = 'SmartChessboard_v1.0.bin';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        if (!firmwareResponse.ok) throw new Error('Chyba serveru');
         
-        // Zobrazení potvrzení
-        alert('Firmware byl úspěšně stažen! Děkujeme.');
-      } else {
-        alert('Pro stažení musíte mít platný přístupový kód.');
+        const firmwareBlob = await firmwareResponse.blob();
+        const firmwareUrl = URL.createObjectURL(firmwareBlob);
+        
+        // 2. Stažení Arduino Flasheru
+        const flasherResponse = await fetch('arduino_flasher.zip');
+        const flasherBlob = await flasherResponse.blob();
+        const flasherUrl = URL.createObjectURL(flasherBlob);
+        
+        // Uložení do localStorage pro instalátor
+        localStorage.setItem('firmwareData', JSON.stringify({
+          code: accessCode,
+          downloadedAt: new Date().toISOString()
+        }));
+        
+        // Nabídnout stažení obou souborů
+        const firmwareLink = document.createElement('a');
+        firmwareLink.href = firmwareUrl;
+        firmwareLink.download = 'SmartChessboard_v1.0.bin';
+        document.body.appendChild(firmwareLink);
+        firmwareLink.click();
+        
+        const flasherLink = document.createElement('a');
+        flasherLink.href = flasherUrl;
+        flasherLink.download = 'Chessboard_Flasher.zip';
+        document.body.appendChild(flasherLink);
+        flasherLink.click();
+        
+        // Vyčištění
+        setTimeout(() => {
+          document.body.removeChild(firmwareLink);
+          document.body.removeChild(flasherLink);
+          URL.revokeObjectURL(firmwareUrl);
+          URL.revokeObjectURL(flasherUrl);
+        }, 100);
+        
+        // Zobrazení návodu
+        document.getElementById('installationGuide').style.display = 'block';
+        
+      } catch (error) {
+        alert('Chyba při stahování: ' + error.message);
+        console.error(error);
       }
     });
 
     // Kontrola přihlášení při načtení stránky
     window.addEventListener('DOMContentLoaded', function() {
-      const accessCode = sessionStorage.getItem('chessboardAccess');
+      const accessCode = sessionStorage.getItem('chessboardAccess') || 
+                        localStorage.getItem('lastAccessCode');
       
-      if (accessCode && validCodes[accessCode]) {
-        document.getElementById('content').style.display = 'block';
+      if (accessCode && isValidCode(accessCode)) {
+        showContent();
         document.getElementById('accessCode').value = accessCode;
-        document.getElementById('downloadCount').textContent = validCodes[accessCode].downloads;
       }
       
-      // Aktuální rok v patičce
       document.getElementById('currentYear').textContent = new Date().getFullYear();
     });
   </script>
