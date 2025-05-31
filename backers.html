@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exkluzivní přístup | Tadeášova Chytrá Šachovnice</title>
+  <title>Exkluzivní materiály | Tadeášova Chytrá Šachovnice</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -17,6 +17,7 @@
       --border-radius: 12px;
       --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s ease;
+      --gradient: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-accent) 100%);
     }
 
     * {
@@ -72,7 +73,7 @@
 
     /* Header */
     .main-header {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-accent) 100%);
+      background: var(--gradient);
       color: var(--text-light);
       padding: 20px 0;
       box-shadow: var(--box-shadow);
@@ -331,8 +332,8 @@
       color: var(--primary-accent);
     }
 
-    /* Download Section */
-    .download-section {
+    /* Email Section */
+    .email-section {
       background: linear-gradient(135deg, var(--primary-accent) 0%, var(--primary-dark) 100%);
       color: white;
       padding: 60px 40px;
@@ -343,7 +344,7 @@
       overflow: hidden;
     }
 
-    .download-section:before {
+    .email-section:before {
       content: '';
       position: absolute;
       top: -50%;
@@ -364,13 +365,13 @@
       }
     }
 
-    .download-section h2 {
+    .email-section h2 {
       font-size: 2rem;
       margin-bottom: 20px;
       position: relative;
     }
 
-    .download-section p {
+    .email-section p {
       margin-bottom: 30px;
       max-width: 700px;
       margin-left: auto;
@@ -379,7 +380,21 @@
       position: relative;
     }
 
-    .download-btn {
+    .email-form {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .email-input {
+      width: 100%;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    .email-btn {
       background-color: white;
       color: var(--primary-accent);
       font-size: 1.1rem;
@@ -392,14 +407,16 @@
       z-index: 1;
       transition: var(--transition);
       font-weight: 600;
+      border: none;
+      cursor: pointer;
     }
 
-    .download-btn:hover {
+    .email-btn:hover {
       transform: translateY(-3px) scale(1.05);
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
 
-    .download-info {
+    .email-info {
       margin-top: 20px;
       font-size: 0.9rem;
       opacity: 0.8;
@@ -602,6 +619,28 @@
       animation: pulse 2s infinite;
     }
 
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #f00;
+      opacity: 0;
+      z-index: 9999;
+      animation: confetti-fall 5s linear forwards;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .hero {
@@ -636,7 +675,7 @@
         margin-bottom: 15px;
       }
       
-      .download-section {
+      .email-section {
         padding: 40px 20px;
       }
     }
@@ -689,15 +728,15 @@
 
   <section class="hero">
     <div class="container hero-content">
-      <h1 data-translate="hero_title">Exkluzivní přístup pro backery</h1>
-      <p data-translate="hero_subtitle">Děkujeme za podporu na Indiegogo! Zadejte svůj unikátní přístupový kód pro stažení instalačního balíčku.</p>
+      <h1 data-translate="hero_title">Exkluzivní materiály pro backery</h1>
+      <p data-translate="hero_subtitle">Děkujeme za podporu na Indiegogo! Zadejte svůj unikátní přístupový kód pro získání kompletního balíčku.</p>
     </div>
   </section>
 
   <section id="access" class="access-section">
     <div class="container access-container">
       <h2><i class="fas fa-lock"></i> <span data-translate="access_title">Ověření přístupu</span></h2>
-      <p data-translate="access_description">Pro stažení instalačního balíčku zadejte přístupový kód, který jste obdrželi jako backer na Indiegogo.</p>
+      <p data-translate="access_description">Pro získání kompletního balíčku zadejte přístupový kód, který jste obdrželi jako backer na Indiegogo.</p>
       
       <form id="accessForm">
         <div class="form-group">
@@ -717,75 +756,77 @@
     <div class="container">
       <div class="section-header">
         <h2 data-translate="welcome_title">Vítejte, backer!</h2>
-        <p data-translate="welcome_subtitle">Děkujeme, že jste součástí našeho projektu. Zde najdete instalační balíček pro vaši chytrou šachovnici.</p>
+        <p data-translate="welcome_subtitle">Děkujeme, že jste součástí našeho projektu. Zde můžete získat kompletní balíček pro vaši chytrou šachovnici.</p>
       </div>
       
       <div class="features">
         <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-download"></i></div>
-          <h3 data-translate="feature1_title">Stažení instalačního balíčku</h3>
-          <p data-translate="feature1_text">Kompletní balíček obsahující instalátor a všechny potřebné soubory pro nahrání firmwaru.</p>
+          <div class="feature-icon"><i class="fas fa-microchip"></i></div>
+          <h3 data-translate="feature1_title">Kompletní firmware</h3>
+          <p data-translate="feature1_text">Včetně zdrojových kódů a dokumentace pro Arduino Mega.</p>
         </div>
         
         <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-book"></i></div>
-          <h3 data-translate="feature2_title">Návod k instalaci</h3>
-          <p data-translate="feature2_text">Podrobný manuál s instrukcemi pro nahrání firmwaru na vaši šachovnici.</p>
+          <div class="feature-icon"><i class="fas fa-cube"></i></div>
+          <h3 data-translate="feature2_title">3D modely (STL)</h3>
+          <p data-translate="feature2_text">Všechny díly šachovnice k vytištění na 3D tiskárně.</p>
         </div>
         
         <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-users"></i></div>
-          <h3 data-translate="feature3_title">Backerská podpora</h3>
-          <p data-translate="feature3_text">Přístup k prioritní podpoře pro backery v případě problémů s instalací.</p>
+          <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+          <h3 data-translate="feature3_title">Gerber soubory</h3>
+          <p data-translate="feature3_text">Pro výrobu vlastních PCB desek.</p>
         </div>
       </div>
       
-      <div class="download-section">
-        <h2><i class="fas fa-download"></i> <span data-translate="download_title">Stáhnout instalační balíček</span></h2>
-        <p data-translate="download_description">Stáhněte si kompletní balíček pro nahrání firmwaru na vaši šachovnici.</p>
-        <a id="downloadLink" href="#" class="btn download-btn pulse">
-          <i class="fas fa-download"></i> <span data-translate="download_button">Stáhnout ChessInstaller.zip</span>
-        </a>
-        <div class="download-info">
-          <span data-translate="download_size">Velikost: 15 MB</span> • 
-          <span data-translate="download_count">Počet stažení: </span><span id="downloadCount">0</span>
-        </div>
+      <div class="email-section">
+        <h2><i class="fas fa-envelope"></i> <span data-translate="email_title">Zadejte svůj e-mail</span></h2>
+        <p data-translate="email_description">Pošleme vám odkaz ke stažení kompletního balíčku se všemi materiály.</p>
+        
+        <form id="emailForm" class="email-form">
+          <input type="email" id="userEmail" class="email-input" placeholder="Váš e-mail" required>
+          <button type="submit" class="email-btn pulse">
+            <i class="fas fa-paper-plane"></i> <span data-translate="send_button">Odeslat materiály</span>
+          </button>
+        </form>
+        
+        <div id="emailMessage" class="email-info" style="display: none;"></div>
       </div>
       
       <div class="steps-section">
         <div class="steps-container">
-          <h2 data-translate="installation_title"><i class="fas fa-wrench"></i> Návod k instalaci</h2>
-          <p data-translate="installation_subtitle" style="margin-bottom: 30px;">Postupujte podle těchto kroků pro nahrání firmwaru:</p>
+          <h2 data-translate="installation_title"><i class="fas fa-wrench"></i> Co obdržíte?</h2>
+          <p data-translate="installation_subtitle" style="margin-bottom: 30px;">Kompletní balíček obsahuje vše potřebné:</p>
           
           <div class="step">
             <div class="step-number">1</div>
             <div class="step-content">
-              <h3 data-translate="step1_title">Stažení balíčku</h3>
-              <p data-translate="step1_text">Stáhněte si ChessInstaller.zip a rozbalte do libovolné složky na vašem počítači.</p>
+              <h3 data-translate="step1_title">Firmware</h3>
+              <p data-translate="step1_text">Kompletní zdrojové kódy pro Arduino Mega včetně všech knihoven.</p>
             </div>
           </div>
           
           <div class="step">
             <div class="step-number">2</div>
             <div class="step-content">
-              <h3 data-translate="step2_title">Připojení šachovnice</h3>
-              <p data-translate="step2_text">Připojte Arduino Mega k počítači pomocí USB kabelu.</p>
+              <h3 data-translate="step2_title">3D modely</h3>
+              <p data-translate="step2_text">STL soubory všech dílů šachovnice připravené k tisku.</p>
             </div>
           </div>
           
           <div class="step">
             <div class="step-number">3</div>
             <div class="step-content">
-              <h3 data-translate="step3_title">Spuštění instalátoru</h3>
-              <p data-translate="step3_text">Otevřete složku s rozbaleným balíčkem a spusťte ChessInstaller.exe.</p>
+              <h3 data-translate="step3_title">Gerber soubory</h3>
+              <p data-translate="step3_text">Všechny potřebné soubory pro výrobu PCB desek.</p>
             </div>
           </div>
           
           <div class="step">
             <div class="step-number">4</div>
             <div class="step-content">
-              <h3 data-translate="step4_title">Dokončení instalace</h3>
-              <p data-translate="step4_text">Postupujte podle pokynů v instalátoru. Po dokončení restartujte šachovnici.</p>
+              <h3 data-translate="step4_title">Dokumentace</h3>
+              <p data-translate="step4_text">Podrobný manuál k sestavení a kalibraci šachovnice.</p>
             </div>
           </div>
         </div>
@@ -846,37 +887,36 @@
       'cs': {
         'app_name': 'Chytrá <span>Šachovnice</span>',
         'back_to_home': 'Zpět na hlavní stránku',
-        'hero_title': 'Exkluzivní přístup pro backery',
-        'hero_subtitle': 'Děkujeme za podporu na Indiegogo! Zadejte svůj unikátní přístupový kód pro stažení instalačního balíčku.',
+        'hero_title': 'Exkluzivní materiály pro backery',
+        'hero_subtitle': 'Děkujeme za podporu na Indiegogo! Zadejte svůj unikátní přístupový kód pro získání kompletního balíčku.',
         'access_title': 'Ověření přístupu',
-        'access_description': 'Pro stažení instalačního balíčku zadejte přístupový kód, který jste obdrželi jako backer na Indiegogo.',
+        'access_description': 'Pro získání kompletního balíčku zadejte přístupový kód, který jste obdrželi jako backer na Indiegogo.',
         'access_code_label': 'Přístupový kód',
         'access_code_placeholder': 'Např. 7UGOKYA0GZ',
         'verify_button': 'Ověřit přístup',
         'invalid_code': 'Neplatný přístupový kód. Zkontrolujte, prosím, zda jste zadali kód správně.',
         'welcome_title': 'Vítejte, backer!',
-        'welcome_subtitle': 'Děkujeme, že jste součástí našeho projektu. Zde najdete instalační balíček pro vaši chytrou šachovnici.',
-        'feature1_title': 'Stažení instalačního balíčku',
-        'feature1_text': 'Kompletní balíček obsahující instalátor a všechny potřebné soubory pro nahrání firmwaru.',
-        'feature2_title': 'Návod k instalaci',
-        'feature2_text': 'Podrobný manuál s instrukcemi pro nahrání firmwaru na vaši šachovnici.',
-        'feature3_title': 'Backerská podpora',
-        'feature3_text': 'Přístup k prioritní podpoře pro backery v případě problémů s instalací.',
-        'download_title': 'Stáhnout instalační balíček',
-        'download_description': 'Stáhněte si kompletní balíček pro nahrání firmwaru na vaši šachovnici.',
-        'download_button': 'Stáhnout ChessInstaller.zip',
-        'download_size': 'Velikost: 15 MB',
-        'download_count': 'Počet stažení: ',
-        'installation_title': 'Návod k instalaci',
-        'installation_subtitle': 'Postupujte podle těchto kroků pro nahrání firmwaru:',
-        'step1_title': 'Stažení balíčku',
-        'step1_text': 'Stáhněte si ChessInstaller.zip a rozbalte do libovolné složky na vašem počítači.',
-        'step2_title': 'Připojení šachovnice',
-        'step2_text': 'Připojte Arduino Mega k počítači pomocí USB kabelu.',
-        'step3_title': 'Spuštění instalátoru',
-        'step3_text': 'Otevřete složku s rozbaleným balíčkem a spusťte ChessInstaller.exe.',
-        'step4_title': 'Dokončení instalace',
-        'step4_text': 'Postupujte podle pokynů v instalátoru. Po dokončení restartujte šachovnici.',
+        'welcome_subtitle': 'Děkujeme, že jste součástí našeho projektu. Zde můžete získat kompletní balíček pro vaši chytrou šachovnici.',
+        'feature1_title': 'Kompletní firmware',
+        'feature1_text': 'Včetně zdrojových kódů a dokumentace pro Arduino Mega.',
+        'feature2_title': '3D modely (STL)',
+        'feature2_text': 'Všechny díly šachovnice k vytištění na 3D tiskárně.',
+        'feature3_title': 'Gerber soubory',
+        'feature3_text': 'Pro výrobu vlastních PCB desek.',
+        'email_title': 'Zadejte svůj e-mail',
+        'email_description': 'Pošleme vám odkaz ke stažení kompletního balíčku se všemi materiály.',
+        'send_button': 'Odeslat materiály',
+        'email_success': 'Děkujeme! Materiály byly odeslány na váš e-mail. Zkontrolujte prosím i složku s nevyžádanou poštou.',
+        'installation_title': 'Co obdržíte?',
+        'installation_subtitle': 'Kompletní balíček obsahuje vše potřebné:',
+        'step1_title': 'Firmware',
+        'step1_text': 'Kompletní zdrojové kódy pro Arduino Mega včetně všech knihoven.',
+        'step2_title': '3D modely',
+        'step2_text': 'STL soubory všech dílů šachovnice připravené k tisku.',
+        'step3_title': 'Gerber soubory',
+        'step3_text': 'Všechny potřebné soubory pro výrobu PCB desek.',
+        'step4_title': 'Dokumentace',
+        'step4_text': 'Podrobný manuál k sestavení a kalibraci šachovnice.',
         'help_title': 'Potřebujete pomoc?',
         'help_text': 'Pokud narazíte na problémy, kontaktujte nás na tadeas.chess@gmail.com s uvedením vašeho kódu a popisu problému.',
         'footer_about': 'O projektu',
@@ -894,37 +934,36 @@
       'en': {
         'app_name': 'Smart <span>Chessboard</span>',
         'back_to_home': 'Back to home',
-        'hero_title': 'Exclusive access for backers',
-        'hero_subtitle': 'Thank you for supporting us on Indiegogo! Enter your unique access code to download the installation package.',
+        'hero_title': 'Exclusive materials for backers',
+        'hero_subtitle': 'Thank you for supporting us on Indiegogo! Enter your unique access code to get the complete package.',
         'access_title': 'Access verification',
-        'access_description': 'To download the installation package, enter the access code you received as a backer on Indiegogo.',
+        'access_description': 'To get the complete package, enter the access code you received as a backer on Indiegogo.',
         'access_code_label': 'Access code',
         'access_code_placeholder': 'E.g. 7UGOKYA0GZ',
         'verify_button': 'Verify access',
         'invalid_code': 'Invalid access code. Please check if you entered the code correctly.',
         'welcome_title': 'Welcome, backer!',
-        'welcome_subtitle': 'Thank you for being part of our project. Here you will find the installation package for your smart chessboard.',
-        'feature1_title': 'Download installation package',
-        'feature1_text': 'Complete package containing the installer and all necessary files for firmware upload.',
-        'feature2_title': 'Installation guide',
-        'feature2_text': 'Detailed manual with instructions for uploading firmware to your chessboard.',
-        'feature3_title': 'Backer support',
-        'feature3_text': 'Access to priority support for backers in case of installation problems.',
-        'download_title': 'Download installation package',
-        'download_description': 'Download the complete package to upload firmware to your chessboard.',
-        'download_button': 'Download ChessInstaller.zip',
-        'download_size': 'Size: 15 MB',
-        'download_count': 'Downloads: ',
-        'installation_title': 'Installation guide',
-        'installation_subtitle': 'Follow these steps to upload the firmware:',
-        'step1_title': 'Download the package',
-        'step1_text': 'Download ChessInstaller.zip and extract to any folder on your computer.',
-        'step2_title': 'Connect the chessboard',
-        'step2_text': 'Connect Arduino Mega to your computer using USB cable.',
-        'step3_title': 'Run the installer',
-        'step3_text': 'Open the folder with extracted package and run ChessInstaller.exe.',
-        'step4_title': 'Complete installation',
-        'step4_text': 'Follow the instructions in the installer. Restart the chessboard after completion.',
+        'welcome_subtitle': 'Thank you for being part of our project. Here you can get the complete package for your smart chessboard.',
+        'feature1_title': 'Complete firmware',
+        'feature1_text': 'Including source codes and documentation for Arduino Mega.',
+        'feature2_title': '3D models (STL)',
+        'feature2_text': 'All chessboard parts ready for 3D printing.',
+        'feature3_title': 'Gerber files',
+        'feature3_text': 'All necessary files for PCB manufacturing.',
+        'email_title': 'Enter your email',
+        'email_description': 'We will send you a download link for the complete package with all materials.',
+        'send_button': 'Send materials',
+        'email_success': 'Thank you! Materials have been sent to your email. Please check your spam folder too.',
+        'installation_title': 'What will you receive?',
+        'installation_subtitle': 'Complete package includes everything you need:',
+        'step1_title': 'Firmware',
+        'step1_text': 'Complete source codes for Arduino Mega including all libraries.',
+        'step2_title': '3D models',
+        'step2_text': 'STL files of all chessboard parts ready for printing.',
+        'step3_title': 'Gerber files',
+        'step3_text': 'All necessary files for PCB production.',
+        'step4_title': 'Documentation',
+        'step4_text': 'Detailed manual for assembly and calibration of the chessboard.',
         'help_title': 'Need help?',
         'help_text': 'If you encounter any problems, contact us at tadeas.chess@gmail.com with your code and problem description.',
         'footer_about': 'About',
@@ -942,37 +981,36 @@
       'es': {
         'app_name': 'Tablero de <span>Ajedrez Inteligente</span>',
         'back_to_home': 'Volver al inicio',
-        'hero_title': 'Acceso exclusivo para patrocinadores',
-        'hero_subtitle': '¡Gracias por apoyarnos en Indiegogo! Ingrese su código de acceso único para descargar el paquete de instalación.',
+        'hero_title': 'Materiales exclusivos para patrocinadores',
+        'hero_subtitle': '¡Gracias por apoyarnos en Indiegogo! Ingrese su código de acceso único para obtener el paquete completo.',
         'access_title': 'Verificación de acceso',
-        'access_description': 'Para descargar el paquete de instalación, ingrese el código de acceso que recibió como patrocinador en Indiegogo.',
+        'access_description': 'Para obtener el paquete completo, ingrese el código de acceso que recibió como patrocinador en Indiegogo.',
         'access_code_label': 'Código de acceso',
         'access_code_placeholder': 'Ej. 7UGOKYA0GZ',
         'verify_button': 'Verificar acceso',
         'invalid_code': 'Código de acceso no válido. Por favor, verifique si ingresó el código correctamente.',
         'welcome_title': '¡Bienvenido, patrocinador!',
-        'welcome_subtitle': 'Gracias por ser parte de nuestro proyecto. Aquí encontrará el paquete de instalación para su tablero de ajedrez inteligente.',
-        'feature1_title': 'Descargar paquete de instalación',
-        'feature1_text': 'Paquete completo que contiene el instalador y todos los archivos necesarios para la carga del firmware.',
-        'feature2_title': 'Guía de instalación',
-        'feature2_text': 'Manual detallado con instrucciones para cargar el firmware en su tablero de ajedrez.',
-        'feature3_title': 'Soporte para patrocinadores',
-        'feature3_text': 'Acceso a soporte prioritario para patrocinadores en caso de problemas de instalación.',
-        'download_title': 'Descargar paquete de instalación',
-        'download_description': 'Descargue el paquete completo para cargar el firmware en su tablero de ajedrez.',
-        'download_button': 'Descargar ChessInstaller.zip',
-        'download_size': 'Tamaño: 15 MB',
-        'download_count': 'Descargas: ',
-        'installation_title': 'Guía de instalación',
-        'installation_subtitle': 'Siga estos pasos para cargar el firmware:',
-        'step1_title': 'Descargar el paquete',
-        'step1_text': 'Descargue ChessInstaller.zip y extraiga en cualquier carpeta de su computadora.',
-        'step2_title': 'Conectar el tablero',
-        'step2_text': 'Conecte Arduino Mega a su computadora usando cable USB.',
-        'step3_title': 'Ejecutar el instalador',
-        'step3_text': 'Abra la carpeta con el paquete extraído y ejecute ChessInstaller.exe.',
-        'step4_title': 'Completar instalación',
-        'step4_text': 'Siga las instrucciones del instalador. Reinicie el tablero después de completar.',
+        'welcome_subtitle': 'Gracias por ser parte de nuestro proyecto. Aquí puede obtener el paquete completo para su tablero de ajedrez inteligente.',
+        'feature1_title': 'Firmware completo',
+        'feature1_text': 'Incluyendo códigos fuente y documentación para Arduino Mega.',
+        'feature2_title': 'Modelos 3D (STL)',
+        'feature2_text': 'Todas las partes del tablero listas para imprimir en 3D.',
+        'feature3_title': 'Archivos Gerber',
+        'feature3_text': 'Todos los archivos necesarios para la fabricación de PCB.',
+        'email_title': 'Ingrese su correo electrónico',
+        'email_description': 'Le enviaremos un enlace de descarga para el paquete completo con todos los materiales.',
+        'send_button': 'Enviar materiales',
+        'email_success': '¡Gracias! Los materiales han sido enviados a su correo electrónico. Por favor revise también su carpeta de spam.',
+        'installation_title': '¿Qué recibirá?',
+        'installation_subtitle': 'El paquete completo incluye todo lo que necesita:',
+        'step1_title': 'Firmware',
+        'step1_text': 'Códigos fuente completos para Arduino Mega incluyendo todas las bibliotecas.',
+        'step2_title': 'Modelos 3D',
+        'step2_text': 'Archivos STL de todas las partes del tablero listas para imprimir.',
+        'step3_title': 'Archivos Gerber',
+        'step3_text': 'Todos los archivos necesarios para la producción de PCB.',
+        'step4_title': 'Documentación',
+        'step4_text': 'Manual detallado para el montaje y calibración del tablero.',
         'help_title': '¿Necesita ayuda?',
         'help_text': 'Si encuentra algún problema, contáctenos en tadeas.chess@gmail.com con su código y descripción del problema.',
         'footer_about': 'Acerca de',
@@ -989,32 +1027,34 @@
       }
     };
 
-    // Načtení platných kódů ze souboru
-    let validCodes = [];
-    
-    async function loadValidCodes() {
-      try {
-        const response = await fetch('valid_codes.txt');
-        if (!response.ok) throw new Error('File not found');
-        const text = await response.text();
-        validCodes = text.split('\n')
-          .map(line => line.trim())
-          .filter(line => line.length > 0);
-        console.log('Loaded codes:', validCodes.length);
-      } catch (error) {
-        console.error('Error loading codes:', error);
-        // Záložní kódy pro případ chyby
-        validCodes = ["7UGOKYA0GZ", "9R5B4SR405", "S5VX71J4LZ"];
+    // Načtení platných kódů
+    let validCodes = ["7UGOKYA0GZ", "9R5B4SR405", "S5VX71J4LZ"]; // Nahraď skutečnými kódy
+
+    // Vytvoření konfet
+    function createConfetti() {
+      const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.width = Math.random() * 10 + 5 + 'px';
+        confetti.style.height = Math.random() * 10 + 5 + 'px';
+        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+        document.body.appendChild(confetti);
+        
+        // Odstranění po animaci
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
       }
     }
 
     // Ověření kódu
-    document.getElementById("accessForm").addEventListener("submit", async function(e) {
+    document.getElementById("accessForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const code = document.getElementById("accessCode").value.trim().toUpperCase();
       const messageElement = document.getElementById("accessMessage");
-      
-      await loadValidCodes(); // Načteme aktuální kódy
       
       if (validCodes.includes(code)) {
         // Platný kód
@@ -1023,13 +1063,6 @@
         // Zobrazíme obsah pro backery
         document.getElementById("content").style.display = "block";
         document.getElementById("access").style.display = "none";
-        
-        // Nastavíme odkaz ke stažení
-        document.getElementById("downloadLink").href = "downloads/ChessInstaller.zip";
-        
-        // Aktualizujeme počítadlo stažení
-        let count = localStorage.getItem('downloadCount') || 0;
-        document.getElementById("downloadCount").textContent = count;
         
         // Scroll na download sekci
         document.getElementById("content").scrollIntoView({ behavior: 'smooth' });
@@ -1055,6 +1088,47 @@
           messageElement.style.animation = 'shake 0.5s';
         }, 10);
       }
+    });
+
+    // Odeslání e-mailu
+    document.getElementById("emailForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("userEmail").value;
+      const messageElement = document.getElementById("emailMessage");
+      const lang = document.querySelector('.language-btn.active').dataset.lang;
+      const successMsg = translations[lang]?.email_success || 'Thank you! Materials have been sent to your email.';
+      
+      // Validace e-mailu
+      if (!email.includes('@') || !email.includes('.')) {
+        messageElement.innerHTML = `
+          <div style="color: #dc3545; background: #f8d7da; padding: 15px; border-radius: 8px;">
+            <i class="fas fa-exclamation-circle"></i> 
+            Prosím, zadejte platnou e-mailovou adresu
+          </div>
+        `;
+        messageElement.style.display = "block";
+        return;
+      }
+      
+      // Simulace úspěšného odeslání
+      messageElement.innerHTML = `
+        <div style="color: #28a745; background: #d4edda; padding: 15px; border-radius: 8px;">
+          <i class="fas fa-check-circle"></i> 
+          ${successMsg}
+        </div>
+      `;
+      messageElement.style.display = "block";
+      
+      // Konfety pro oslavu!
+      createConfetti();
+      
+      // Zde by v praxi byl AJAX request na tvůj backend
+      console.log(`Email request received - Email: ${email}, Code: ${localStorage.getItem('validatedCode')}`);
+      
+      // Reset formuláře
+      setTimeout(() => {
+        document.getElementById("emailForm").reset();
+      }, 5000);
     });
 
     // Přepínání jazyků
@@ -1109,30 +1183,7 @@
     if (localStorage.getItem('validatedCode')) {
       document.getElementById("content").style.display = "block";
       document.getElementById("access").style.display = "none";
-      document.getElementById("downloadLink").href = "downloads/ChessInstaller.zip";
-      let count = localStorage.getItem('downloadCount') || 0;
-      document.getElementById("downloadCount").textContent = count;
     }
-    
-    // Počítadlo stažení
-    document.getElementById('downloadLink').addEventListener('click', function(e) {
-      if (this.getAttribute('href') === '#') {
-        e.preventDefault();
-        return;
-      }
-      
-      let count = parseInt(localStorage.getItem('downloadCount') || 0);
-      count++;
-      localStorage.setItem('downloadCount', count);
-      document.getElementById("downloadCount").textContent = count;
-      
-      // Animace
-      this.classList.remove('pulse');
-      setTimeout(() => this.classList.add('pulse'), 10);
-    });
-
-    // Inicializace placeholderu
-    translatePage();
   </script>
 </body>
 </html>
