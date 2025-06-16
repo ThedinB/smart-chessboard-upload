@@ -1,476 +1,505 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YourChess - Zažijte novou hru</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
-    
+    <title>YourChess | Glow in the Dark Chess Revolution</title>
     <style>
+        /* CRAZY NEON STYLES */
         :root {
-            --bg-dark: #0D0D10;
-            --bg-surface: #1A1A1E;
-            --text-primary: #F0F0F0;
-            --text-secondary: #A9A9B2;
-            --accent-blue: #4A90E2;
-            --blue-glow: rgba(74, 144, 226, 0.4);
+            --neon-blue: #0ff0fc;
+            --neon-pink: #ff2ced;
+            --neon-purple: #9600ff;
+            --dark-bg: #0a0a1a;
+            --darker-bg: #050510;
+            --text-glow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
         }
-
-        /* --- GLOBÁLNÍ RESET A ZÁKLADY --- */
-        * {
+        
+        @font-face {
+            font-family: 'Neon';
+            src: url('https://fonts.cdnfonts.com/css/neon-absolute-sans');
+        }
+        
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            font-family: 'Manrope', sans-serif;
+            font-family: 'Neon', Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--neon-purple) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, var(--neon-blue) 0%, transparent 25%);
         }
         
-        h1, h2 {
-            font-weight: 800;
-        }
-
-        h2 .highlight {
-            color: var(--accent-blue);
+        /* CRAZY GLOW EFFECTS */
+        .glow {
+            text-shadow: var(--text-glow);
         }
         
-        p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 1rem;
-            max-width: 65ch;
+        .neon-border {
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 15px var(--neon-blue);
         }
         
-        /* --- NAVIGACE (MOBILE FIRST) --- */
-        .navbar {
+        /* WILD CHESS BOARD HEADER */
+        .chess-header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chess-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .chess-square {
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .chess-square:nth-child(16n+1),
+        .chess-square:nth-child(16n+3),
+        .chess-square:nth-child(16n+5),
+        .chess-square:nth-child(16n+7),
+        .chess-square:nth-child(16n+10),
+        .chess-square:nth-child(16n+12),
+        .chess-square:nth-child(16n+14),
+        .chess-square:nth-child(16n+16) {
+            background-color: rgba(0, 255, 252, 0.05);
+        }
+        
+        /* INSANE TITLE EFFECT */
+        .main-title {
+            font-size: 8vw;
+            margin: 0;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-pink);
+            animation: flicker 1.5s infinite alternate;
+        }
+        
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 
+                    0 0 10px var(--neon-blue),
+                    0 0 20px var(--neon-blue),
+                    0 0 30px var(--neon-blue),
+                    0 0 40px var(--neon-pink),
+                    0 0 70px var(--neon-pink),
+                    0 0 80px var(--neon-pink);
+            }
+            20%, 24%, 55% {        
+                text-shadow: none;
+            }
+        }
+        
+        /* NUTTY NAVIGATION */
+        .neon-nav {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            z-index: 1000;
-            background: rgba(13, 13, 16, 0.7);
+            padding: 20px;
+            z-index: 100;
+            background-color: rgba(10, 10, 26, 0.7);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            text-decoration: none;
-            color: var(--text-primary);
-        }
-        
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 25px;
-            height: 25px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-        
-        .hamburger .line {
-            width: 100%;
-            height: 2px;
-            background-color: var(--text-primary);
-            transition: all 0.3s ease;
-        }
-
-        .nav-links {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 70%;
-            max-width: 300px;
-            background-color: var(--bg-surface);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-links.nav-active {
-            transform: translateX(0);
-        }
-        
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
+        .nav-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-family: 'Neon', sans-serif;
             font-size: 1.2rem;
-            font-weight: 700;
-            transition: color 0.3s ease;
+            margin: 0 15px;
+            cursor: pointer;
+            position: relative;
+            padding: 5px 10px;
         }
         
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-blue);
-        }
-
-        /* Aktivní stav Hamburgeru (X) */
-        .hamburger.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
-        .hamburger.toggle .line2 { opacity: 0; }
-        .hamburger.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
-        
-        /* --- HERO SEKCE --- */
-        .hero {
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 8rem 5% 4rem;
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-blue);
+            transition: width 0.3s;
         }
         
-        .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero p {
-            font-size: clamp(1rem, 4vw, 1.2rem);
-            margin-bottom: 2.5rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            text-decoration: none;
-            font-weight: 700;
-            color: var(--text-primary);
-            background-color: var(--accent-blue);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px var(--blue-glow);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 30px 5px var(--blue-glow);
-        }
-        
-        /* --- KONTOVÝ OBSAH & SEKCE --- */
-        .content-section {
-            padding: 4rem 5%;
-        }
-
-        .content-section:nth-child(odd) {
-            background-color: var(--bg-surface);
-        }
-
-        .section-header {
-            margin-bottom: 3rem;
-        }
-        
-        .section-header h2 {
-            font-size: clamp(2rem, 7vw, 2.8rem);
-            line-height: 1.3;
-        }
-        
-        /* LAYOUT S OBRÁZKEM */
-        .content-row {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .text-container {
-            flex: 1;
-        }
-        
-        .text-container h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        /* RÁMEČEK PRO FOTKY - TADY JE TA MAGIE */
-        .image-container {
-            flex: 1;
-            padding: 1rem;
-            border: 1px solid rgba(74, 144, 226, 0.2);
-            border-radius: 12px;
-            background-color: rgba(13, 13, 16, 0.5);
-            box-shadow: 0 0 25px rgba(74, 144, 226, 0.1);
-        }
-
-        .image-container img {
+        .nav-btn:hover::after {
             width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 6px;
         }
         
-        /* --- GALERIE --- */
-        .gallery-grid {
+        /* PSYCHEDELIC CONTENT SECTIONS */
+        .content-section {
+            min-height: 100vh;
+            padding: 100px 20px;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            color: var(--neon-blue);
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        /* WILD PHOTO GALLERY */
+        .photo-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
         }
-
-        /* --- SEKCE STAŽENÍ --- */
-        .download-box {
+        
+        .photo-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 300px;
+            transition: transform 0.5s;
+        }
+        
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(80%) contrast(120%);
+            transition: all 0.5s;
+        }
+        
+        .photo-card:hover img {
+            filter: grayscale(0%) contrast(100%);
+            transform: scale(1.1);
+        }
+        
+        .photo-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,255,252,0.3), rgba(255,44,237,0.3));
+            mix-blend-mode: overlay;
+        }
+        
+        /* CRAZY DOWNLOAD BUTTON */
+        .download-btn {
+            display: block;
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
             text-align: center;
-            background-color: var(--bg-dark);
-            padding: 3rem 1.5rem;
-            border-radius: 12px;
-            border-top: 2px solid var(--accent-blue);
-            box-shadow: inset 0 10px 40px -10px var(--blue-glow);
+            background: var(--darker-bg);
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s;
         }
         
-        .download-box h2 {
-            margin-bottom: 1rem;
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            transition: 0.5s;
+            z-index: -1;
         }
         
-        .download-box p {
-            margin: 0 auto 2.5rem auto;
+        .download-btn:hover::before {
+            left: 100%;
         }
         
-        /* --- JAZYKOVÝ PŘEPÍNAČ & FOOTER --- */
-        .footer-utils {
-            text-align: center;
-            padding: 2rem 5% 1rem;
+        .download-btn:hover {
+            color: var(--dark-bg);
+            background: var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue);
         }
         
-        .lang-switcher a {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin: 0 0.5rem;
-            text-decoration: none;
-        }
-        
-        .lang-switcher a.active {
-            color: var(--accent-blue);
-            font-weight: 700;
-        }
-
-        footer {
-            text-align: center;
-            padding: 1rem 5% 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* --- DESKTOP VYLEPŠENÍ (MEDIA QUERIES) --- */
-        @media (min-width: 800px) {
-            .hamburger { display: none; }
-            .nav-links {
-                position: static;
-                transform: translateX(0);
-                flex-direction: row;
-                height: auto;
-                width: auto;
+        /* INSANE RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 15vw;
+            }
+            
+            .neon-nav {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px;
+            }
+            
+            .nav-btn {
+                margin: 5px 0;
+            }
+            
+            .content-section {
+                padding: 50px 10px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-btn {
+                width: 80%;
+            }
+            
+            /* Mobile menu toggle */
+            .mobile-menu-btn {
+                display: block;
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 101;
                 background: none;
                 border: none;
-            }
-            .nav-links a { font-size: 1rem; }
-            
-            .hero, .content-section, .footer-utils, footer {
-                padding-left: 10%;
-                padding-right: 10%;
-            }
-
-            .content-row {
-                flex-direction: row;
-                align-items: center;
-                gap: 4rem;
+                color: var(--neon-blue);
+                font-size: 2rem;
+                cursor: pointer;
             }
             
-            /* Otočení layoutu u lichých řádků */
-            .content-section:nth-of-type(odd) .content-row {
-                flex-direction: row-reverse;
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
             }
-        }
-        
-        /* ANIMACE */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+            
+            .nav-links.active {
+                display: flex;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- NUTTY NAVIGATION -->
+    <nav class="neon-nav">
+        <div class="logo glow">♔ YourChess</div>
+        <button class="mobile-menu-btn">☰</button>
+        <div class="nav-links" id="navLinks">
+            <button class="nav-btn glow" data-section="home">Home</button>
+            <button class="nav-btn glow" data-section="about">About</button>
+            <button class="nav-btn glow" data-section="features">Features</button>
+            <button class="nav-btn glow" data-section="campaign">Campaign</button>
+            <button class="nav-btn glow" data-section="download">Download</button>
+            <button class="lang-btn glow" data-lang="en">EN</button>
+            <button class="lang-btn glow" data-lang="cs">ČE</button>
+        </div>
+    </nav>
 
-    <header class="navbar">
-        <a href="#" class="logo">YourChess</a>
-        <nav class="nav-links" id="nav-menu">
-            <a href="#about" data-lang-key="nav_about">O Projektu</a>
-            <a href="#gallery" data-lang-key="nav_gallery">Galerie</a>
-            <a href="#download" data-lang-key="nav_download">Stažení</a>
-        </nav>
-        <div class="hamburger" id="nav-toggle">
-            <div class="line line1"></div>
-            <div class="line line2"></div>
-            <div class="line line3"></div>
+    <!-- INSANE CHESS HEADER -->
+    <header class="chess-header" id="home">
+        <div class="chess-grid">
+            <div class="chess-square"></div><div class="chess-square"></div><div class="chess-square"></div><div class="chess-square"></div>
+            <div class="chess-square"></div><div class="chess-square"></div><div class="chess-square"></div><div class="chess-square"></div>
+            <!-- Repeat for all 64 squares -->
+        </div>
+        
+        <h1 class="main-title">YourChess</h1>
+        <p class="glow" style="font-size: 1.5rem; max-width: 600px; text-align: center;">
+            Where chess meets neon madness. The future of interactive chess is here.
+        </p>
+        
+        <div style="margin-top: 50px;">
+            <button class="nav-btn glow neon-border" style="padding: 15px 30px;">Begin the Madness</button>
         </div>
     </header>
 
-    <main>
-        <!-- HERO SEKCE -->
-        <section class="hero">
-            <div class="reveal">
-                <h1 data-lang-key="hero_h1">Vstupte do nové hry.</h1>
-                <p data-lang-key="hero_p">Prožijte klasické šachy v moderním, čistém a podmanivém prostředí, navrženém pro dokonalé soustředění.</p>
-                <!-- Zde vložte odkaz na vaši Indiegogo kampaň! -->
-                <a href="https://VASE-INDIEGOGO-URL" target="_blank" class="cta-button" data-lang-key="hero_btn">Podpořit na Indiegogo</a>
-            </div>
-        </section>
-
-        <!-- O PROJEKTU -->
-        <section id="about" class="content-section">
-            <div class="content-row reveal">
-                <div class="image-container">
-                    <!-- ZDE VLOŽTE OBRÁZEK: např. screenshot menu hry -->
-                    <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=2071&auto=format&fit=crop" alt="Ukázka šachové partie">
-                </div>
-                <div class="text-container">
-                    <h3 data-lang-key="about_h3">Čistota. Soustředění. Strategie.</h3>
-                    <p data-lang-key="about_p">Unaveni z přeplácaných aplikací jsme se rozhodli vytvořit prostor, kde hlavní roli hraje hra sama. YourChess je naše vize šachů pro 21. století: minimalistické, intuitivní a vizuálně strhující. Vše, co vidíte, slouží jedinému cíli - vašemu dokonalému zážitku ze hry.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- GALERIE -->
-        <section id="gallery" class="content-section">
-             <div class="section-header reveal">
-                <h2 data-lang-key="gallery_h2">Více než jen hra. <span class="highlight">Zážitek.</span></h2>
-             </div>
-             <div class="gallery-grid">
-                <!-- VLOŽTE ZDE SVÉ FOTKY, RÁMEČEK SE PŘIDÁ SÁM! -->
-                <div class="image-container reveal">
-                     <img src="https://images.unsplash.com/photo-1617094247718-2c26f634b0bf?q=80&w=2070&auto=format&fit=crop" alt="Galerie 1 - Detail figurky">
-                </div>
-                <div class="image-container reveal">
-                    <img src="https://images.unsplash.com/photo-1582285188147-3a8549635f13?q=80&w=1887&auto=format&fit=crop" alt="Galerie 2 - Matoucí pozice">
-                </div>
-             </div>
-        </section>
+    <!-- PSYCHEDELIC ABOUT SECTION -->
+    <section class="content-section" id="about" style="background-color: var(--darker-bg);">
+        <h2 class="section-title glow">About This Madness</h2>
         
-        <!-- STAŽENÍ -->
-        <section id="download" class="content-section">
-            <div class="download-box reveal">
-                <h2 data-lang-key="download_h2">Udělejte první tah.</h2>
-                <p data-lang-key="download_p">Stáhněte si naši bezplatnou Alpha verzi pro Windows. Váš feedback je klíčový pro dokončení hry, kterou si všichni zamilujeme.</p>
-                <a href="downloads/YourChessInstaller.exe" download class="cta-button" data-lang-key="download_btn">Stáhnout YourChess Alpha</a>
+        <div style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
+            <p style="font-size: 1.2rem; line-height: 1.8; text-align: center;">
+                YourChess isn't your grandpa's chess game. We've taken the ancient game of kings and injected it with neon, 
+                cyberpunk energy and a dose of pure imagination. This is chess reimagined for the digital age.
+            </p>
+            
+            <div class="photo-gallery">
+                <div class="photo-card">
+                    <!-- Replace with your actual photo -->
+                    <img src="https://images.unsplash.com/photo-1543092587-d8b8feaf4f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Chess match">
+                </div>
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1524179091875-bf99a9a6af57?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Chess pieces">
+                </div>
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Chess tournament">
+                </div>
             </div>
-        </section>
-    </main>
-
-    <div class="footer-utils">
-        <div class="lang-switcher">
-            <a href="#" id="lang-cz">CZ</a> | <a href="#" id="lang-en">EN</a>
         </div>
-    </div>
-    
-    <footer>
-        <p>© <span id="current-year"></span> YourChess. Projekt s vášní pro šachy.</p>
-    </footer>
+    </section>
+
+    <!-- WILD FEATURES SECTION -->
+    <section class="content-section" id="features">
+        <h2 class="section-title glow">Features That Blow Minds</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 0 20px;">
+            <div class="neon-border" style="padding: 30px; border-radius: 10px;">
+                <h3 style="color: var(--neon-pink); font-size: 1.8rem;">♜ Neon Vision</h3>
+                <p>Our patented blue-glowing chessboard adapts to your playing style, literally lighting up potential moves.</p>
+            </div>
+            
+            <div class="neon-border" style="padding: 30px; border-radius: 10px;">
+                <h3 style="color: var(--neon-pink); font-size: 1.8rem;">♞ Sound Explosion</h3>
+                <p>Every piece has its own synthwave sound effect. Capture a queen? Enjoy the bass drop.</p>
+            </div>
+            
+            <div class="neon-border" style="padding: 30px; border-radius: 10px;">
+                <h3 style="color: var(--neon-pink); font-size: 1.8rem;">♝ Time Warp</h3>
+                <p>Slow motion replay of critical moves with particle effects. Because why not?</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CRAZY CAMPAIGN SECTION -->
+    <section class="content-section" id="campaign" style="background-color: var(--darker-bg);">
+        <h2 class="section-title glow">Join the Revolution</h2>
+        
+        <div style="max-width: 800px; margin: 0 auto; padding: 0 20px; text-align: center;">
+            <p style="font-size: 1.2rem; margin-bottom: 50px;">
+                Our Indiegogo campaign is more than funding - it's building a movement of chess radicals who believe the game 
+                should be as visually stunning as it is mentally challenging.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div class="neon-border" style="padding: 20px; border-radius: 10px;">
+                    <h3 style="color: var(--neon-blue);">♙ Pawn Tier</h3>
+                    <p>Early access + digital assets</p>
+                    <button class="nav-btn" style="margin-top: 15px; padding: 10px 20px;">$25</button>
+                </div>
+                
+                <div class="neon-border" style="padding: 20px; border-radius: 10px; border-color: var(--neon-pink);">
+                    <h3 style="color: var(--neon-pink);">♘ Knight Tier</h3>
+                    <p>All previous + exclusive content</p>
+                    <button class="nav-btn" style="margin-top: 15px; padding: 10px 20px; border-color: var(--neon-pink);">$50</button>
+                </div>
+                
+                <div class="neon-border" style="padding: 20px; border-radius: 10px; border-color: var(--neon-purple);">
+                    <h3 style="color: var(--neon-purple);">♕ Queen Tier</h3>
+                    <p>Everything + direct input on features</p>
+                    <button class="nav-btn" style="margin-top: 15px; padding: 10px 20px; border-color: var(--neon-purple);">$100+</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MIND-BLOWING DOWNLOAD SECTION -->
+    <section class="content-section" id="download">
+        <h2 class="section-title glow">Download the Madness</h2>
+        
+        <div style="text-align: center;">
+            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 30px;">
+                Ready to experience chess like never before? Download now and join the neon revolution.
+            </p>
+            
+            <a href="downloads/YourChessInstaller.exe" class="download-btn glow" download>
+                <i class="fas fa-download"></i> DOWNLOAD NOW
+            </a>
+            
+            <div style="margin-top: 30px; color: var(--neon-blue);">
+                <p>System Requirements:</p>
+                <p>Windows 10/11 | 2GB RAM | 500MB space</p>
+            </div>
+        </div>
+    </section>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-        const translations = {
-            en: {
-                nav_about: 'About', nav_gallery: 'Gallery', nav_download: 'Download',
-                hero_h1: 'Enter a new game.',
-                hero_p: 'Experience classic chess in a modern, clean, and captivating environment designed for perfect focus.',
-                hero_btn: 'Back us on Indiegogo',
-                about_h3: 'Clarity. Focus. Strategy.',
-                about_p: 'Tired of cluttered apps, we decided to create a space where the game itself plays the main role. YourChess is our vision of chess for the 21st century: minimalist, intuitive, and visually stunning. Everything you see serves a single purpose - your perfect gaming experience.',
-                gallery_h2: 'More than just a game. <span class="highlight">An experience.</span>',
-                download_h2: 'Make the first move.',
-                download_p: 'Download our free Alpha version for Windows. Your feedback is crucial to finishing the game we will all love.',
-                download_btn: 'Download YourChess Alpha'
-            },
-            cs: {
-                nav_about: 'O Projektu', nav_gallery: 'Galerie', nav_download: 'Stažení',
-                hero_h1: 'Vstupte do nové hry.',
-                hero_p: 'Prožijte klasické šachy v moderním, čistém a podmanivém prostředí, navrženém pro dokonalé soustředění.',
-                hero_btn: 'Podpořit na Indiegogo',
-                about_h3: 'Čistota. Soustředění. Strategie.',
-                about_p: 'Unaveni z přeplácaných aplikací jsme se rozhodli vytvořit prostor, kde hlavní roli hraje hra sama. YourChess je naše vize šachů pro 21. století: minimalistické, intuitivní a vizuálně strhující. Vše, co vidíte, slouží jedinému cíli - vašemu dokonalému zážitku ze hry.',
-                gallery_h2: 'Více než jen hra. <span class="highlight">Zážitek.</span>',
-                download_h2: 'Udělejte první tah.',
-                download_p: 'Stáhněte si naši bezplatnou Alpha verzi pro Windows. Váš feedback je klíčový pro dokončení hry, kterou si všichni zamilujeme.',
-                download_btn: 'Stáhnout YourChess Alpha'
-            }
-        };
-
-        // Hamburger menu
-        const navToggle = document.getElementById('nav-toggle');
-        const navMenu = document.getElementById('nav-menu');
-        if (navToggle && navMenu) {
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('nav-active');
-                navToggle.classList.toggle('toggle');
+        // INSANE INTERACTIVITY
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.getElementById('navLinks');
+            
+            mobileBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
             });
-
-            // Zavřít menu po kliknutí na odkaz
-            navMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navMenu.classList.remove('nav-active');
-                    navToggle.classList.remove('toggle');
+            
+            // Smooth scrolling
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-section');
+                    if (sectionId) {
+                        document.getElementById(sectionId).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        navLinks.classList.remove('active');
+                    }
                 });
             });
-        }
-        
-        // Přepínač jazyků
-        const langCz = document.getElementById('lang-cz');
-        const langEn = document.getElementById('lang-en');
-        const translatableElements = document.querySelectorAll('[data-lang-key]');
-
-        const setLanguage = (lang) => {
-            translatableElements.forEach(el => {
-                const key = el.getAttribute('data-lang-key');
-                if (translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
-                }
+            
+            // Language switcher
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    // Here you would implement language change logic
+                });
             });
-            localStorage.setItem('yourchess_lang', lang);
-            document.documentElement.lang = lang;
-            langCz.classList.toggle('active', lang === 'cs');
-            langEn.classList.toggle('active', lang === 'en');
-        };
-
-        langCz.addEventListener('click', (e) => { e.preventDefault(); setLanguage('cs'); });
-        langEn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
-        setLanguage(localStorage.getItem('yourchess_lang') || 'cs');
-        
-        // Animace při scrollu
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
+            
+            // Crazy hover effects for chess squares
+            const chessSquares = document.querySelectorAll('.chess-square');
+            chessSquares.forEach(square => {
+                square.addEventListener('mouseover', function() {
+                    this.style.backgroundColor = `rgba(0, 255, 252, ${Math.random() * 0.2})`;
+                    this.style.boxShadow = `0 0 ${Math.random() * 20}px rgba(0, 255, 252, 0.5)`;
+                });
+                
+                square.addEventListener('mouseout', function() {
+                    this.style.backgroundColor = '';
+                    this.style.boxShadow = '';
+                });
             });
-        }, { threshold: 0.15 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        
-        // Rok ve footeru
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    });
+            
+            // Even crazier - make the chess pieces "dance" on music
+            if (typeof window.AudioContext !== 'undefined') {
+                const audioContext = new AudioContext();
+                const analyser = audioContext.createAnalyser();
+                
+                // This would connect to audio when user interacts
+                document.addEventListener('click', function initAudio() {
+                    if (audioContext.state === 'suspended') {
+                        audioContext.resume();
+                    }
+                    document.removeEventListener('click', initAudio);
+                });
+                
+                // Visualizer would go here
+            }
+        });
     </script>
 </body>
 </html>
