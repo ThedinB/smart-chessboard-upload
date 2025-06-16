@@ -1,505 +1,378 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YourChess | Glow in the Dark Chess Revolution</title>
+    <title>YourChess - Tradicí vytesáno. Technologií oživeno.</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
     <style>
-        /* CRAZY NEON STYLES */
         :root {
-            --neon-blue: #0ff0fc;
-            --neon-pink: #ff2ced;
-            --neon-purple: #9600ff;
-            --dark-bg: #0a0a1a;
-            --darker-bg: #050510;
-            --text-glow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            --bg-dark: #0A0A0A;
+            --text-light: #EAEAEA;
+            --text-muted: #888;
+            --accent-blue: #3A8DED;
+            --accent-ember: #E57C3E;
+            --glow-blue: rgba(58, 141, 237, 0.5);
+            --glow-ember: rgba(229, 124, 62, 0.7);
         }
-        
-        @font-face {
-            font-family: 'Neon';
-            src: url('https://fonts.cdnfonts.com/css/neon-absolute-sans');
-        }
+
+        /* --- ZÁKLADNÍ ESENCE & TEXTUROVANÉ POZADÍ --- */
+        html { scroll-behavior: smooth; }
         
         body {
+            background-color: var(--bg-dark);
+            /* Toto přidává jemnou texturu podobnou šumu, evokuje materiál */
+            background-image: linear-gradient(rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.95)), 
+                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23222222' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+            color: var(--text-light);
+            font-family: 'Roboto', sans-serif;
             margin: 0;
-            padding: 0;
-            font-family: 'Neon', Arial, sans-serif;
-            background-color: var(--dark-bg);
-            color: white;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 30%, var(--neon-purple) 0%, transparent 25%),
-                radial-gradient(circle at 80% 70%, var(--neon-blue) 0%, transparent 25%);
+        }
+
+        /* --- TYPOGRAFIE, KTERÁ MÁ CHARAKTER --- */
+        h1, h2, h3 {
+            font-family: 'Teko', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
         
-        /* CRAZY GLOW EFFECTS */
-        .glow {
-            text-shadow: var(--text-glow);
+        h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            line-height: 1;
+            color: var(--text-light);
+            text-shadow: 0 0 15px var(--glow-blue);
         }
         
-        .neon-border {
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 15px var(--neon-blue);
+        h2 {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            line-height: 1.1;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
         }
         
-        /* WILD CHESS BOARD HEADER */
-        .chess-header {
-            height: 100vh;
+        /* --- NAVIGACE --- */
+        .navbar {
+            padding: 1.5rem 5%;
+        }
+
+        .logo {
+            font-family: 'Teko';
+            font-size: 2rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+        
+        /* --- HERO - PRVNÍ DOJEM --- */
+        .hero {
+            text-align: center;
+            padding: 6rem 5% 4rem;
+        }
+        
+        .hero p {
+            max-width: 50ch;
+            margin: 2rem auto 3rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-blue);
+            color: var(--text-light);
+            font-family: 'Teko';
+            font-weight: 500;
+            font-size: 1.5rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.8rem 3rem;
+            border: 2px solid var(--accent-blue);
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--glow-blue), inset 0 0 5px rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+        
+        .cta-button:hover {
+            box-shadow: 0 0 25px var(--glow-blue), inset 0 0 10px rgba(255,255,255,0.3);
+            transform: scale(1.05);
+            animation-play-state: paused;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px var(--glow-blue), inset 0 0 5px rgba(255,255,255,0.3); }
+            50% { box-shadow: 0 0 20px 2px var(--glow-blue), inset 0 0 5px rgba(255,255,255,0.3); }
+            100% { box-shadow: 0 0 10px var(--glow-blue), inset 0 0 5px rgba(255,255,255,0.3); }
+        }
+
+        /* --- OBSAHOVÉ SEKCE --- */
+        .section {
+            padding: 4rem 5%;
+        }
+        
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+        }
+
+        .section-header span {
+            color: var(--accent-blue);
+        }
+        
+        /* --- STYLIZACE PRO VAŠE FOTKY --- */
+        .image-frame {
+            padding: 0.5rem;
+            background: linear-gradient(145deg, #181818, #111111);
+            border: 1px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+        
+        /* Sekce "O Projektu" */
+        .about-grid {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
         }
         
-        .chess-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        /* Sekce "Klíčové vlastnosti" - Features */
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            grid-template-rows: repeat(8, 1fr);
-            z-index: -1;
-            opacity: 0.3;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
         }
         
-        .chess-square {
-            border: 1px solid rgba(255,255,255,0.05);
+        .feature-card {
+            border: 1px solid #222;
+            padding: 2rem;
+            background: rgba(18, 18, 18, 0.5);
         }
         
-        .chess-square:nth-child(16n+1),
-        .chess-square:nth-child(16n+3),
-        .chess-square:nth-child(16n+5),
-        .chess-square:nth-child(16n+7),
-        .chess-square:nth-child(16n+10),
-        .chess-square:nth-child(16n+12),
-        .chess-square:nth-child(16n+14),
-        .chess-square:nth-child(16n+16) {
-            background-color: rgba(0, 255, 252, 0.05);
-        }
-        
-        /* INSANE TITLE EFFECT */
-        .main-title {
-            font-size: 8vw;
-            margin: 0;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-pink);
-            animation: flicker 1.5s infinite alternate;
-        }
-        
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                text-shadow: 
-                    0 0 10px var(--neon-blue),
-                    0 0 20px var(--neon-blue),
-                    0 0 30px var(--neon-blue),
-                    0 0 40px var(--neon-pink),
-                    0 0 70px var(--neon-pink),
-                    0 0 80px var(--neon-pink);
-            }
-            20%, 24%, 55% {        
-                text-shadow: none;
-            }
-        }
-        
-        /* NUTTY NAVIGATION */
-        .neon-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+        .feature-card h3 {
             display: flex;
-            justify-content: space-between;
-            padding: 20px;
-            z-index: 100;
-            background-color: rgba(10, 10, 26, 0.7);
-            backdrop-filter: blur(10px);
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--accent-blue);
+            font-size: 1.8rem;
         }
         
-        .nav-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-family: 'Neon', sans-serif;
+        /* DOWNLOAD SEKCE */
+        .download-section {
+            background: linear-gradient(transparent, #0A0A0A);
+            text-align: center;
+        }
+
+        .download-box a:hover {
+            color: var(--text-light);
+            background: var(--accent-ember);
+            border-color: var(--accent-ember);
+            box-shadow: 0 0 25px var(--glow-ember);
+        }
+
+        /* JAZYKY & FOOTER */
+        .site-footer {
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+        
+        .lang-switcher a {
+            font-family: 'Teko';
             font-size: 1.2rem;
-            margin: 0 15px;
-            cursor: pointer;
-            position: relative;
-            padding: 5px 10px;
-        }
-        
-        .nav-btn::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--neon-blue);
-            transition: width 0.3s;
-        }
-        
-        .nav-btn:hover::after {
-            width: 100%;
-        }
-        
-        /* PSYCHEDELIC CONTENT SECTIONS */
-        .content-section {
-            min-height: 100vh;
-            padding: 100px 20px;
-            position: relative;
-        }
-        
-        .section-title {
-            font-size: 3rem;
-            color: var(--neon-blue);
-            margin-bottom: 50px;
-            text-align: center;
-        }
-        
-        /* WILD PHOTO GALLERY */
-        .photo-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-        
-        .photo-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-            height: 300px;
-            transition: transform 0.5s;
-        }
-        
-        .photo-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(80%) contrast(120%);
-            transition: all 0.5s;
-        }
-        
-        .photo-card:hover img {
-            filter: grayscale(0%) contrast(100%);
-            transform: scale(1.1);
-        }
-        
-        .photo-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(0,255,252,0.3), rgba(255,44,237,0.3));
-            mix-blend-mode: overlay;
-        }
-        
-        /* CRAZY DOWNLOAD BUTTON */
-        .download-btn {
-            display: block;
-            width: 300px;
-            margin: 50px auto;
-            padding: 20px;
-            text-align: center;
-            background: var(--darker-bg);
-            color: var(--neon-blue);
-            border: 2px solid var(--neon-blue);
-            font-size: 1.5rem;
             text-transform: uppercase;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text-muted);
+            margin: 0 1rem;
+            transition: color 0.3s;
         }
-        
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            transition: 0.5s;
-            z-index: -1;
+        .lang-switcher a.active {
+            color: var(--accent-blue);
         }
-        
-        .download-btn:hover::before {
-            left: 100%;
-        }
-        
-        .download-btn:hover {
-            color: var(--dark-bg);
-            background: var(--neon-blue);
-            box-shadow: 0 0 20px var(--neon-blue);
-        }
-        
-        /* INSANE RESPONSIVE DESIGN */
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: 15vw;
+
+        /* --- DESKTOP ROZLOŽENÍ --- */
+        @media (min-width: 800px) {
+            .section, .navbar, .hero, .site-footer {
+                padding-left: 10%;
+                padding-right: 10%;
             }
-            
-            .neon-nav {
-                flex-direction: column;
+            .about-grid {
+                flex-direction: row;
+                gap: 4rem;
                 align-items: center;
-                padding: 10px;
             }
-            
-            .nav-btn {
-                margin: 5px 0;
+            .about-grid .text-content {
+                flex: 1;
             }
-            
-            .content-section {
-                padding: 50px 10px;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .photo-gallery {
-                grid-template-columns: 1fr;
-            }
-            
-            .download-btn {
-                width: 80%;
-            }
-            
-            /* Mobile menu toggle */
-            .mobile-menu-btn {
-                display: block;
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 101;
-                background: none;
-                border: none;
-                color: var(--neon-blue);
-                font-size: 2rem;
-                cursor: pointer;
-            }
-            
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                text-align: center;
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
+             .about-grid .image-frame {
+                flex: 1.2;
+             }
+             .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+             }
         }
     </style>
 </head>
 <body>
-    <!-- NUTTY NAVIGATION -->
-    <nav class="neon-nav">
-        <div class="logo glow">♔ YourChess</div>
-        <button class="mobile-menu-btn">☰</button>
-        <div class="nav-links" id="navLinks">
-            <button class="nav-btn glow" data-section="home">Home</button>
-            <button class="nav-btn glow" data-section="about">About</button>
-            <button class="nav-btn glow" data-section="features">Features</button>
-            <button class="nav-btn glow" data-section="campaign">Campaign</button>
-            <button class="nav-btn glow" data-section="download">Download</button>
-            <button class="lang-btn glow" data-lang="en">EN</button>
-            <button class="lang-btn glow" data-lang="cs">ČE</button>
-        </div>
+
+    <nav class="navbar">
+        <a href="#" class="logo">YOURCHESS</a>
     </nav>
 
-    <!-- INSANE CHESS HEADER -->
-    <header class="chess-header" id="home">
-        <div class="chess-grid">
-            <div class="chess-square"></div><div class="chess-square"></div><div class="chess-square"></div><div class="chess-square"></div>
-            <div class="chess-square"></div><div class="chess-square"></div><div class="chess-square"></div><div class="chess-square"></div>
-            <!-- Repeat for all 64 squares -->
-        </div>
-        
-        <h1 class="main-title">YourChess</h1>
-        <p class="glow" style="font-size: 1.5rem; max-width: 600px; text-align: center;">
-            Where chess meets neon madness. The future of interactive chess is here.
-        </p>
-        
-        <div style="margin-top: 50px;">
-            <button class="nav-btn glow neon-border" style="padding: 15px 30px;">Begin the Madness</button>
-        </div>
-    </header>
+    <main>
+        <!-- HERO SEKCE -->
+        <header class="hero">
+            <h1 data-lang-key="hero_h1">Tradicí vytesáno.<br>Technologií oživeno.</h1>
+            <p data-lang-key="hero_p">Šachy, jaké jste ještě neviděli. Surová energie dřeva se potkává s pulzujícím světlem budoucnosti. Toto není jen hra. Toto je zážitek.</p>
+            <!-- Nahraďte svým Indiegogo linkem! -->
+            <a href="https://VASE-INDIEGOGO-URL" target="_blank" class="cta-button" data-lang-key="hero_btn">Prozkoumat kampaň</a>
+        </header>
 
-    <!-- PSYCHEDELIC ABOUT SECTION -->
-    <section class="content-section" id="about" style="background-color: var(--darker-bg);">
-        <h2 class="section-title glow">About This Madness</h2>
-        
-        <div style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
-            <p style="font-size: 1.2rem; line-height: 1.8; text-align: center;">
-                YourChess isn't your grandpa's chess game. We've taken the ancient game of kings and injected it with neon, 
-                cyberpunk energy and a dose of pure imagination. This is chess reimagined for the digital age.
-            </p>
-            
-            <div class="photo-gallery">
-                <div class="photo-card">
-                    <!-- Replace with your actual photo -->
-                    <img src="https://images.unsplash.com/photo-1543092587-d8b8feaf4f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Chess match">
+        <!-- SEKCE "O PROJEKTU" -->
+        <section id="about" class="section">
+            <div class="about-grid">
+                <div class="image-frame">
+                    <!-- ZDE DEJTE VAŠI FOTKU ŠACHOVNICE -->
+                    <img src="https://i.imgur.com/G3Pz8A7.jpeg" alt="Šachovnice YourChess v celé své kráse">
                 </div>
-                <div class="photo-card">
-                    <img src="https://images.unsplash.com/photo-1524179091875-bf99a9a6af57?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Chess pieces">
-                </div>
-                <div class="photo-card">
-                    <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Chess tournament">
+                <div class="text-content">
+                    <h2 data-lang-key="about_h2">Fúze světů</h2>
+                    <p data-lang-key="about_p">Začalo to jednoduchou otázkou: jak by vypadaly šachy, kdyby vznikly dnes? Vzali jsme prastarou úctu ke dřevu a řemeslu a spojili ji s tím, co nás fascinuje na technologii - světlem, interaktivitou a neomezenými možnostmi.</p>
+                    <p data-lang-key="about_p2">Výsledkem je YourChess. Každý kus je originál. Každá partie je podmanivá. </p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- WILD FEATURES SECTION -->
-    <section class="content-section" id="features">
-        <h2 class="section-title glow">Features That Blow Minds</h2>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 0 20px;">
-            <div class="neon-border" style="padding: 30px; border-radius: 10px;">
-                <h3 style="color: var(--neon-pink); font-size: 1.8rem;">♜ Neon Vision</h3>
-                <p>Our patented blue-glowing chessboard adapts to your playing style, literally lighting up potential moves.</p>
-            </div>
-            
-            <div class="neon-border" style="padding: 30px; border-radius: 10px;">
-                <h3 style="color: var(--neon-pink); font-size: 1.8rem;">♞ Sound Explosion</h3>
-                <p>Every piece has its own synthwave sound effect. Capture a queen? Enjoy the bass drop.</p>
-            </div>
-            
-            <div class="neon-border" style="padding: 30px; border-radius: 10px;">
-                <h3 style="color: var(--neon-pink); font-size: 1.8rem;">♝ Time Warp</h3>
-                <p>Slow motion replay of critical moves with particle effects. Because why not?</p>
-            </div>
-        </div>
-    </section>
+        <!-- SEKCE "KLÍČOVÉ VLASTNOSTI" -->
+        <section id="features" class="section">
+             <div class="section-header">
+                 <h2 data-lang-key="features_h2">DNA naší šachovnice</h2>
+             </div>
+             <div class="features-grid">
+                 <div class="feature-card">
+                    <h3>
+                        <span data-lang-key="feature1_h3">Opálené dřevo</span>
+                    </h3>
+                    <p data-lang-key="feature1_p">Každý rám je ručně opracován a opalován, aby získal unikátní texturu a charakter. Žádné dva kusy nejsou stejné.</p>
+                 </div>
+                  <div class="feature-card">
+                    <h3>
+                        <span data-lang-key="feature2_h3">LED Matrice</span>
+                    </h3>
+                    <p data-lang-key="feature2_p">Podsvícená šachovnice nejenže vypadá úchvatně, ale otevírá dveře pro herní módy, tutoriály a vizualizaci tahů.</p>
+                 </div>
+                 <div class="feature-card">
+                    <h3>
+                        <span data-lang-key="feature3_h3">3D Tištěné Figurky</span>
+                    </h3>
+                    <p data-lang-key="feature3_p">Moderní, geometrický design figurek perfektně kontrastuje s organickým dřevem. Precizní tisk pro skvělý herní pocit.</p>
+                 </div>
+             </div>
+        </section>
 
-    <!-- CRAZY CAMPAIGN SECTION -->
-    <section class="content-section" id="campaign" style="background-color: var(--darker-bg);">
-        <h2 class="section-title glow">Join the Revolution</h2>
-        
-        <div style="max-width: 800px; margin: 0 auto; padding: 0 20px; text-align: center;">
-            <p style="font-size: 1.2rem; margin-bottom: 50px;">
-                Our Indiegogo campaign is more than funding - it's building a movement of chess radicals who believe the game 
-                should be as visually stunning as it is mentally challenging.
-            </p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                <div class="neon-border" style="padding: 20px; border-radius: 10px;">
-                    <h3 style="color: var(--neon-blue);">♙ Pawn Tier</h3>
-                    <p>Early access + digital assets</p>
-                    <button class="nav-btn" style="margin-top: 15px; padding: 10px 20px;">$25</button>
-                </div>
-                
-                <div class="neon-border" style="padding: 20px; border-radius: 10px; border-color: var(--neon-pink);">
-                    <h3 style="color: var(--neon-pink);">♘ Knight Tier</h3>
-                    <p>All previous + exclusive content</p>
-                    <button class="nav-btn" style="margin-top: 15px; padding: 10px 20px; border-color: var(--neon-pink);">$50</button>
-                </div>
-                
-                <div class="neon-border" style="padding: 20px; border-radius: 10px; border-color: var(--neon-purple);">
-                    <h3 style="color: var(--neon-purple);">♕ Queen Tier</h3>
-                    <p>Everything + direct input on features</p>
-                    <button class="nav-btn" style="margin-top: 15px; padding: 10px 20px; border-color: var(--neon-purple);">$100+</button>
-                </div>
+        <!-- SEKCE DOWNLOAD -->
+        <section id="download" class="section download-section">
+             <div class="download-box section-header">
+                <h2 data-lang-key="download_h2">Udělejte svůj tah</h2>
+                <p data-lang-key="download_p">Software, který pohání YourChess, je teprve na začátku. Stáhněte si Alpha verzi, podpořte náš vývoj a staňte se součástí komunity, která formuje budoucnost této hry.</p>
+                 <a href="downloads/YourChessInstaller.exe" download class="cta-button" data-lang-key="download_btn">Stáhnout Alpha [Win]</a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- MIND-BLOWING DOWNLOAD SECTION -->
-    <section class="content-section" id="download">
-        <h2 class="section-title glow">Download the Madness</h2>
-        
-        <div style="text-align: center;">
-            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 30px;">
-                Ready to experience chess like never before? Download now and join the neon revolution.
-            </p>
-            
-            <a href="downloads/YourChessInstaller.exe" class="download-btn glow" download>
-                <i class="fas fa-download"></i> DOWNLOAD NOW
-            </a>
-            
-            <div style="margin-top: 30px; color: var(--neon-blue);">
-                <p>System Requirements:</p>
-                <p>Windows 10/11 | 2GB RAM | 500MB space</p>
-            </div>
+    </main>
+    
+    <footer class="site-footer">
+        <div class="lang-switcher">
+            <a href="#" id="lang-cz" class="active">CZ</a>
+            <a href="#" id="lang-en">EN</a>
         </div>
-    </section>
+        <p style="margin-top: 1.5rem; font-size: 0.9rem;">© <span id="current-year"></span> YourChess</p>
+    </footer>
 
-    <script>
-        // INSANE INTERACTIVITY
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle
-            const mobileBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.getElementById('navLinks');
-            
-            mobileBtn.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-            });
-            
-            // Smooth scrolling
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const sectionId = this.getAttribute('data-section');
-                    if (sectionId) {
-                        document.getElementById(sectionId).scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                        navLinks.classList.remove('active');
-                    }
-                });
-            });
-            
-            // Language switcher
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    // Here you would implement language change logic
-                });
-            });
-            
-            // Crazy hover effects for chess squares
-            const chessSquares = document.querySelectorAll('.chess-square');
-            chessSquares.forEach(square => {
-                square.addEventListener('mouseover', function() {
-                    this.style.backgroundColor = `rgba(0, 255, 252, ${Math.random() * 0.2})`;
-                    this.style.boxShadow = `0 0 ${Math.random() * 20}px rgba(0, 255, 252, 0.5)`;
-                });
-                
-                square.addEventListener('mouseout', function() {
-                    this.style.backgroundColor = '';
-                    this.style.boxShadow = '';
-                });
-            });
-            
-            // Even crazier - make the chess pieces "dance" on music
-            if (typeof window.AudioContext !== 'undefined') {
-                const audioContext = new AudioContext();
-                const analyser = audioContext.createAnalyser();
-                
-                // This would connect to audio when user interacts
-                document.addEventListener('click', function initAudio() {
-                    if (audioContext.state === 'suspended') {
-                        audioContext.resume();
-                    }
-                    document.removeEventListener('click', initAudio);
-                });
-                
-                // Visualizer would go here
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const translations = {
+            en: {
+                hero_h1: "Carved by Tradition.<br>Revived by Technology.",
+                hero_p: "Chess like you've never seen before. The raw energy of wood meets the pulsating light of the future. This is not just a game. This is an experience.",
+                hero_btn: "Explore the Campaign",
+                about_h2: "A Fusion of Worlds",
+                about_p: "It started with a simple question: what would chess look like if it were invented today? We took the ancient respect for wood and craft and merged it with what fascinates us about technology—light, interactivity, and limitless possibilities.",
+                about_p2: "The result is YourChess. Every piece is an original. Every match is captivating.",
+                features_h2: "The DNA of our chessboard",
+                feature1_h3: "Torched Wood",
+                feature1_p: "Each frame is handcrafted and torched to gain a unique texture and character. No two pieces are the same.",
+                feature2_h3: "LED Matrix",
+                feature2_p: "The backlit chessboard not only looks stunning but opens the door for game modes, tutorials, and move visualizations.",
+                feature3_h3: "3D Printed Pieces",
+                feature3_p: "The modern, geometric design of the pieces perfectly contrasts with the organic wood. Precisely printed for a great in-game feel.",
+                download_h2: "Make your move",
+                download_p: "The software that powers YourChess is just at the beginning. Download the Alpha version, support our development, and become part of the community shaping the future of this game.",
+                download_btn: "Download Alpha [Win]"
+            },
+            cs: {
+                hero_h1: "Tradicí vytesáno.<br>Technologií oživeno.",
+                hero_p: "Šachy, jaké jste ještě neviděli. Surová energie dřeva se potkává s pulzujícím světlem budoucnosti. Toto není jen hra. Toto je zážitek.",
+                hero_btn: "Prozkoumat kampaň",
+                about_h2: "Fúze světů",
+                about_p: "Začalo to jednoduchou otázkou: jak by vypadaly šachy, kdyby vznikly dnes? Vzali jsme prastarou úctu ke dřevu a řemeslu a spojili ji s tím, co nás fascinuje na technologii - světlem, interaktivitou a neomezenými možnostmi.",
+                about_p2: "Výsledkem je YourChess. Každý kus je originál. Každá partie je podmanivá.",
+                features_h2: "DNA naší šachovnice",
+                feature1_h3: "Opálené dřevo",
+                feature1_p: "Každý rám je ručně opracován a opalován, aby získal unikátní texturu a charakter. Žádné dva kusy nejsou stejné.",
+                feature2_h3: "LED Matrice",
+                feature2_p: "Podsvícená šachovnice nejenže vypadá úchvatně, ale otevírá dveře pro herní módy, tutoriály a vizualizaci tahů.",
+                feature3_h3: "3D Tištěné Figurky",
+                feature3_p: "Moderní, geometrický design figurek perfektně kontrastuje s organickým dřevem. Precizní tisk pro skvělý herní pocit.",
+                download_h2: "Udělejte svůj tah",
+                download_p: "Software, který pohání YourChess, je teprve na začátku. Stáhněte si Alpha verzi, podpořte náš vývoj a staňte se součástí komunity, která formuje budoucnost této hry.",
+                download_btn: "Stáhnout Alpha [Win]"
             }
-        });
-    </script>
+        };
+
+        const langCz = document.getElementById('lang-cz');
+        const langEn = document.getElementById('lang-en');
+        
+        const setLanguage = (lang) => {
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.dataset.langKey;
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            localStorage.setItem('yourchess_lang', lang);
+            langCz.classList.toggle('active', lang === 'cs');
+            langEn.classList.toggle('active', lang === 'en');
+        };
+
+        langCz.addEventListener('click', (e) => { e.preventDefault(); setLanguage('cs'); });
+        langEn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
+        setLanguage(localStorage.getItem('yourchess_lang') || 'cs');
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    });
+</script>
+
 </body>
 </html>
