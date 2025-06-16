@@ -3,382 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YourChess - Váš tah.</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
+    <title>YourChess - The Ultimate Gambit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        /* --- ZÁKLADNÍ ESENCE --- */
-        :root {
-            --dark-pane: #0B0B0B;
-            --light-pane: #F5F5F5;
-            --light-text: #F5F5F5;
-            --dark-text: #0B0B0B;
-            --secondary-text: #888;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Unica+One&family=Orbitron:wght@500&display=swap');
 
-        html { scroll-behavior: smooth; }
-        
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            font-family: 'Unica One', sans-serif;
             overflow-x: hidden;
-            background-color: var(--dark-pane); /* Pro mobilní fallback */
-        }
-        
-        /* --- DVOJITÝ LAYOUT PRO DESKTOP --- */
-        .split-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            height: 100vh;
+            position: relative;
+            margin: 0;
         }
 
-        /* --- LEVÁ, STATICKÁ POLOVINA (VIZE) --- */
-        .left-pane {
+        /* Cosmic Chess Background */
+        .cosmic-chess {
             position: fixed;
             top: 0;
             left: 0;
-            width: 50%;
+            width: 100%;
             height: 100%;
-            background-color: var(--dark-pane);
-            color: var(--light-text);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 3rem;
-            box-sizing: border-box;
-        }
-        
-        .logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-        
-        .showcase-content {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .showcase-image {
-            width: 80%;
-            max-width: 450px;
-            aspect-ratio: 1 / 1;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: background-image 0.5s ease-in-out, opacity 0.5s ease-in-out;
-            opacity: 0; /* Začíná neviditelný, JS to opraví */
+            z-index: -1;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="0" y="0" width="50" height="50" fill="#fff"/><rect x="50" y="50" width="50" height="50" fill="#fff"/></svg>') repeat,
+                        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            background-size: 80px 80px, 100%;
+            animation: cosmicPulse 40s ease-in-out infinite;
         }
 
-        .showcase-image.visible {
-            opacity: 1;
+        @keyframes cosmicPulse {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.2; }
+            50% { transform: scale(1.05) translate(-20px, -20px); opacity: 0.3; }
         }
 
-        .left-footer {
-            text-align: left;
+        /* Navbar */
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 3px solid rgba(255, 255, 255, 0.4);
+            position: fixed;
+            width: 100%;
+            z-index: 50;
         }
 
-        .cta-buttons a {
-            display: inline-block;
-            text-decoration: none;
-            padding: 0.8rem 2rem;
-            border: 1px solid var(--light-text);
-            color: var(--light-text);
-            border-radius: 50px;
-            margin-right: 1rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
-            transition: background-color 0.3s, color 0.3s;
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
         }
 
-        .cta-buttons a:hover {
-            background-color: var(--light-text);
-            color: var(--dark-text);
-        }
-
-        .lang-switcher { margin-top: 1rem; }
-        .lang-switcher a {
-            cursor: pointer;
-            color: var(--secondary-text);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        .lang-switcher a:hover { color: var(--light-text); }
-        .lang-switcher a.active { color: var(--light-text); font-weight: 700; }
-
-        /* --- PRAVÁ, ROLOVACÍ POLOVINA (PŘÍBĚH) --- */
-        .right-pane {
-            grid-column: 2 / 3;
-            background-color: var(--light-pane);
-            color: var(--dark-text);
-            overflow-y: scroll;
-            height: 100vh;
-        }
-        
-        .content-section {
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 5rem 12%;
-            box-sizing: border-box;
-            border-bottom: 1px solid #ddd;
+        .nav-link::after {
+            content: '♞';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            font-size: 1.2rem;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s, transform 0.8s;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
-        .content-section:last-child {
-            border-bottom: none;
-        }
-
-        .content-section.visible {
+        .nav-link:hover::after {
+            transform: translateX(-50%) scale(1);
             opacity: 1;
-            transform: translateY(0);
         }
-        
-        .content-section h2 {
-            font-family: 'Cormorant Garamond', serif;
+
+        /* Chess Piece Animation */
+        .chess-piece {
+            position: relative;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55), filter 0.6s ease;
+        }
+
+        .chess-piece:hover {
+            transform: scale(1.15) rotate(3deg);
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
+        }
+
+        /* Section Transitions */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px) rotate(-2deg);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0) rotate(0);
+        }
+
+        /* Chess Portal */
+        .chess-portal {
+            position: relative;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.9));
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .chess-portal::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(transparent, rgba(255, 255, 255, 0.2), transparent 30%);
+            animation: portalSpin 10s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes portalSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Title Font */
+        .title-font {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Chess Figure Accent */
+        .chess-accent::before {
+            content: '♛';
+            position: absolute;
+            top: -30px;
+            right: -30px;
             font-size: 3rem;
-            font-weight: 700;
-            margin: 0 0 1rem 0;
-            color: var(--dark-text);
-        }
-        
-        .section-intro {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            color: #555;
-            margin-bottom: 2rem;
-        }
-        
-        .content-section p {
-            line-height: 1.8;
-            max-width: 55ch;
-            color: #333;
-            font-weight: 300;
+            opacity: 0.2;
+            transform: rotate(20deg);
+            transition: transform 0.6s ease, opacity 0.6s ease;
         }
 
-        /* --- MOBILNÍ ZOBRAZENÍ --- */
-        @media (max-width: 900px) {
-            .split-layout {
-                display: block; /* Zrušíme mřížku */
-                height: auto;
-            }
+        .chess-portal:hover .chess-accent::before {
+            transform: rotate(0) scale(1.3);
+            opacity: 0.4;
+        }
 
-            .left-pane, .right-pane {
-                position: static;
-                width: 100%;
-                height: auto;
-            }
-            
-            .left-pane {
-                min-height: 100vh; /* Statická část zabere celou první obrazovku */
-            }
-
-            .showcase-content {
-                display: none; /* Skryjeme interaktivní obrázek */
-            }
-
-            .logo { font-size: 2rem; }
-
-            .right-pane {
-                overflow-y: visible;
-                padding-top: 2rem; /* aby nebyl obsah nalepený hned pod */
-            }
-            .content-section {
-                padding: 3rem 8%;
-                min-height: auto;
-            }
-            .content-section h2 { font-size: 2.2rem; }
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .text-7xl { font-size: 2.5rem; }
+            .text-4xl { font-size: 1.6rem; }
+            .text-lg { font-size: 0.9rem; }
+            .grid-cols-3, .grid-cols-2 { grid-template-columns: 1fr; }
+            .navbar { padding: 0.5rem; }
+            .navbar .flex { flex-direction: column; gap: 0.5rem; }
+            .cosmic-chess { background-size: 60px 60px; }
+            .chess-accent::before { font-size: 2rem; top: -15px; right: -15px; }
+            .chess-portal { border-radius: 12px; }
         }
     </style>
 </head>
 <body>
+    <!-- Cosmic Chess Background -->
+    <div class="cosmic-chess"></div>
 
-    <div class="split-layout">
-
-        <!-- LEVÁ POLOVINA: VIZE & ZNAČKA -->
-        <div class="left-pane">
-            <div class="logo">YourChess</div>
-            
-            <div class="showcase-content">
-                <div class="showcase-image" id="interactive-image"></div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-3xl title-font text-white">YourChess</h1>
+            <div class="flex flex-col sm:flex-row sm:space-x-3 items-center text-white text-sm">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#indiegogo" class="nav-link">Indiegogo</a>
+                <a href="#download" class="nav-link">Download</a>
+                <select id="language-switch" class="bg-transparent border border-white text-white rounded px-2 py-1 mt-2 sm:mt-0">
+                    <option value="cs">Čeština</option>
+                    <option value="en">English</option>
+                </select>
             </div>
+        </div>
+    </nav>
 
-            <div class="left-footer">
-                <div class="cta-buttons">
-                    <a href="https://VASE-INDIEGOGO-URL" target="_blank" data-lang-key="cta_indiegogo">Podpořit projekt</a>
-                    <a href="downloads/YourChessInstaller.exe" download data-lang-key="cta_download">Stáhnout Alpha</a>
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center">
+        <div class="text-center max-w-3xl mx-auto px-4">
+            <h2 class="text-7xl title-font font-bold mb-6 fade-in">YourChess</h2>
+            <p class="text-lg mb-8 fade-in" data-lang-cs="Vstupte do šachového vesmíru. Přidejte se k naší Indiegogo kampani!" data-lang-en="Enter the chess universe. Join our Indiegogo campaign!">Vstupte do šachového vesmíru. Přidejte se k naší Indiegogo kampani!</p>
+            <a href="#indiegogo" class="inline-block bg-white text-black hover:bg-gray-200 font-semibold py-3 px-12 rounded-full transition chess-piece fade-in">Open the Gambit</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-28">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-4xl title-font font-bold text-center mb-12 fade-in">About YourChess</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="chess-portal chess-accent fade-in">
+                    <img src="https://via.placeholder.com/600x400?text=Chess+Cosmos" alt="Chess Cosmos" class="rounded-lg chess-piece w-full">
                 </div>
-                <div class="lang-switcher">
-                    <a id="lang-cz" class="active">CZ</a> / <a id="lang-en">EN</a>
+                <div class="flex items-center fade-in">
+                    <p data-lang-cs="YourChess je portál do nové dimenze šachů – technologie, umění a strategie v jednom tahu. Připojte se k naší revoluci!" data-lang-en="YourChess is a portal to a new dimension of chess – technology, art, and strategy in one move. Join our revolution!">YourChess je portál do nové dimenze šachů – technologie, umění a strategie v jednom tahu. Připojte se k naší revoluci!</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- PRAVÁ POLOVINA: PŘÍBĚH -->
-        <div class="right-pane">
-            <!-- SEKCIA 1: ÚVOD -->
-            <section class="content-section" id="intro" 
-                data-image="https://images.unsplash.com/photo-1528459132220-4e5c57c4c3e8?q=80&w=1887&auto=format&fit=crop">
-                <p class="section-intro" data-lang-key="intro_subtitle">Vítejte ve hře, přemyšlené.</p>
-                <h2 data-lang-key="intro_h2">Nejsme další šachová aplikace.</h2>
-                <p data-lang-key="intro_p">
-                    Jsme manifestem. Manifestem designu, soustředění a čisté lásky ke hře.
-                    YourChess je prostor, kde strategie dýchá a každý tah má váhu. Zapomeňte na vizuální balast. Toto je hra ve své nejryzejší podobě.
-                </p>
-            </section>
-            
-            <!-- SEKCIA 2: DESIGN -->
-            <section class="content-section" id="design"
-                 data-image="https://images.unsplash.com/photo-1616447820093-c40c5f591d8f?q=80&w=1887&auto=format&fit=crop">
-                <p class="section-intro" data-lang-key="design_subtitle">01 / Filozofie</p>
-                <h2 data-lang-key="design_h2">Méně je více.</h2>
-                <p data-lang-key="design_p">
-                    Odstranili jsme vše, co je zbytečné, aby zůstalo jen to podstatné. Čisté linie, dokonalá typografie a intuitivní ovládání, které vám jde z cesty. Prostředí je navrženo tak, aby vám umožnilo plné ponoření se do partie. Každý prvek byl pečlivě zvážen a vytvořen s úctou k vám, hráči.
-                </p>
-            </section>
-
-            <!-- SEKCIA 3: INTELIGENCE -->
-            <section class="content-section" id="intelligence"
-                data-image="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop">
-                <p class="section-intro" data-lang-key="intel_subtitle">02 / Technologie</p>
-                <h2 data-lang-key="intel_h2">Protivník, ne nepřítel.</h2>
-                <p data-lang-key="intel_p">
-                    Naše umělá inteligence se od vás učí. Není to bezduchý stroj, který vás chce porazit, ale partner, který roste s vámi. Analyzuje vaše slabiny, napodobuje lidské chyby a nabízí výzvu, která je vždy spravedlivá a motivující. Je to váš osobní velmistr a sparring partner v jednom.
-                </p>
-            </section>
-            
-             <!-- SEKCIA 4: FINÁLNÍ VÝZVA -->
-            <section class="content-section" id="final"
-                data-image="https://images.unsplash.com/photo-1582285188147-3a8549635f13?q=80&w=1887&auto=format&fit=crop">
-                <p class="section-intro" data-lang-key="final_subtitle">03 / Budoucnost</p>
-                <h2 data-lang-key="final_h2">Váš tah.</h2>
-                <p data-lang-key="final_p">
-                   Nyní máte šanci stát se součástí této vize. Vaše podpora na Indiegogo nám umožní hru dokončit, rozšířit komunitní funkce a přivést ji na další platformy. Stáhněte si Alpha verzi, vyzkoušejte ji a přidejte se k revoluci. Děkujeme.
-                </p>
-            </section>
-
+    <!-- Indiegogo Section -->
+    <section id="indiegogo" class="py-28 bg-black bg-opacity-70">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-4xl title-font font-bold text-center mb-12 fade-in">Indiegogo Campaign</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="chess-portal chess-accent fade-in">
+                    <img src="https://via.placeholder.com/300x200?text=First+Move" alt="First Move" class="rounded-lg mb-4 w-full chess-piece">
+                    <p data-lang-cs="Podpořte náš první tah a staňte se šachovým vizionářem!" data-lang-en="Support our first move and become a chess visionary!">Podpořte náš první tah a staňte se šachovým vizionářem!</p>
+                </div>
+                <div class="chess-portal chess-accent fade-in">
+                    <img src="https://via.placeholder.com/300x200?text=Game+Changer" alt="Game Changer" class="rounded-lg mb-4 w-full chess-piece">
+                    <p data-lang-cs="Změňte pravidla hry s YourChess." data-lang-en="Change the rules of the game with YourChess.">Změňte pravidla hry s YourChess.</p>
+                </div>
+                <div class="chess-portal chess-accent fade-in">
+                    <img src="https://via.placeholder.com/300x200?text=Checkmate" alt="Checkmate" class="rounded-lg mb-4 w-full chess-piece">
+                    <p data-lang-cs="Společně dosáhneme šachmatu!" data-lang-en="Together, we'll achieve checkmate!">Společně dosáhneme šachmatu!</p>
+                </div>
+            </div>
+            <div class="text-center mt-12 fade-in">
+                <a href="https://www.indiegogo.com" target="_blank" class="inline-block bg-white text-black hover:bg-gray-200 font-semibold py-3 px-12 rounded-full transition chess-piece">Fund the Future</a>
+            </div>
         </div>
-    </div>
+    </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
+    <!-- Download Section -->
+    <section id="download" class="py-28">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <h2 class="text-4xl title-font font-bold mb-12 fade-in">Download YourChess</h2>
+            <p class="text-lg mb-8 fade-in" data-lang-cs="Zahrajte si šachy z budoucnosti. Stáhněte si software teď!" data-lang-en="Play the chess of the future. Download the software now!">Zahrajte si šachy z budoucnosti. Stáhněte si software teď!</p>
+            <a href="downloads/YourChessInstaller.exe" download class="inline-block bg-white text-black hover:bg-gray-200 font-semibold py-3 px-12 rounded-full transition chess-piece fade-in">Download Now</a>
+        </div>
+    </section>
 
-    const translations = {
-        en: {
-            cta_indiegogo: 'Support the Project', cta_download: 'Download Alpha',
-            intro_subtitle: 'Welcome to the game, rethought.',
-            intro_h2: 'We are not another chess app.',
-            intro_p: 'We are a manifest. A manifest of design, focus, and pure love for the game. YourChess is a space where strategy breathes and every move matters. Forget the visual clutter. This is the game in its purest form.',
-            design_subtitle: '01 / The Philosophy',
-            design_h2: 'Less is infinitely more.',
-            design_p: 'We removed everything unnecessary to leave only the essential. Clean lines, perfect typography, and intuitive controls that get out of your way. The environment is designed to allow you to fully immerse yourself in the match. Every element has been carefully considered and crafted with respect for you, the player.',
-            intel_subtitle: '02 / The Technology',
-            intel_h2: 'An opponent, not an enemy.',
-            intel_p: 'Our artificial intelligence learns from you. It\'s not a mindless machine trying to beat you, but a partner that grows with you. It analyzes your weaknesses, mimics human error, and offers a challenge that is always fair and motivating. It\'s your personal grandmaster and sparring partner in one.',
-            final_subtitle: '03 / The Future',
-            final_h2: 'Your move.',
-            final_p: 'Now you have the chance to become part of this vision. Your support on Indiegogo will allow us to finish the game, expand community features, and bring it to other platforms. Download the Alpha version, try it, and join the revolution. Thank you.'
-        },
-        cs: {
-            cta_indiegogo: 'Podpořit projekt', cta_download: 'Stáhnout Alpha',
-            intro_subtitle: 'Vítejte ve hře, přemyšlené.',
-            intro_h2: 'Nejsme další šachová aplikace.',
-            intro_p: 'Jsme manifestem. Manifestem designu, soustředění a čisté lásky ke hře. YourChess je prostor, kde strategie dýchá a každý tah má váhu. Zapomeňte na vizuální balast. Toto je hra ve své nejryzejší podobě.',
-            design_subtitle: '01 / Filozofie',
-            design_h2: 'Méně je více.',
-            design_p: 'Odstranili jsme vše, co je zbytečné, aby zůstalo jen to podstatné. Čisté linie, dokonalá typografie a intuitivní ovládání, které vám jde z cesty. Prostředí je navrženo tak, aby vám umožnilo plné ponoření se do partie. Každý prvek byl pečlivě zvážen a vytvořen s úctou k vám, hráči.',
-            intel_subtitle: '02 / Technologie',
-            intel_h2: 'Protivník, ne nepřítel.',
-            intel_p: 'Naše umělá inteligence se od vás učí. Není to bezduchý stroj, který vás chce porazit, ale partner, který roste s vámi. Analyzuje vaše slabiny, napodobuje lidské chyby a nabízí výzvu, která je vždy spravedlivá a motivující. Je to váš osobní velmistr a sparring partner v jednom.',
-            final_subtitle: '03 / Budoucnost',
-            final_h2: 'Váš tah.',
-            final_p: 'Nyní máte šanci stát se součástí této vize. Vaše podpora na Indiegogo nám umožní hru dokončit, rozšířit komunitní funkce a přivést ji na další platformy. Stáhněte si Alpha verzi, vyzkoušejte ji a přidejte se k revoluci. Děkujeme.'
-        }
-    };
-    
-    // --- FUNKCIONALITA INTERAKTIVNÍHO OBRAZCE ---
-    const imageContainer = document.getElementById('interactive-image');
-    const sections = document.querySelectorAll('.content-section');
+    <!-- Footer -->
+    <footer class="py-10 bg-black bg-opacity-90 text-center">
+        <p class="text-white" data-lang-cs="© 2025 YourChess. Všechna práva vyhrazena." data-lang-en="© 2025 YourChess. All rights reserved.">© 2025 YourChess. Všechna práva vyhrazena.</p>
+    </footer>
 
-    if (window.innerWidth > 900) { // Aktivovat magii jen na desktopu
-        const observerOptions = {
-            root: document.querySelector('.right-pane'),
-            rootMargin: '0px',
-            threshold: 0.5 // Kdy je sekce v polovině, změní se obrázek
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    const newImage = entry.target.getAttribute('data-image');
-                    imageContainer.classList.remove('visible'); // Fade out
-                    
-                    setTimeout(() => {
-                        imageContainer.style.backgroundImage = `url(${newImage})`;
-                        imageContainer.classList.add('visible'); // Fade in
-                    }, 300); // Malá prodleva pro hezký přechod
-                }
+    <script>
+        // Language Switcher
+        $(document).ready(function() {
+            $('#language-switch').change(function() {
+                const lang = $(this).val();
+                $('[data-lang-cs]').each(function() {
+                    $(this).text($(this).data(`lang-${lang}`));
+                });
             });
-        }, observerOptions);
-        
-        sections.forEach(section => {
-             observer.observe(section);
-             section.classList.add('visible'); // Na desktopu hned viditelné
+
+            // Fade-in animations on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll('.fade-in').forEach(element => {
+                observer.observe(element);
+            });
         });
-        
-    } else { // Fallback pro mobily (jednoduchá animace při scrollu)
-        const mobileObserver = new IntersectionObserver((entries, observer) => {
-             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-             });
-        }, { threshold: 0.2 });
-
-        sections.forEach(section => mobileObserver.observe(section));
-    }
-
-
-    // --- PŘEPÍNÁNÍ JAZYKŮ ---
-    const langSwitchers = {
-        cz: document.getElementById('lang-cz'),
-        en: document.getElementById('lang-en')
-    };
-    const translatableElements = document.querySelectorAll('[data-lang-key]');
-    
-    const setLanguage = (lang) => {
-        localStorage.setItem('yourchess_lang', lang);
-        
-        translatableElements.forEach(el => {
-            const key = el.getAttribute('data-lang-key');
-            if(translations[lang][key]) {
-                el.innerHTML = translations[lang][key];
-            }
-        });
-        
-        langSwitchers.cz.classList.toggle('active', lang === 'cs');
-        langSwitchers.en.classList.toggle('active', lang === 'en');
-        document.documentElement.lang = lang;
-    };
-    
-    langSwitchers.cz.addEventListener('click', () => setLanguage('cs'));
-    langSwitchers.en.addEventListener('click', () => setLanguage('en'));
-
-    const savedLang = localStorage.getItem('yourchess_lang') || 'cs';
-    setLanguage(savedLang);
-
-});
-</script>
-
+    </script>
 </body>
 </html>
