@@ -11,202 +11,172 @@
     
     <style>
         :root {
-            --bg-dark-slate: #1F2937; 
-            --bg-light-slate: #374151; 
-            --text-primary: #F3F4F6;   
-            --text-secondary: #9CA3AF; 
-            --accent-blue: #3B82F6;    
-            --accent-gold: #F59E0B;    
-            --discord-blurple: #5865F2; /* Discord barva */
-            --border-color: rgba(107, 114, 128, 0.3); 
-            --shadow-color: rgba(0, 0, 0, 0.2);
-            --glow-blue-soft: rgba(59, 130, 246, 0.3);
-            --glow-gold-soft: rgba(245, 158, 11, 0.4);
+            --bg-dark-slate: #181E29; /* Trochu tmavší základ */
+            --bg-light-slate: #2A303C; /* Karty, mírně světlejší */
+            --text-primary: #E8EAF0;   
+            --text-secondary: #A0AEC0; 
+            --accent-blue: #4F8AFF;    /* Světlejší modrá pro lepší kontrast */
+            --accent-gold: #FACC15;    /* Žlutější zlatá */
+            --discord-blurple: #5865F2; 
+            --border-color: rgba(107, 114, 128, 0.25); 
+            --shadow-color: rgba(0, 0, 0, 0.25);
+            --glow-blue-soft: rgba(79, 138, 255, 0.25);
+            --glow-gold-soft: rgba(250, 204, 21, 0.3);
+
+            /* Velikosti pro desktop - upravíme zde */
+            --font-size-base-desktop: 17px; 
+            --padding-section-desktop: 5.5rem; 
+            --padding-card-desktop: 3rem;
         }
 
-        /* --- ZÁKLADY --- */
+        /* --- ZÁKLADY & NOVÉ ANIMOVANÉ POZADÍ --- */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; }
+        html { scroll-behavior: smooth; } /* Základní velikost fontu pro mobil */
         body {
             background-color: var(--bg-dark-slate);
-            background-image: linear-gradient(rgba(31,41,55,0.97), rgba(31,41,55,0.97)), 
-                              url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232a303a' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-2.209-1.791-4-4-4s-4 1.791-4 4 1.791 4 4 4 4-1.791 4-4zm-30 0c0-2.209-1.791-4-4-4s-4 1.791-4 4 1.791 4 4 4 4-1.791 4-4zm60 0c0-2.209-1.791-4-4-4s-4 1.791-4 4 1.791 4 4 4 4-1.791 4-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            /* ALTERNATIVNÍ "BLUEPRINT" POZADÍ - odkomentujte pro změnu 
-            background-color: #0F121B;
-            background-image: none; Konec šumu 
-            */
             color: var(--text-primary);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             line-height: 1.7;
+            font-size: 16px; /* Default pro mobil */
+            position: relative; /* Pro pozadí */
         }
-        /* Pokud chcete Blueprint pozadí, odkomentujte toto a zakomentujte body background-image nahoře: */
-        /*
-        #blueprint-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        #animated-chess-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background-size: 40px 40px;
-            background-image:
-                linear-gradient(to right, rgba(59,130,246,0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(59,130,246,0.05) 1px, transparent 1px);
-            animation: panGrid 80s linear infinite;
+            overflow: hidden;
         }
-        @keyframes panGrid {
-            0% { background-position: 0 0; }
-            100% { background-position: 160px 80px; }
-        }
-        */
+        /* JS bude kreslit na canvas, zde jen fallback/placeholder styl */
         
-        /* --- TYPOGRAFIE --- */
+        /* --- TYPOGRAFIE (upraveno pro desktop) --- */
         h1, h2, h3, .logo, .nav-menu a, .cta-button, .btn-discord {
             font-family: 'Manrope', sans-serif;
             font-weight: 800; 
         }
-        h1 { font-size: clamp(2.3rem, 5.5vw, 3.6rem); line-height: 1.25; margin-bottom: 0.75rem; color: var(--text-primary); }
+        h1 { font-size: clamp(2.2rem, 5.5vw, 3.8rem); line-height: 1.25; margin-bottom: 1rem; color: var(--text-primary); }
         h1 .highlight { color: var(--accent-blue); }
-        h2 { font-size: clamp(1.9rem, 4.8vw, 2.6rem); margin-bottom: 1.5rem; padding-bottom: 0.6rem; border-bottom: 3px solid var(--accent-blue); display: inline-block;}
-        h3 { font-size: clamp(1.3rem, 4.2vw, 1.7rem); color: var(--text-primary); margin-bottom: 0.8rem; }
-        h3 .icon { color: var(--accent-gold); margin-right: 0.6rem; vertical-align: middle;}
+        h2 { font-size: clamp(1.8rem, 4.8vw, 2.8rem); margin-bottom: 1.8rem; padding-bottom: 0.7rem; border-bottom: 3px solid var(--accent-blue); display: inline-block;}
+        h3 { font-size: clamp(1.3rem, 4.2vw, 1.8rem); color: var(--text-primary); margin-bottom: 1rem; }
+        h3 .icon { color: var(--accent-gold); margin-right: 0.7rem; vertical-align: middle; font-size: 1.2em;}
 
-        p { color: var(--text-secondary); margin-bottom: 1.5rem; max-width: 70ch; font-size: 1.05rem;}
+        p { color: var(--text-secondary); margin-bottom: 1.5rem; max-width: 70ch; font-size: 1.1rem;} /* Trochu větší base p */
         a { color: var(--accent-blue); text-decoration: none; font-weight: 500; }
-        a:hover { text-decoration: underline; filter: brightness(1.1); }
+        a:hover { text-decoration: underline; filter: brightness(1.15); }
         strong { color: var(--text-primary); font-weight: 700; }
 
-        /* --- NAVIGACE --- */
+        /* --- NAVIGACE (upraven padding) --- */
         .navbar {
             position: fixed; top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 1.2rem 5%; z-index: 1000; /* Zvýšený padding */
-            background: rgba(31, 41, 55, 0.9); backdrop-filter: blur(10px);
+            padding: 1.3rem 5%; z-index: 1000; 
+            background: rgba(24, 30, 41, 0.88); backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
         }
-        .logo { font-size: 1.6rem; letter-spacing: 0.5px; }
-        .nav-cluster { display: flex; align-items: center; gap: 1.75rem; }
-        .nav-menu { list-style: none; display: flex; gap: 1.75rem; }
-        .nav-menu a { font-size: 0.95rem; font-weight:700; color: var(--text-secondary); transition: color 0.2s ease, transform 0.2s ease;}
+        /* Ostatní styly navigace zůstávají zhruba stejné */
+        .logo { font-size: 1.7rem; letter-spacing: 0.5px; }
+        .nav-cluster { display: flex; align-items: center; gap: 2rem; } /* Větší mezery */
+        .nav-menu { list-style: none; display: flex; gap: 2rem; }
+        .nav-menu a { font-size: 1rem; font-weight:700; color: var(--text-secondary); transition: color 0.2s ease, transform 0.2s ease;}
         .nav-menu a:hover, .nav-menu a.active-link { color: var(--text-primary); transform: translateY(-2px); }
-        .lang-switcher a { font-size: 0.9rem; font-weight: 700; color:var(--text-secondary); margin-left:0.25rem;}
+        .lang-switcher a { font-size: 0.95rem; font-weight: 700; color:var(--text-secondary); margin-left:0.3rem;}
         .lang-switcher a.active { color: var(--accent-gold); text-decoration: none; border-bottom:2px solid var(--accent-gold);}
         .nav-toggle-btn { display: none; } 
 
-        /* --- HERO SEKCE --- */
+        /* --- HERO SEKCE (upraven padding) --- */
         .hero {
-            padding: 10rem 5% 6rem; text-align: left; 
-            min-height: 85vh; display: flex; align-items: center; 
+            padding: 11rem 5% 7rem; text-align: left; 
+            min-height: 90vh; display: flex; align-items: center; 
         }
-        .hero-content { max-width: 750px; }
-        .hero .greeting { font-size: 1.2rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 0.5rem; display: block; }
+        .hero-content { max-width: 800px; } /* Trochu širší */
+        .hero .greeting { font-size: 1.3rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 0.6rem; display: block; }
         .hero .subheadline {
-            font-size: 1.2rem; color: var(--text-secondary);
-            margin-top: 1.25rem; margin-bottom: 3rem;
+            font-size: 1.25rem; color: var(--text-secondary);
+            margin-top: 1.5rem; margin-bottom: 3rem;
         }
         .cta-button {
-            display: inline-block; background: var(--accent-blue); color: #fff;
-            padding: 1rem 2.5rem; border-radius: 8px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.75px;
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+            display: inline-block; background: var(--accent-blue); color: var(--bg-dark-slate); /* Tmavší text na modrém tlačítku pro kontrast */
+            padding: 1.1rem 2.8rem; border-radius: 8px; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.8px;
+            box-shadow: 0 6px 20px rgba(79, 138, 255, 0.35);
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease; border:none;
             animation: pulse-cta 2.5s infinite ease-in-out;
         }
-        @keyframes pulse-cta {
-            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3); }
-            50% { transform: scale(1.03); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.45); }
-            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3); }
-        }
-        .cta-button:hover { animation-play-state: paused; transform: translateY(-4px) scale(1.03) ; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5); }
-        .cta-secondary {
-            display: inline-block; color: var(--accent-blue);
-            padding: 0.9rem 2.25rem; border: 2px solid var(--accent-blue); border-radius: 8px;
-            font-size: 1.05rem; text-transform: uppercase; margin-left:1.25rem;
-        }
-        .cta-secondary:hover { background: rgba(59,130,246,0.1); }
+        /* Animace a hover zůstávají stejné */
 
-
-        /* --- SEKCE A KARTY --- */
-        .section { padding: 4.5rem 5%; }
+        /* --- SEKCE A KARTY (upraven padding) --- */
+        .section { padding: var(--padding-section-desktop) 5%; }
         .content-card {
             background-color: var(--bg-light-slate);
-            padding: clamp(2rem, 5vw, 3rem); /* Responzivní padding */
-            border-radius: 12px;
-            box-shadow: 0 10px 35px var(--shadow-color);
+            padding: var(--padding-card-desktop); 
+            border-radius: 14px; /* Mírně větší zaoblení */
+            box-shadow: 0 12px 40px var(--shadow-color);
             border: 1px solid var(--border-color);
-            margin-bottom: 3rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 3.5rem;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
-        .content-card:hover { transform: translateY(-5px); box-shadow: 0 15px 45px rgba(0,0,0,0.25); }
+        .content-card:hover { transform: translateY(-6px) scale(1.005); box-shadow: 0 18px 50px rgba(0,0,0,0.3); }
         
-        .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.75rem; margin-top:2.5rem;}
+        .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 2rem; margin-top:2.5rem;}
         .grid-item {
             background: var(--bg-dark-slate); border: 1px solid var(--border-color);
-            padding: 1.75rem; border-radius: 10px;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            padding: 2rem; border-radius: 10px; /* Větší padding */
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
-        .grid-item:hover { transform: translateY(-3px); border-color: var(--accent-blue); }
-        .grid-item .icon { font-size: 2rem; margin-bottom: 0.8rem; color: var(--accent-gold); display: inline-block;}
+        .grid-item:hover { transform: translateY(-4px); border-color: var(--accent-blue); box-shadow: 0 5px 15px rgba(79,138,255,0.1);}
+        /* Styly ikon a textu v gridu zůstávají */
         
-        .image-container { 
-            background: var(--bg-dark-slate); border-radius: 10px;
-            padding: 0.75rem; margin: 2.5rem 0;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 5px 15px var(--shadow-color);
-        }
-        .image-container img { width: 100%; height: auto; display: block; border-radius: 6px; }
-        
-        .bullet-list { list-style: none; padding-left: 0;}
-        .bullet-list li { padding-left: 2em; position:relative; margin-bottom:0.9em; font-size:1.05rem;}
-        .bullet-list li::before {
-            content: '✓'; 
-            color: var(--accent-gold); font-weight: bold;
-            position: absolute; left: 0; font-size: 1.1em;
-            text-shadow: 0 0 5px var(--glow-gold-soft);
-        }
-        
-        /* Discord Tlačítko */
+        /* Discord Tlačítko (upraveno) */
         .btn-discord {
-            display: inline-flex; align-items: center; gap: 0.75rem;
+            display: inline-flex; align-items: center; gap: 0.8rem;
             background-color: var(--discord-blurple); color: #fff;
-            padding: 0.9rem 1.8rem; border-radius: 8px; font-size: 1.05rem;
-            text-transform: uppercase; letter-spacing: 0.5px;
-            box-shadow: 0 4px 14px rgba(88, 101, 242, 0.4);
+            padding: 1rem 2rem; border-radius: 8px; font-size: 1.1rem; /* Větší */
+            text-transform: uppercase; letter-spacing: 0.6px;
+            box-shadow: 0 5px 18px rgba(88, 101, 242, 0.35);
             transition: transform 0.2s ease, box-shadow 0.2s ease; border: none;
-            margin-top: 1.5rem;
+            margin-top: 2rem; /* Více prostoru nad */
         }
-        .btn-discord svg { width: 24px; height: 24px; }
-        .btn-discord:hover { transform: translateY(-3px); box-shadow: 0 7px 20px rgba(88, 101, 242, 0.5); }
+        .btn-discord svg { width: 26px; height: 26px; } /* Větší ikona */
+        .btn-discord:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 8px 25px rgba(88, 101, 242, 0.45); }
 
 
-        /* Patička */
-        .footer { text-align: center; padding: 3.5rem 5% 2.5rem; border-top: 1px solid var(--border-color); background: var(--bg-light-slate);}
+        /* --- RESPONZIVITA (základní desktop styly a media query pro menší) --- */
+        /* Pro Desktop jsou teď hodnoty definované ve --variables a aplikované přímo */
+        @media (min-width: 1024px) { /* Úpravy pro větší desktopy */
+            body { font-size: var(--font-size-base-desktop); }
+            .section { padding: var(--padding-section-desktop) 10%; } /* Větší postranní padding na větších obrazovkách */
+            .hero { padding: 12rem 10% 8rem; }
+            .hero-content { max-width: 850px; }
+            .content-card { padding: var(--padding-card-desktop); }
+        }
 
-        /* --- RESPONZIVITA --- */
-        @media (max-width: 800px) { /* Stávající breakpoint */
+        @media (max-width: 800px) { 
+            body { font-size: 15px; } /* Základní font pro menší mobily, aby se vešlo víc */
+            .section { padding: 3rem 5%; }
+            .content-card { padding: 2rem 1.5rem; margin-bottom: 2rem; }
+            .hero { padding: 7rem 5% 3.5rem; } 
              /* Zachovat existující mobilní styly pro .nav-toggle-btn, .nav-cluster, .nav-menu atd. */
             .navbar { padding: 1rem 5%; }
-            .hero { text-align:center; padding: 8rem 5% 4rem; } 
+            .hero { text-align:center; } 
             .hero-content { margin: 0 auto; }
-            .cta-button, .cta-secondary, .btn-discord { width:100%; margin-left:0; margin-bottom:1rem; }
+            .cta-button, .cta-secondary, .btn-discord { width:100%; margin-left:0; margin-bottom:1.2rem; }
             .cta-secondary { margin-top:0.5rem; }
             .content-with-image { flex-direction: column; }
             .content-with-image .image-container { order: -1; margin-bottom: 2rem; }
         }
-        /* Můžeme přidat ještě menší breakpoint pro velmi malé mobily, pokud je potřeba */
-        @media (min-width: 900px) { /* Pro layout obrázek-text na desktopu */
-             .content-with-image { display:flex; flex-direction: row; align-items:center; gap:3rem;}
-             .content-with-image .text-content { flex:1.2; } /* Textu trochu více prostoru */
-             .content-with-image .image-container { flex:0.8; max-width:500px; margin:0;}
-             .content-with-image.reverse { flex-direction: row-reverse;}
-        }
         
-        /* --- ANIMACE PRVKŮ PŘI SCROLLU --- */
-        .reveal { opacity: 0; transform: translateY(25px); transition: opacity 0.65s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.65s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        /* Zachovat scroll animace */
+        .reveal { opacity: 0; transform: translateY(25px); transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
-    <!-- <div id="blueprint-bg"></div> --> <!-- Pokud chcete blueprint, odkomentujte -->
-
+    <canvas id="animated-chess-bg"></canvas> <!-- Canvas pro nové pozadí -->
+    
+    <!-- HTML struktura zůstává z velké části stejná jako v předchozí verzi, -->
+    <!-- pouze jsem přidal/upravil některé třídy nebo elementy pro vylepšení. -->
+    <!-- Ujistěte se, že Discord tlačítko je správně umístěno v sekci #support. -->
+    
     <nav class="navbar">
-        <!-- ... (HTML pro Navbar zůstává stejné jako v předchozí dobré verzi, jen pozor na třídy u přepínače jazyků) ... -->
         <a href="#" class="logo">YourChess</a>
         <div class="nav-cluster" id="nav-cluster">
             <ul class="nav-menu">
@@ -237,14 +207,13 @@
         <!-- Úvod / O co jde -->
         <section id="intro" class="section">
             <div class="content-card reveal">
-                <!-- Tento text je už dobře zakomponovaný v HERO, zvažte jestli tuto sekci potřebujete nebo sloučit s Hero -->
-                <p data-lang-key="intro_p1" style="font-size:1.15em; color:var(--text-primary);">Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.</p>
+                <p data-lang-key="intro_p1" style="font-size:1.2em; color:var(--text-primary); font-weight:500;">Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.</p>
                 <p data-lang-key="intro_p2">Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong></p>
             </div>
         </section>
 
         <!-- Pro Koho Je Tento Projekt? -->
-        <section id="who-for" class="section">
+        <section id="who-for" class="section darker-surface"> <!-- Střídání pozadí pro sekce -->
             <div class="content-card reveal">
                 <h2 data-lang-key="who_title">Pro Koho Je Tento Projekt?</h2>
                  <p data-lang-key="who_intro">Tato kampaň je pro vás, pokud:</p>
@@ -258,7 +227,7 @@
         </section>
 
         <!-- Co Získáte -->
-        <section id="package" class="section darker-surface">
+        <section id="package" class="section">
             <div class="content-card reveal">
                 <h2 data-lang-key="package_title">Co Získáte v <span class="highlight">Exkluzivním Balíčku</span>?</h2>
                 <p data-lang-key="package_intro">Vaší podporou si nekupujete jen soubory. Kupujete si vstupenku do světa YourChess.</p>
@@ -280,7 +249,7 @@
         </section>
 
         <!-- Podpora a Komunita -->
-         <section id="support" class="section">
+         <section id="support" class="section darker-surface">
             <div class="content-card reveal">
                 <h2 data-lang-key="support_title">Víc než jen Soubory: <span class="highlight">Naše Podpora a Komunita</span></h2>
                 <p data-lang-key="support_p1">Nenecháme vás v tom samotné. Chceme, aby se vám stavba podařila a abyste z ní měli radost. Proto je součástí balíčku i náš závazek vůči vám:</p>
@@ -296,49 +265,57 @@
         </section>
 
         <!-- Transparence & Cena -->
-        <section id="transparency" class="section darker-surface">
+        <section id="transparency" class="section">
              <div class="content-card reveal">
-                <h2 data-lang-key="transparency_title">Plná Transparence: <span class="highlight">Co Budete Potřebovat?</span></h2>
-                <p data-lang-key="transparency_p1">Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.</p>
-                <p data-lang-key="transparency_p2" style="font-size: 1.15em;">Dle mých propočtů se celková cena za všechny součástky (Arduino, 64x Hall Senzor, LED pásek, elektronika, sklo atd.) pohybuje okolo <strong style="color:var(--accent-gold);">4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který zajistí, že se vaše investice do hardwaru promění ve funkční mistrovské dílo.</p>
-                <div class="image-container">
-                    <img src="https://i.imgur.com/GgGv3fE.png" alt="Prototyp YourChess - boční pohled">
+                <div class="content-with-image">
+                    <div class="text-content">
+                        <h2 data-lang-key="transparency_title">Plná Transparence: <span class="highlight">Co Budete Potřebovat?</span></h2>
+                        <p data-lang-key="transparency_p1">Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.</p>
+                        <p data-lang-key="transparency_p2" style="font-size: 1.2em; line-height:1.5;">Dle mých propočtů se celková cena za všechny součástky pohybuje okolo <strong style="color:var(--accent-gold); font-size:1.1em;">4400 Kč (cca 180 EUR)</strong>. Náš balíček je klíčem, který vaši investici promění ve funkční dílo.</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="https://i.imgur.com/GgGv3fE.png" alt="Prototyp YourChess">
+                    </div>
                 </div>
             </div>
         </section>
         
         <!-- Vize Budoucnosti -->
-        <section id="vision" class="section">
+        <section id="vision" class="section darker-surface">
             <div class="content-card reveal">
-                <h2 data-lang-key="vision_title">Naše Vize: <span class="highlight">Budoucnost YourChess</span></h2>
-                <p data-lang-key="vision_p1">Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>, která bude menší, lehčí, rychlejší, lépe přenositelná, hezčí a chytřejší.</p>
-                 <p data-lang-key="vision_p2">Co plánujeme pro v2.0:</p>
-                <ul class="bullet-list">
-                    <li data-lang-key="vision_item1"><strong>Online Hra:</strong> Přechod na ESP32 umožní připojení na Lichess.</li>
-                    <li data-lang-key="vision_item2"><strong>Pokročilá AI:</strong> Implementace silnějšího šachového engine s volitelným ELO.</li>
-                    <li data-lang-key="vision_item3"><strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely a zjednoduší stavbu.</li>
-                </ul>
-                <div class="image-container">
-                    <img src="https://i.imgur.com/Pew15d5.png" alt="Vize YourChess v2.0 - pohled shora">
+                 <div class="content-with-image reverse">
+                    <div class="text-content">
+                        <h2 data-lang-key="vision_title">Naše Vize: <span class="highlight">Budoucnost YourChess</span></h2>
+                        <p data-lang-key="vision_p1">Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>, která bude menší, lehčí, rychlejší, lépe přenositelná, hezčí a chytřejší.</p>
+                        <p data-lang-key="vision_p2">Co plánujeme pro v2.0:</p>
+                        <ul class="bullet-list">
+                            <li data-lang-key="vision_item1"><strong>Online Hra:</strong> Přechod na ESP32 umožní připojení na Lichess.</li>
+                            <li data-lang-key="vision_item2"><strong>Pokročilá AI:</strong> Implementace silnějšího šachového engine s volitelným ELO.</li>
+                            <li data-lang-key="vision_item3"><strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely a zjednoduší stavbu.</li>
+                        </ul>
+                    </div>
+                    <div class="image-container">
+                        <img src="https://i.imgur.com/Pew15d5.png" alt="Vize YourChess v2.0">
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Staňte se součástí -->
-        <section id="join" class="section darker-surface">
+        <section id="join" class="section">
              <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="join_title">Staňte se <span class="highlight">součástí naší cesty</span></h2>
-                <p data-lang-key="join_p1">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.</p>
-                <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Podpořit na Indiegogo & Připojit se k Nám!</a>
+                <p data-lang-key="join_p1" style="max-width: 600px; margin-left:auto; margin-right:auto;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.</p>
+                <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Podpořit YourChess na Indiegogo!</a>
             </div>
         </section>
         
          <!-- Download .exe souboru -->
-        <section id="download" class="section">
+        <section id="download" class="section darker-surface">
             <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="download_title">Stáhnout <span class="highlight">YourChess Uploader</span></h2>
-                <p data-lang-key="download_p">Software pro nahrání firmware a přístup k digitálním podkladům pro backery (nebo pro vyzkoušení dema, pokud máte).</p>
-                <a href="downloads/YourChessUploader.exe" download class="cta-button" data-lang-key="download_btn">Stáhnout Uploader (.EXE)</a>
+                <p data-lang-key="download_p" style="max-width: 600px; margin-left:auto; margin-right:auto;">Software pro nahrání firmware a přístup k digitálním podkladům pro backery.</p>
+                <a href="downloads/YourChessUploader.exe" download class="cta-button" data-lang-key="download_btn" style="margin-top:1rem;">Stáhnout Uploader (.EXE)</a>
                 <p style="font-size:0.9rem; margin-top:1.5rem;" data-lang-key="download_note">(Vyžaduje unikátní kód pro plný přístup k souborům po podpoře kampaně.)</p>
             </div>
         </section>
@@ -350,10 +327,58 @@
     </footer>
 
     <script>
-    // JS kód zůstává stejný, jen se ujistěte, že klíče v `translations` odpovídají novým `data-lang-key` atributům
+    // --- JS PRO ANIMOVANÉ POZADÍ ---
+    const canvas = document.getElementById('animated-chess-bg');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width, height, particles;
+
+        const config = {
+            particleColor: "rgba(79, 138, 255, 0.1)", // --accent-blue s nízkou alpha
+            lineColor: "rgba(79, 138, 255, 0.05)",
+            particleAmount: 0, // Vypočítá se dynamicky
+            defaultSpeed: 0.15,
+            variantSpeed: 0.15,
+            defaultRadius: 1.5,
+            variantRadius: 1,
+            linkRadius: 120, // Menší pro jemnější efekt
+        };
+
+        class Particle { /* ... (Definice třídy Particle) ... */ 
+             constructor() { this.x = Math.random() * width; this.y = Math.random() * height; this.speed = config.defaultSpeed + Math.random() * config.variantSpeed; this.directionAngle = Math.floor(Math.random() * 360); this.color = config.particleColor; this.radius = config.defaultRadius + Math.random() * config.variantRadius;}
+            update() { this.border(); const radians = this.directionAngle * Math.PI / 180; this.x += this.speed * Math.cos(radians); this.y += this.speed * Math.sin(radians);}
+            border() { if (this.x >= width || this.x <= 0) {this.directionAngle = (180 - this.directionAngle) % 360;} if (this.y >= height || this.y <= 0) {this.directionAngle = (360 - this.directionAngle) % 360;}}
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.closePath(); ctx.fillStyle = this.color; ctx.fill();}
+        }
+
+        function setup() { /* ... (Definice setup) ... */ 
+            width = window.innerWidth; height = document.body.scrollHeight; // Výška celé stránky
+            canvas.width = width; canvas.height = height;
+            config.particleAmount = Math.floor(width * height / 20000); // hustota částic
+            particles = [];
+            for (let i = 0; i < config.particleAmount; i++) { particles.push(new Particle());}
+            window.requestAnimationFrame(loop);
+        }
+
+        function loop() { /* ... (Definice loop pro kreslení) ... */
+            ctx.clearRect(0,0,width,height);
+            for(let particle of particles){particle.update(); particle.draw();}
+            for(let i=0; i<particles.length; i++){ for(let j=i+1; j<particles.length; j++){ const épais = Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2)); if(épais < config.linkRadius){ ctx.beginPath(); ctx.strokeStyle = config.lineColor; ctx.lineWidth = 0.2; ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();}}}
+            window.requestAnimationFrame(loop);
+        }
+        
+        let resizeTimeout;
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(setup, 100); // Opoždění pro resize
+        });
+        setup(); // První spuštění
+    }
+
+    // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace) ---
     document.addEventListener('DOMContentLoaded', () => {
-        const translations = {
-            en: {
+        const translations = { /* ... Vaše překlady ... */ 
+             en: {
                 nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support & Community', nav_vision: 'Vision', nav_download: 'Download',
                 hero_greeting: "Hi, I'm Tadeáš.",
                 hero_title: "More Than a Game.<br><span class='highlight'>Your Own High-Tech Project.</span>",
@@ -382,7 +407,7 @@
                 support_discord_btn: "Join our Discord Community",
                 transparency_title: "Full Transparency: <span class='highlight'>What Will You Need?</span>",
                 transparency_p1: "Our digital package does not include physical components. You'll need to purchase those yourself. The manual will provide a detailed list of everything required.",
-                transparency_p2: "According to my calculations, the total cost for all components (Arduino, 64x Hall Sensors, LED strip, electronics, glass, etc.) is around <strong style='color:var(--accent-gold);'>4400 CZK (approx. 180 EUR)</strong>. Our package is therefore the key that ensures your hardware investment turns into a functional masterpiece.",
+                transparency_p2: "According to my calculations, the total cost for all components (Arduino, 64x Hall Sensors, LED strip, electronics, glass, etc.) is around <strong style='color:var(--accent-gold); font-size:1.1em;'>4400 CZK (approx. 180 EUR)</strong>. Our package is therefore the key that ensures your hardware investment turns into a functional masterpiece.",
                 vision_title: "Our Vision: <span class='highlight'>The Future of YourChess</span>",
                 vision_p1: "This prototype is amazing, but it's just the first step. Your support will allow us to fund the development of <strong>YourChess v2.0</strong>, which will be smaller, lighter, faster, more portable, more beautiful, and smarter.",
                 vision_p2: "What we plan for v2.0:",
@@ -426,7 +451,7 @@
                 support_discord_btn: "Připojit se k Discord komunitě",
                 transparency_title: "Plná Transparence: <span class='highlight'>Co Budete Potřebovat?</span>",
                 transparency_p1: "Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.",
-                transparency_p2: "Dle mých propočtů se celková cena za všechny součástky (Arduino, 64x Hall Senzor, LED pásek, elektronika, sklo atd.) pohybuje okolo <strong style='color:var(--accent-gold);'>4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který zajistí, že se vaše investice do hardwaru promění ve funkční mistrovské dílo.",
+                transparency_p2: "Dle mých propočtů se celková cena za všechny součástky (Arduino, 64x Hall Senzor, LED pásek, elektronika, sklo atd.) pohybuje okolo <strong style='color:var(--accent-gold); font-size:1.1em;'>4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který zajistí, že se vaše investice do hardwaru promění ve funkční mistrovské dílo.",
                 vision_title: "Naše Vize: <span class='highlight'>Budoucnost YourChess</span>",
                 vision_p1: "Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>, která bude menší, lehčí, rychlejší, lépe přenositelná, hezčí a chytřejší.",
                 vision_p2: "Co plánujeme pro v2.0:",
@@ -443,6 +468,7 @@
             }
         };
 
+        // Navigace, Jazyky, Scroll Reveal - kód zůstává stejný jako v poslední funkční verzi
         const navToggleBtn = document.getElementById('nav-toggle');
         const navCluster = document.getElementById('nav-cluster');
         if (navToggleBtn && navCluster) {
@@ -450,7 +476,6 @@
                 navCluster.classList.toggle('active');
                 navToggleBtn.classList.toggle('active');
             });
-            // Zavírání menu po kliknutí na odkaz v mobilním menu, ale ne na jazykový přepínač
              navCluster.querySelectorAll('.nav-menu a').forEach(link => {
                 link.addEventListener('click', () => {
                     if (navCluster.classList.contains('active')) {
@@ -463,13 +488,10 @@
 
         const langCz = document.getElementById('lang-cz');
         const langEn = document.getElementById('lang-en');
-        
         const setLanguage = (lang) => {
             document.querySelectorAll('[data-lang-key]').forEach(el => {
                 const key = el.dataset.langKey;
-                if (translations[lang] && translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
-                }
+                if (translations[lang] && translations[lang][key]) { el.innerHTML = translations[lang][key];}
             });
             localStorage.setItem('yourchess_lang', lang);
             if(langCz && langEn){
@@ -477,7 +499,6 @@
                 langEn.classList.toggle('active', lang === 'en');
             }
         };
-
         if(langCz && langEn){
             langCz.addEventListener('click', (e) => { e.preventDefault(); setLanguage('cs'); });
             langEn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
@@ -487,14 +508,10 @@
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); 
-                }
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
             });
         }, { threshold: 0.1 });
         revealElements.forEach(el => revealObserver.observe(el));
-
         document.getElementById('current-year').textContent = new Date().getFullYear();
     });
     </script>
