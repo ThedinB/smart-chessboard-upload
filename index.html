@@ -3,135 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YourChess: Prototyp Budoucnosti Šachů</title>
+    <title>YourChess: Postavte si Šachovnici Budoucnosti</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Exo+2:wght@600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #121826; /* Tmavě modro-šedá */
-            --bg-surface: #1E293B; /* O něco světlejší */
-            --text-primary: #E2E8F0;
-            --text-secondary: #94A3B8;
-            --accent-blue: #3B82F6;
-            --accent-orange: #F59E0B; /* Pro "jiskru" */
-            --border-color: rgba(148, 163, 184, 0.2);
-            --glow-blue: rgba(59, 130, 246, 0.3);
+            --bg-deep-black: #0D0D0D;
+            --bg-dark-surface: #181818; 
+            --text-cream: #F5F5F5;
+            --text-grey: #A0A0A0;
+            --accent-blue-elegant: #5D7EA6; /* Tlumenější modrá */
+            --accent-gold-subtle: #B08D57; /* Decentní zlatá/bronzová */
+            --border-color-subtle: rgba(176, 141, 87, 0.2); /* Zlatavý nádech */
+            --glow-blue-soft: rgba(93, 126, 166, 0.2);
         }
 
         /* --- ZÁKLADY --- */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; }
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            font-family: 'Roboto Mono', monospace; /* Technický font pro text */
+            background-color: var(--bg-deep-black);
+            color: var(--text-cream);
+            font-family: 'Lato', sans-serif;
             overflow-x: hidden;
             line-height: 1.7;
         }
         
         /* --- TYPOGRAFIE --- */
-        h1, h2, h3, .logo {
-            font-family: 'Exo 2', sans-serif; /* Výrazný font pro nadpisy */
-            font-weight: 800;
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
             line-height: 1.2;
-            letter-spacing: 0.5px;
         }
-        h1 { font-size: clamp(2.2rem, 6vw, 3.5rem); color: var(--text-primary); }
-        h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 1rem; color: var(--accent-blue); }
-        h3 { font-size: clamp(1.2rem, 4vw, 1.5rem); color: var(--accent-orange); margin-bottom: 0.75rem; }
-        p { color: var(--text-secondary); margin-bottom: 1.5rem; max-width: 70ch; }
-        a { color: var(--accent-blue); text-decoration: none; transition: color 0.3s ease; }
+        h3, .logo, .nav-menu a, .cta-button {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        h1 { font-size: clamp(2.5rem, 6vw, 4rem); color: var(--text-cream); }
+        h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1.5rem; color: var(--text-cream); }
+        h2 .highlight { color: var(--accent-gold-subtle); } /* Zvýraznění zlatou */
+        h3 { font-size: clamp(1.3rem, 4vw, 1.6rem); color: var(--accent-blue-elegant); margin-bottom: 0.75rem; }
+        
+        p { color: var(--text-grey); margin-bottom: 1.5rem; max-width: 65ch; }
+        a { color: var(--accent-blue-elegant); text-decoration: none; transition: color 0.3s ease; }
         a:hover { filter: brightness(1.2); }
-        strong { color: var(--text-primary); font-weight: 500; }
+        strong { color: var(--text-cream); font-weight: 700; }
 
         /* --- NAVIGACE --- */
         .navbar {
             position: fixed; top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 5%; z-index: 1000;
-            background: rgba(18, 24, 38, 0.85); backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border-color);
+            padding: 1.25rem 5%; z-index: 1000;
+            background: rgba(13, 13, 13, 0.85); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color-subtle);
         }
-        .logo { font-size: 1.4rem; }
-        .nav-toggle { display: none; /* pro mobilní menu */ }
-        .nav-menu { list-style: none; display: flex; gap: 1.5rem; }
-        .nav-menu a { font-family: 'Exo 2'; font-weight: 600; font-size: 0.9rem; text-transform: uppercase;}
+        .logo { font-size: 1.6rem; letter-spacing: 1px; }
+        .nav-right-cluster { display: flex; align-items: center; gap: 2rem; }
+        .nav-menu { list-style: none; display: flex; gap: 2rem; }
+        .nav-menu a { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .lang-switcher-desktop a { font-family: 'Montserrat'; font-size: 0.9rem; margin-left: 0.5rem; }
+        .lang-switcher-desktop .active { color: var(--accent-gold-subtle); font-weight: 700; }
+        .nav-toggle { display: none; } /* Hamburger ikona */
 
         /* --- HERO SEKCE --- */
         .hero {
-            padding: 8rem 5% 4rem; text-align: center;
+            padding: 9rem 5% 5rem; text-align: center;
+            min-height: 80vh; display: flex; flex-direction: column; justify-content: center;
+            position: relative;
+        }
+        .hero::before { /* Decentní geometrické pozadí */
+            content: ''; position: absolute; top:0; left:0; right:0; bottom:0; z-index: -1;
             background-image: 
-                radial-gradient(circle at top left, rgba(59,130,246,0.1) 0%, transparent 40%),
-                radial-gradient(circle at bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
+                linear-gradient(45deg, var(--border-color-subtle) 1px, transparent 1px),
+                linear-gradient(-45deg, var(--border-color-subtle) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
         }
         .hero .subheadline {
-            font-size: 1.1rem; color: var(--text-primary);
-            margin: 1.5rem 0 2.5rem; max-width: 700px; margin-left: auto; margin-right: auto;
+            font-size: 1.15rem; color: var(--text-cream);
+            margin: 1.5rem 0 2.5rem; max-width: 650px; margin-left: auto; margin-right: auto;
+            font-family: 'Lato';
         }
         .cta-button {
-            display: inline-block; background: var(--accent-blue); color: #fff;
-            padding: 0.8rem 2rem; border-radius: 6px;
-            font-family: 'Exo 2'; font-weight: 600; font-size: 1.1rem; text-transform: uppercase;
-            box-shadow: 0 5px 15px var(--glow-blue);
+            display: inline-block; background: var(--accent-blue-elegant); color: var(--text-cream);
+            padding: 0.9rem 2.5rem; border-radius: 6px; font-size: 1.1rem; text-transform: uppercase;
+            box-shadow: 0 5px 20px var(--glow-blue-soft);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px var(--glow-blue); }
+        .cta-button:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--glow-blue-soft); }
 
         /* --- SEKCE --- */
-        .section { padding: 4rem 5%; border-bottom: 1px solid var(--border-color); }
-        .section:last-of-type { border-bottom: none; }
-        .section-header { margin-bottom: 2rem; }
+        .section { padding: 5rem 5%; }
+        .section.darker-surface { background-color: var(--bg-dark-surface); }
+        .section-header { margin-bottom: 3rem; text-align: center; }
         
-        /* Obsahový balíček - Co získáte */
-        .package-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        /* Obsahový balíček */
+        .package-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         .package-item {
-            background: var(--bg-surface); border: 1px solid var(--border-color);
-            padding: 1.5rem; border-radius: 8px;
+            background: var(--bg-dark-surface); border: 1px solid var(--border-color-subtle);
+            padding: 2rem; border-radius: 8px; text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .package-item .icon {
-            font-size: 2rem; margin-bottom: 0.5rem;
-            color: var(--accent-orange); /* Ikony budou oranžové */
+        .package-item:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(176, 141, 87, 0.1); }
+        .package-item .icon svg {
+            width: 40px; height: 40px; margin-bottom: 1rem;
+            stroke: var(--accent-gold-subtle); /* Ikony zlaté */
         }
 
         /* Prototyp a Vize */
-        .prototype-section, .vision-section {
-            background-color: var(--bg-surface);
+        .content-with-image { display: flex; flex-direction: column; gap: 2rem; align-items: center;}
+        .image-container {
+            background: var(--bg-dark-surface); border: 1px solid var(--border-color-subtle);
+            padding: 1rem; border-radius: 12px; width: 100%; max-width: 600px;
         }
-        .image-placeholder { /* Místo pro vaše fotky/rendery */
-            background: #2a3a50; border-radius: 8px;
-            min-height: 250px; display: flex; align-items: center; justify-content: center;
-            font-style: italic; color: var(--text-secondary);
-            border: 2px dashed var(--border-color);
-            margin-bottom: 1.5rem;
-        }
-        
+        .image-container img { width: 100%; height: auto; display: block; border-radius: 6px; }
+
         /* Patička */
-        .footer { text-align: center; padding: 3rem 5%; background: var(--bg-surface); }
-        .lang-switcher a { margin: 0 0.5rem; font-family: 'Roboto Mono'; font-weight: 500; }
-        .lang-switcher .active { color: var(--accent-blue); }
+        .footer { text-align: center; padding: 4rem 5% 2rem; background: var(--bg-dark-surface); }
 
         /* --- RESPONZIVITA --- */
-        @media (max-width: 768px) {
-            .nav-toggle { display: block; /* Zobrazí hamburger ikonu */ cursor: pointer; }
-            .nav-toggle .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: var(--text-primary); transition: all 0.3s ease-in-out; }
-            .nav-menu {
-                position: fixed; top: 0; right: -100%; /* Skryté mimo obrazovku */
-                width: 70%; height: 100vh; background: var(--bg-dark);
+        @media (max-width: 900px) { /* Změna breakpointu pro lepší přechod */
+            .nav-toggle { display: block; cursor: pointer; z-index: 1001;}
+            .nav-toggle .bar { display: block; width: 25px; height: 2px; margin: 5px auto; background-color: var(--text-cream); transition: all 0.3s ease-in-out; }
+            .nav-menu, .lang-switcher-desktop { display: none; } /* Skryje desktopové menu a jazyky */
+            
+            .nav-menu-mobile { /* Nová třída pro mobilní menu */
+                list-style: none; padding:0; margin:0;
+                position: fixed; top: 0; right: -100%; 
+                width: 80%; max-width:300px; height: 100vh; background: var(--bg-deep-black);
                 flex-direction: column; justify-content: center; align-items: center;
-                transition: right 0.3s ease-in-out;
-                border-left: 1px solid var(--border-color);
+                transition: right 0.35s cubic-bezier(0.77, 0, 0.175, 1);
+                border-left: 1px solid var(--border-color-subtle);
+                display: flex; /* Zajistí, že je flexbox, když je aktivní */
             }
-            .nav-menu.active { right: 0; /* Zobrazí se */ }
-            .nav-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .nav-menu-mobile.active { right: 0; }
+            .nav-menu-mobile li { margin: 1.5rem 0; }
+            .nav-menu-mobile a { font-size: 1.2rem; }
+            .lang-switcher-mobile { margin-top: 2rem; }
+            .lang-switcher-mobile a { font-size: 1.1rem; margin: 0 0.75rem; font-family: 'Montserrat'; }
+            .lang-switcher-mobile .active { color: var(--accent-gold-subtle); font-weight: 700; }
+
+            .nav-toggle.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
             .nav-toggle.active .bar:nth-child(2) { opacity: 0; }
-            .nav-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+            .nav-toggle.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        }
+
+        @media (min-width: 901px) {
+            .content-with-image { flex-direction: row; }
+            .content-with-image .text-content { flex: 1; }
+            .content-with-image .image-container { flex: 0 0 45%; } /* Pevná šířka pro obrázek */
+            .content-with-image.reverse { flex-direction: row-reverse; }
         }
         
         /* --- ANIMACE PRVKŮ PŘI SCROLLU --- */
-        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
@@ -139,198 +168,218 @@
 
     <nav class="navbar">
         <a href="#" class="logo">YourChess</a>
+        <div class="nav-right-cluster">
+            <ul class="nav-menu">
+                <li><a href="#about-project" data-lang-key="nav_about">O projektu</a></li>
+                <li><a href="#package" data-lang-key="nav_package">Co získáte</a></li>
+                <li><a href="#prototype" data-lang-key="nav_prototype">Prototyp</a></li>
+                <li><a href="#vision" data-lang-key="nav_vision">Vize</a></li>
+            </ul>
+            <div class="lang-switcher-desktop">
+                <a href="#" id="lang-cz-desktop" class="active">CZ</a> | <a href="#" id="lang-en-desktop">EN</a>
+            </div>
+        </div>
         <div class="nav-toggle" id="nav-toggle"> <div class="bar"></div> <div class="bar"></div> <div class="bar"></div> </div>
-        <ul class="nav-menu" id="nav-menu">
-            <li><a href="#about-project" data-lang-key="nav_about">O projektu</a></li>
-            <li><a href="#package" data-lang-key="nav_package">Co získáte</a></li>
-            <li><a href="#prototype" data-lang-key="nav_prototype">Prototyp</a></li>
-            <li><a href="#vision" data-lang-key="nav_vision">Vize</a></li>
-        </ul>
     </nav>
+    
+    <!-- Mobilní menu (skryté defaultně) -->
+    <ul class="nav-menu-mobile" id="nav-menu-mobile">
+        <li><a href="#about-project" data-lang-key="nav_about_mobile">O projektu</a></li>
+        <li><a href="#package" data-lang-key="nav_package_mobile">Co získáte</a></li>
+        <li><a href="#prototype" data-lang-key="nav_prototype_mobile">Prototyp</a></li>
+        <li><a href="#vision" data-lang-key="nav_vision_mobile">Vize</a></li>
+        <div class="lang-switcher-mobile">
+            <a href="#" id="lang-cz-mobile" class="active">CZ</a> | <a href="#" id="lang-en-mobile">EN</a>
+        </div>
+    </ul>
+
 
     <main>
         <!-- HERO SEKCE -->
         <header class="hero">
             <h1 data-lang-key="hero_title" class="reveal">YourChess: Staňte se součástí vývoje.<br>Postavte si prototyp budoucnosti.</h1>
-            <p data-lang-key="hero_subtitle" class="subheadline reveal">Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice. Podpořte projekt, který mění pravidla hry, a buďte u zrodu jeho finální verze.</p>
+            <p data-lang-key="hero_subtitle" class="subheadline reveal">Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice. Podpořte projekt, který mění pravidla hry.</p>
             <a href="https://VASE-INDIEGOGO-URL" target="_blank" class="cta-button reveal" data-lang-key="hero_cta">Podpořit projekt na Indiegogo</a>
         </header>
 
         <!-- Sekce 2: O co v tomto projektu skutečně jde? -->
         <section id="about-project" class="section">
-            <div class="section-header reveal">
-                <h2 data-lang-key="about_title">O co v tomto projektu <span style="color:var(--accent-orange);">skutečně</span> jde?</h2>
-            </div>
-            <div class="reveal">
-                <p data-lang-key="about_p1">Toto není kampaň na hotový produkt v krabici. Toto je <strong>pozvánka pro pravé fanoušky, kutily a technologické nadšence</strong>, aby se stali součástí něčeho výjimečného.</p>
-                <p data-lang-key="about_p2">Představuji vám <strong>YourChess v1.0</strong> – funkční prototyp inteligentní šachovnice, který je výsledkem mé roční maturitní práce. Je to projekt zrozený z vášně pro šachy a elektroniku, který dokazuje, že koncept funguje. A teď, s vaší pomocí, ho chci posunout na světovou úroveň.</p>
-                <p data-lang-key="about_p3">Podporou této kampaně nezískáváte jen produkt, ale stáváte se součástí vývojového týmu. Získáte vše, co potřebujete, abyste si mohli postavit vlastní, funkční prototyp, a zároveň přispějete k vývoji finální, elegantní verze 2.0.</p>
+            <div class="content-with-image reveal">
+                <div class="text-content">
+                    <h2 data-lang-key="about_title">O co v projektu <span class="highlight">skutečně</span> jde?</h2>
+                    <p data-lang-key="about_p1">Toto není kampaň na hotový produkt. Je to <strong>pozvánka pro fanoušky, kutily a technologické nadšence</strong>, aby se stali spolutvůrci.</p>
+                    <p data-lang-key="about_p2">Představuji vám <strong>YourChess v1.0</strong> – funkční prototyp inteligentní šachovnice, výsledek mé maturitní práce. Projekt zrozený z vášně pro šachy a elektroniku, který dokazuje, že koncept funguje. S vaší pomocí ho chci posunout na světovou úroveň.</p>
+                </div>
+                 <div class="image-container">
+                    <!-- FOTKA PROTOTYPU ŠACHOVNICE -->
+                    <img src="https://i.imgur.com/GgGv3fE.png" alt="Prototyp šachovnice YourChess">
+                </div>
             </div>
         </section>
 
-        <!-- Sekce 3: Co získáte v našem exkluzivním balíčku pro backery? -->
-        <section id="package" class="section">
+        <!-- Sekce 3: Co získáte -->
+        <section id="package" class="section darker-surface">
             <div class="section-header reveal">
-                <h2 data-lang-key="package_title">Co získáte v našem <span style="color:var(--accent-orange);">exkluzivním balíčku</span>?</h2>
-                <p data-lang-key="package_intro">Vaší podporou si nekupujete fyzické součástky, ale exkluzivní přístup k digitálnímu know-how a softwaru, který je mozkem celé šachovnice. Balíček obsahuje:</p>
+                <h2 data-lang-key="package_title">Co získáte v <span class="highlight">exkluzivním</span> balíčku?</h2>
+                <p data-lang-key="package_intro">Vaší podporou si nekupujete fyzické součástky, ale digitální know-how a software – mozek šachovnice.</p>
             </div>
             <div class="package-grid">
                 <div class="package-item reveal">
-                    <div class="icon">🗂️</div> <!-- Nahraďte SVG ikonami pokud možno -->
+                    <div class="icon"> <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.5 4.21l4.5 2.58 4.5-2.58M7.5 19.79V14.5L3 12M12 12v7.79M16.5 19.79V14.5L21 12M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"></path></svg> </div>
                     <h3 data-lang-key="package_stl_title">Kompletní STL soubory</h3>
-                    <p data-lang-key="package_stl_desc">Všechny 3D modely potřebné k vytištění mechanické konstrukce šachovnice.</p>
+                    <p data-lang-key="package_stl_desc">3D modely pro tisk mechanické konstrukce šachovnice.</p>
                 </div>
                 <div class="package-item reveal" style="transition-delay: 0.1s;">
-                    <div class="icon">🛠️</div>
+                    <div class="icon"> <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2-3.87a3.5 3.5 0 010 6.74M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> </div>
                     <h3 data-lang-key="package_gerber_title">Gerber data pro PCB</h3>
-                    <p data-lang-key="package_gerber_desc">Profesionální podklady pro výrobu plošných spojů (např. pro JLCPCB).</p>
+                    <p data-lang-key="package_gerber_desc">Podklady pro výrobu plošných spojů (např. JLCPCB).</p>
                 </div>
                 <div class="package-item reveal" style="transition-delay: 0.2s;">
-                    <div class="icon">💻</div>
-                    <h3 data-lang-key="package_uploader_title">Exkluzivní YourChess Uploader (.exe)</h3>
-                    <p data-lang-key="package_uploader_desc">Aplikace pro nahrání firmware do Arduina a stažení digitálních podkladů po ověření kódem.</p>
+                    <div class="icon"> <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> </div>
+                    <h3 data-lang-key="package_uploader_title">Exkluzivní YourChess Uploader</h3>
+                    <p data-lang-key="package_uploader_desc">Aplikace (.exe) pro nahrání firmware a stažení podkladů.</p>
                 </div>
                 <div class="package-item reveal" style="transition-delay: 0.3s;">
-                    <div class="icon">📖</div>
+                    <div class="icon"> <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v11.494m0 0A7.5 7.5 0 0019.5 12H4.5a7.5 7.5 0 007.5 5.747z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253V4.5A2.25 2.25 0 0114.25 2.25h0A2.25 2.25 0 0116.5 4.5v1.753M12 6.253V4.5A2.25 2.25 0 009.75 2.25h0A2.25 2.25 0 007.5 4.5v1.753"></path></svg> </div>
                     <h3 data-lang-key="package_manual_title">Detailní návod (PDF)</h3>
-                    <p data-lang-key="package_manual_desc">Komplexní průvodce stavbou, zapojením a zprovozněním.</p>
+                    <p data-lang-key="package_manual_desc">Průvodce stavbou, zapojením a zprovozněním.</p>
                 </div>
             </div>
-            <p style="margin-top: 2rem; text-align: center;" class="reveal" data-lang-key="package_not_included"><strong>Co balíček neobsahuje:</strong> Fyzické elektronické komponenty (Arduino, senzory, LED) a mechanické díly. Seznam bude v manuálu.</p>
+            <p style="margin-top: 2.5rem; text-align: center;" class="reveal" data-lang-key="package_not_included"><strong>Co balíček neobsahuje:</strong> Fyzické komponenty (Arduino, senzory, LED) a díly. Seznam bude v manuálu.</p>
         </section>
 
         <!-- Sekce 4: Současný prototyp -->
-        <section id="prototype" class="section prototype-section">
-            <div class="section-header reveal">
-                <h2 data-lang-key="prototype_title">Současný prototyp: <span style="color:var(--accent-orange);">Cesta plná výzev</span></h2>
-            </div>
-            <div class="reveal">
-                <p data-lang-key="prototype_p1">Buďme upřímní – současný prototyp je <strong>důkazem konceptu, ne finálním produktem</strong>. Jeho stavba byla plná slepých uliček a kreativních řešení. Například, pro čtení všech 64 senzorů využívá prototyp 32 vodičů zapojených přímo do Arduina. Proč? Protože to byl nejspolehlivější způsob, jak v dané fázi zajistit modularitu a snadnou diagnostiku.</p>
-                <div class="image-placeholder reveal">Zde můžete vložit fotku "syrového" prototypu v1.0</div>
-                <p data-lang-key="prototype_p2">Tento "nedokonalý" stav je ale důkazem autenticity. Ukazuje skutečný vývoj a překonávání překážek. A vy teď máte jedinečnou příležitost být u toho, když se z tohoto funkčního, ale syrového prototypu zrodí něco mnohem elegantnějšího.</p>
+        <section id="prototype" class="section">
+             <div class="content-with-image reverse reveal">
+                <div class="text-content">
+                    <h2 data-lang-key="prototype_title">Současný prototyp: <span class="highlight">Cesta plná výzev</span></h2>
+                    <p data-lang-key="prototype_p1">Současný prototyp je <strong>důkazem konceptu</strong>. Jeho stavba byla plná slepých uliček. Například, 64 senzorů využívá 32 vodičů přímo do Arduina – pro modularitu a diagnostiku.</p>
+                    <p data-lang-key="prototype_p2">Tento "nedokonalý" stav je důkazem autenticity. Ukazuje skutečný vývoj. Máte šanci být u toho, když se z tohoto syrového prototypu zrodí něco elegantnějšího.</p>
+                </div>
+                <div class="image-container">
+                     <!-- FOTKA "SYROVÉHO" PROTOTYPU, třeba detail kabeláže pokud je to ok -->
+                    <img src="https://i.imgur.com/Pew15d5.png" alt="Detail prototypu v1.0">
+                </div>
             </div>
         </section>
 
         <!-- Sekce 5: Vize Budoucnosti -->
-        <section id="vision" class="section vision-section">
+        <section id="vision" class="section darker-surface">
             <div class="section-header reveal">
-                <h2 data-lang-key="vision_title">Vize Budoucnosti (<span style="color:var(--accent-orange);">YourChess v2.0</span>)</h2>
-                <p data-lang-key="vision_intro">Vaše podpora je investicí do budoucnosti projektu YourChess. Získané prostředky použijeme na vývoj v2.0 s dechberoucími vylepšeními:</p>
+                <h2 data-lang-key="vision_title">Vize Budoucnosti (<span class="highlight">YourChess v2.0</span>)</h2>
+                <p data-lang-key="vision_intro">Vaše podpora je investicí. Prostředky použijeme na vývoj v2.0 s vylepšeními:</p>
             </div>
-            <ul style="list-style: none; padding-left: 0;" class="reveal">
-                <li style="margin-bottom: 1rem;"><strong>🔌 Přechod na ESP32:</strong> Srdcem nové verze se stane výkonnější mikrokontroler ESP32, otevírající neuvěřitelné možnosti.</li>
-                <li style="margin-bottom: 1rem;"><strong>🌐 Hra proti lidem přes Lichess:</strong> Díky integrované Wi-Fi v ESP32 se připojíte k serveru Lichess a budete hrát online na své fyzické šachovnici.</li>
-                <li style="margin-bottom: 1rem;"><strong>🤖 Hra proti AI (Stockfish):</strong> Implementace šachového engine Stockfish přímo do šachovnice s nastavitelným ELO.</li>
-                <li style="margin-bottom: 1rem;"><strong>✨ Elegantní design elektroniky:</strong> Jeden velký, profesionální plošný spoj nahradí současné moduly a desítky kabelů.</li>
+            <ul style="list-style: none; padding-left: 0; max-width:700px; margin: 0 auto;" class="reveal">
+                <li style="margin-bottom: 1rem; display:flex; align-items:start; gap:0.75rem;"><span style="color:var(--accent-gold-subtle); font-size:1.5rem;">⚡</span> <div><strong>Přechod na ESP32:</strong> Výkonnější mikrokontroler pro neuvěřitelné možnosti.</div></li>
+                <li style="margin-bottom: 1rem; display:flex; align-items:start; gap:0.75rem;"><span style="color:var(--accent-gold-subtle); font-size:1.5rem;">🌐</span> <div><strong>Hra přes Lichess:</strong> Díky Wi-Fi v ESP32 budete hrát online na své fyzické šachovnici.</div></li>
+                <li style="margin-bottom: 1rem; display:flex; align-items:start; gap:0.75rem;"><span style="color:var(--accent-gold-subtle); font-size:1.5rem;">🤖</span> <div><strong>Hra proti AI (Stockfish):</strong> Implementace šachového engine přímo do šachovnice s nastavitelným ELO.</div></li>
+                <li style="margin-bottom: 1rem; display:flex; align-items:start; gap:0.75rem;"><span style="color:var(--accent-gold-subtle); font-size:1.5rem;">✨</span> <div><strong>Elegantní design elektroniky:</strong> Jeden profesionální plošný spoj nahradí moduly a kabely.</div></li>
             </ul>
-             <div class="image-placeholder reveal" style="margin-top:2rem;">Zde můžete vložit render/ilustraci vize v2.0</div>
         </section>
 
         <!-- Sekce 6: Pro koho je tento projekt? -->
         <section id="who-for" class="section">
             <div class="section-header reveal">
-                <h2 data-lang-key="who_title">Pro koho je tento <span style="color:var(--accent-orange);">projekt</span>?</h2>
+                <h2 data-lang-key="who_title">Pro koho je tento <span class="highlight">projekt</span>?</h2>
             </div>
-            <ul style="list-style: '⚡ '; padding-left: 1.5rem;" class="reveal">
-                <li data-lang-key="who_1" style="margin-bottom:0.5rem;">Technologický nadšenec nebo kutil, který miluje stavět, pájet a oživovat elektroniku.</li>
-                <li data-lang-key="who_2" style="margin-bottom:0.5rem;">Vášnivý šachista, který sní o tom mít doma unikátní, interaktivní šachovnici.</li>
-                <li data-lang-key="who_3" style="margin-bottom:0.5rem;">Podporovatel inovací, který chce pomoci mladému tvůrci přetavit školní projekt ve světový produkt.</li>
+            <ul style="list-style:'✔ '; padding-left: 1.5rem; max-width:700px; margin: 0 auto;" class="reveal">
+                <li data-lang-key="who_1" style="margin-bottom:0.75rem;">Technologický nadšenec nebo kutil, který miluje stavět a oživovat elektroniku.</li>
+                <li data-lang-key="who_2" style="margin-bottom:0.75rem;">Vášnivý šachista, snící o unikátní, interaktivní šachovnici.</li>
+                <li data-lang-key="who_3" style="margin-bottom:0.75rem;">Podporovatel inovací, který chce pomoci mladému tvůrci přetavit školní projekt ve světový produkt.</li>
             </ul>
             <p style="text-align:center; margin-top:3rem;" class="reveal">
-                <strong data-lang-key="who_cta">Staňte se součástí komunity YourChess. Získejte svůj exkluzivní balíček podkladů a buďte první, kdo si postaví tento unikátní prototyp. Děkujeme za vaši podporu!</strong>
+                <strong data-lang-key="who_cta">Staňte se součástí komunity YourChess. Získejte svůj exkluzivní balíček a buďte první, kdo si postaví tento unikátní prototyp. Děkujeme!</strong>
             </p>
-             <div style="text-align:center; margin-top:2rem;" class="reveal">
+             <div style="text-align:center; margin-top:2.5rem;" class="reveal">
                 <a href="https://VASE-INDIEGOGO-URL" target="_blank" class="cta-button" data-lang-key="hero_cta_bottom">Podpořit Nyní</a>
             </div>
         </section>
     </main>
 
     <footer class="footer">
-        <div class="lang-switcher reveal">
-            <a href="#" id="lang-cz" class="active">CZ</a> | <a href="#" id="lang-en">EN</a>
-        </div>
-        <p class="reveal" style="margin-top:1.5rem; font-size:0.9rem;">© <span id="current-year"></span> YourChess</p>
+        <!-- Přepínač jazyků pro Desktop je v navbaru, toto je pro případ, že bychom ho chtěli i zde -->
+        <p class="reveal" style="font-size:0.9rem;">© <span id="current-year"></span> YourChess. Všechna práva vyhrazena.</p>
     </footer>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Slovník (zatím zkrácený, doplňte z textu kampaně)
-        const translations = {
-            en: {
-                nav_about: 'About Project', nav_package: 'What You Get', nav_prototype: 'Prototype', nav_vision: 'Vision',
-                hero_title: "YourChess: Be Part of the Development.<br>Build the Prototype of the Future.",
-                hero_subtitle: "Get exclusive access to digital assets and software to build a functional prototype of an intelligent chessboard. Support a game-changing project and be there for the birth of its final version.",
+        const translations = { /* ... stejné jako v předchozí verzi, jen doplňte klíče pro mobilní nav_xxx_mobile ... */ 
+             en: {
+                nav_about: 'About', nav_package: 'The Kit', nav_prototype: 'Prototype', nav_vision: 'Vision',
+                nav_about_mobile: 'About Project', nav_package_mobile: 'What You Get', nav_prototype_mobile: 'The Prototype', nav_vision_mobile: 'Our Vision', // Mobilní klíče
+                hero_title: "YourChess: Join the Development.<br>Build the Prototype of the Future.",
+                hero_subtitle: "Get exclusive access to digital assets and software to build a functional prototype of an intelligent chessboard. Support a game-changing project.",
                 hero_cta: "Support on Indiegogo", hero_cta_bottom: "Support Now",
-                about_title: "What is this project <span style='color:var(--accent-orange);'>really</span> about?",
-                about_p1: "This is not a campaign for a finished, boxed product. This is an <strong>invitation for true fans, DIYers, and tech enthusiasts</strong> to become part of something special.",
-                about_p2: "Introducing <strong>YourChess v1.0</strong> – a functional prototype of an intelligent chessboard, the result of my year-long graduation project. It's a project born from a passion for chess and electronics, proving the concept works. And now, with your help, I want to take it to a global level.",
-                about_p3: "By supporting this campaign, you're not just getting a product; you're becoming part of the development team. You'll get everything you need to build your own functional prototype and contribute to the development of the final, elegant version 2.0.",
-                package_title: "What do you get in our <span style='color:var(--accent-orange);'>exclusive package</span>?",
-                package_intro: "By supporting, you're not buying physical components, but exclusive access to digital know-how and software that is the brain of the chessboard. The package includes:",
-                package_stl_title: "Complete STL Files", package_stl_desc: "All 3D models needed to print the mechanical structure.",
-                package_gerber_title: "Gerber Data for PCB", package_gerber_desc: "Professional files for PCB manufacturing (e.g., for JLCPCB).",
-                package_uploader_title: "Exclusive YourChess Uploader (.exe)", package_uploader_desc: "App to upload firmware to Arduino and download digital assets after code verification.",
-                package_manual_title: "Detailed Manual (PDF)", package_manual_desc: "Comprehensive guide for building, wiring, and setup.",
-                package_not_included: "<strong>What's not included:</strong> Physical electronic components (Arduino, sensors, LEDs) and mechanical parts. The list will be in the manual.",
-                prototype_title: "Current Prototype: <span style='color:var(--accent-orange);'>A Journey of Challenges</span>",
-                prototype_p1: "Let's be honest – the current prototype is a <strong>proof of concept, not a final product</strong>. Its construction was full of dead ends and creative solutions. For example, to read all 64 sensors, the prototype uses 32 wires connected directly to the Arduino. Why? It was the most reliable way at that stage to ensure modularity and easy diagnostics.",
-                prototype_p2: "This 'imperfect' state is proof of authenticity. It shows real development and overcoming obstacles. And now you have a unique opportunity to be there when something much more elegant is born from this functional but raw prototype.",
-                vision_title: "Future Vision (<span style='color:var(--accent-orange);'>YourChess v2.0</span>)",
-                vision_intro: "Your support is an investment in the future of the YourChess project. Funds will be used for v2.0 with breathtaking improvements:",
-                who_title: "Who is this <span style='color:var(--accent-orange);'>project</span> for?",
-                who_1: "Tech enthusiasts or DIYers who love building, soldering, and bringing electronics to life.",
-                who_2: "Passionate chess players dreaming of a unique, interactive chessboard at home.",
-                who_3: "Innovation supporters who want to help a young creator turn a school project into a global product.",
-                who_cta: "Become part of the YourChess community. Get your exclusive asset package and be the first to build this unique prototype. Thank you for your support!"
+                about_title: "What is this project <span class='highlight'>really</span> about?",
+                about_p1: "This isn't a campaign for a finished product. It's an <strong>invitation for fans, DIYers, and tech enthusiasts</strong> to become co-creators.",
+                about_p2: "Introducing <strong>YourChess v1.0</strong> – a functional prototype of an intelligent chessboard, the result of my graduation project. Born from a passion for chess and electronics, it proves the concept works. With your help, I want to elevate it to a global level.",
+                package_title: "What's in the <span class='highlight'>exclusive</span> kit?",
+                package_intro: "By supporting, you're not buying physical parts, but digital know-how and software – the chessboard's brain.",
+                package_stl_title: "Complete STL Files", package_stl_desc: "3D models for printing the chessboard's mechanical structure.",
+                package_gerber_title: "Gerber Data for PCB", package_gerber_desc: "Files for PCB manufacturing (e.g., JLCPCB).",
+                package_uploader_title: "Exclusive YourChess Uploader", package_uploader_desc: "App (.exe) to upload firmware and download assets.",
+                package_manual_title: "Detailed Manual (PDF)", package_manual_desc: "Guide for building, wiring, and setup.",
+                package_not_included: "<strong>What's not included:</strong> Physical components (Arduino, sensors, LEDs) and parts. The list will be in the manual.",
+                prototype_title: "Current Prototype: <span class='highlight'>A Journey of Challenges</span>",
+                prototype_p1: "The current prototype is a <strong>proof of concept</strong>. Its build was full of dead ends. For example, 64 sensors use 32 wires directly to Arduino – for modularity and diagnostics.",
+                prototype_p2: "This 'imperfect' state proves authenticity, showing real development. You have a chance to be there as this raw prototype evolves into something elegant.",
+                vision_title: "Future Vision (<span class='highlight'>YourChess v2.0</span>)",
+                vision_intro: "Your support is an investment. Funds will go to v2.0 development with improvements:",
+                who_title: "Who is this <span class='highlight'>project</span> for?",
+                who_1: "Tech enthusiasts or DIYers who love building and bringing electronics to life.",
+                who_2: "Passionate chess players dreaming of a unique, interactive chessboard.",
+                who_3: "Innovation supporters wanting to help a young creator turn a school project global.",
+                who_cta: "Join the YourChess community. Get your exclusive kit and be the first to build this unique prototype. Thank you!"
             },
-            cs: { // Doplňte české překlady podle textu kampaně
+            cs: { // Doplňte české překlady
                 nav_about: 'O projektu', nav_package: 'Co získáte', nav_prototype: 'Prototyp', nav_vision: 'Vize',
+                nav_about_mobile: 'O projektu', nav_package_mobile: 'Co získáte', nav_prototype_mobile: 'Prototyp', nav_vision_mobile: 'Vize', // Mobilní klíče
                 hero_title: "YourChess: Staňte se součástí vývoje.<br>Postavte si prototyp budoucnosti.",
-                hero_subtitle: "Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice. Podpořte projekt, který mění pravidla hry, a buďte u zrodu jeho finální verze.",
+                hero_subtitle: "Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice. Podpořte projekt, který mění pravidla hry.",
                 hero_cta: "Podpořit projekt na Indiegogo", hero_cta_bottom: "Podpořit Nyní",
-                about_title: "O co v tomto projektu <span style='color:var(--accent-orange);'>skutečně</span> jde?",
-                about_p1: "Toto není kampaň na hotový produkt v krabici. Toto je <strong>pozvánka pro pravé fanoušky, kutily a technologické nadšence</strong>, aby se stali součástí něčeho výjimečného.",
-                about_p2: "Představuji vám <strong>YourChess v1.0</strong> – funkční prototyp inteligentní šachovnice, který je výsledkem mé roční maturitní práce. Je to projekt zrozený z vášně pro šachy a elektroniku, který dokazuje, že koncept funguje. A teď, s vaší pomocí, ho chci posunout na světovou úroveň.",
-                about_p3: "Podporou této kampaně nezískáváte jen produkt, ale stáváte se součástí vývojového týmu. Získáte vše, co potřebujete, abyste si mohli postavit vlastní, funkční prototyp, a zároveň přispějete k vývoji finální, elegantní verze 2.0.",
-                package_title: "Co získáte v našem <span style='color:var(--accent-orange);'>exkluzivním balíčku</span>?",
-                package_intro: "Vaší podporou si nekupujete fyzické součástky, ale exkluzivní přístup k digitálnímu know-how a softwaru, který je mozkem celé šachovnice. Balíček obsahuje:",
-                package_stl_title: "Kompletní STL soubory", package_stl_desc: "Všechny 3D modely potřebné k vytištění mechanické konstrukce šachovnice.",
-                package_gerber_title: "Gerber data pro PCB", package_gerber_desc: "Profesionální podklady pro výrobu plošných spojů (např. pro JLCPCB).",
-                package_uploader_title: "Exkluzivní YourChess Uploader (.exe)", package_uploader_desc: "Aplikace pro nahrání firmware do Arduina a stažení digitálních podkladů po ověření kódem.",
-                package_manual_title: "Detailní návod (PDF)", package_manual_desc: "Komplexní průvodce stavbou, zapojením a zprovozněním.",
-                package_not_included: "<strong>Co balíček neobsahuje:</strong> Fyzické elektronické komponenty (Arduino, senzory, LED) a mechanické díly. Seznam bude v manuálu.",
-                prototype_title: "Současný prototyp: <span style='color:var(--accent-orange);'>Cesta plná výzev</span>",
-                prototype_p1: "Buďme upřímní – současný prototyp je <strong>důkazem konceptu, ne finálním produktem</strong>. Jeho stavba byla plná slepých uliček a kreativních řešení. Například, pro čtení všech 64 senzorů využívá prototyp 32 vodičů zapojených přímo do Arduina. Proč? Protože to byl nejspolehlivější způsob, jak v dané fázi zajistit modularitu a snadnou diagnostiku.",
-                prototype_p2: "Tento \"nedokonalý\" stav je ale důkazem autenticity. Ukazuje skutečný vývoj a překonávání překážek. A vy teď máte jedinečnou příležitost být u toho, když se z tohoto funkčního, ale syrového prototypu zrodí něco mnohem elegantnějšího.",
-                vision_title: "Vize Budoucnosti (<span style='color:var(--accent-orange);'>YourChess v2.0</span>)",
-                vision_intro: "Vaše podpora je investicí do budoucnosti projektu YourChess. Získané prostředky použijeme na vývoj v2.0 s dechberoucími vylepšeními:",
-                who_title: "Pro koho je tento <span style='color:var(--accent-orange);'>projekt</span>?",
-                who_1: "Technologický nadšenec nebo kutil, který miluje stavět, pájet a oživovat elektroniku.",
-                who_2: "Vášnivý šachista, který sní o tom mít doma unikátní, interaktivní šachovnici.",
+                about_title: "O co v projektu <span class='highlight'>skutečně</span> jde?",
+                about_p1: "Toto není kampaň na hotový produkt. Je to <strong>pozvánka pro fanoušky, kutily a technologické nadšence</strong>, aby se stali spolutvůrci.",
+                about_p2: "Představuji vám <strong>YourChess v1.0</strong> – funkční prototyp inteligentní šachovnice, výsledek mé maturitní práce. Projekt zrozený z vášně pro šachy a elektroniku, který dokazuje, že koncept funguje. S vaší pomocí ho chci posunout na světovou úroveň.",
+                package_title: "Co získáte v <span class='highlight'>exkluzivním</span> balíčku?",
+                package_intro: "Vaší podporou si nekupujete fyzické součástky, ale digitální know-how a software – mozek šachovnice.",
+                package_stl_title: "Kompletní STL soubory", package_stl_desc: "3D modely pro tisk mechanické konstrukce šachovnice.",
+                package_gerber_title: "Gerber data pro PCB", package_gerber_desc: "Podklady pro výrobu plošných spojů (např. JLCPCB).",
+                package_uploader_title: "Exkluzivní YourChess Uploader", package_uploader_desc: "Aplikace (.exe) pro nahrání firmware a stažení podkladů.",
+                package_manual_title: "Detailní návod (PDF)", package_manual_desc: "Průvodce stavbou, zapojením a zprovozněním.",
+                package_not_included: "<strong>Co balíček neobsahuje:</strong> Fyzické komponenty (Arduino, senzory, LED) a díly. Seznam bude v manuálu.",
+                prototype_title: "Současný prototyp: <span class='highlight'>Cesta plná výzev</span>",
+                prototype_p1: "Současný prototyp je <strong>důkazem konceptu</strong>. Jeho stavba byla plná slepých uliček. Například, 64 senzorů využívá 32 vodičů přímo do Arduina – pro modularitu a diagnostiku.",
+                prototype_p2: "Tento \"nedokonalý\" stav je důkazem autenticity. Ukazuje skutečný vývoj. Máte šanci být u toho, když se z tohoto syrového prototypu zrodí něco elegantnějšího.",
+                vision_title: "Vize Budoucnosti (<span class='highlight'>YourChess v2.0</span>)",
+                vision_intro: "Vaše podpora je investicí. Prostředky použijeme na vývoj v2.0 s vylepšeními:",
+                who_title: "Pro koho je tento <span class='highlight'>projekt</span>?",
+                who_1: "Technologický nadšenec nebo kutil, který miluje stavět a oživovat elektroniku.",
+                who_2: "Vášnivý šachista, snící o unikátní, interaktivní šachovnici.",
                 who_3: "Podporovatel inovací, který chce pomoci mladému tvůrci přetavit školní projekt ve světový produkt.",
-                who_cta: "Staňte se součástí komunity YourChess. Získejte svůj exkluzivní balíček podkladů a buďte první, kdo si postaví tento unikátní prototyp. Děkujeme za vaši podporu!"
+                who_cta: "Staňte se součástí komunity YourChess. Získejte svůj exkluzivní balíček a buďte první, kdo si postaví tento unikátní prototyp. Děkujeme!"
             }
         };
 
-        // Mobilní navigace
         const navToggle = document.getElementById('nav-toggle');
-        const navMenu = document.getElementById('nav-menu');
-        if (navToggle && navMenu) {
+        const navMenuMobile = document.getElementById('nav-menu-mobile');
+        if (navToggle && navMenuMobile) {
             navToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
+                navMenuMobile.classList.toggle('active');
                 navToggle.classList.toggle('active');
             });
-            navMenu.querySelectorAll('a').forEach(link => {
+            navMenuMobile.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
-                    navMenu.classList.remove('active');
+                    navMenuMobile.classList.remove('active');
                     navToggle.classList.remove('active');
                 });
             });
         }
 
-        // Přepínání jazyků
-        const langCz = document.getElementById('lang-cz');
-        const langEn = document.getElementById('lang-en');
+        const langCzDesktop = document.getElementById('lang-cz-desktop');
+        const langEnDesktop = document.getElementById('lang-en-desktop');
+        const langCzMobile = document.getElementById('lang-cz-mobile');
+        const langEnMobile = document.getElementById('lang-en-mobile');
+        
         const setLanguage = (lang) => {
             document.querySelectorAll('[data-lang-key]').forEach(el => {
                 const key = el.dataset.langKey;
@@ -339,18 +388,22 @@
                 }
             });
             localStorage.setItem('yourchess_lang', lang);
-            if(langCz && langEn) {
-                langCz.classList.toggle('active', lang === 'cs');
-                langEn.classList.toggle('active', lang === 'en');
+            if(langCzDesktop && langEnDesktop && langCzMobile && langEnMobile){
+                langCzDesktop.classList.toggle('active', lang === 'cs');
+                langEnDesktop.classList.toggle('active', lang === 'en');
+                langCzMobile.classList.toggle('active', lang === 'cs');
+                langEnMobile.classList.toggle('active', lang === 'en');
             }
         };
-        if(langCz && langEn){
-            langCz.addEventListener('click', (e) => { e.preventDefault(); setLanguage('cs'); });
-            langEn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
+
+        if(langCzDesktop && langEnDesktop && langCzMobile && langEnMobile){
+            langCzDesktop.addEventListener('click', (e) => { e.preventDefault(); setLanguage('cs'); });
+            langEnDesktop.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
+            langCzMobile.addEventListener('click', (e) => { e.preventDefault(); setLanguage('cs'); });
+            langEnMobile.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
         }
         setLanguage(localStorage.getItem('yourchess_lang') || 'cs');
         
-        // Animace prvků při scrollu
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
