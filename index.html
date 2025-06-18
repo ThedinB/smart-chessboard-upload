@@ -11,43 +11,50 @@
     
     <style>
         :root {
-            --bg-dark-slate: #1F2937; 
-            --bg-light-slate: #374151; 
-            --text-primary: #F3F4F6;   
-            --text-secondary: #9CA3AF; 
-            --accent-blue: #3B82F6;    
-            --accent-gold: #F59E0B;    
+            --bg-dark-slate: #181E29; 
+            --bg-light-slate: #2A303C; 
+            --text-primary: #E8EAF0;   
+            --text-secondary: #A0AEC0; 
+            --accent-blue: #4F8AFF;    
+            --accent-gold: #FACC15;    
             --discord-blurple: #5865F2; 
-            --border-color: rgba(107, 114, 128, 0.3); 
-            --shadow-color: rgba(0, 0, 0, 0.2);
-            --glow-blue-soft: rgba(59, 130, 246, 0.3);
+            --border-color: rgba(107, 114, 128, 0.25); 
+            --shadow-color: rgba(0, 0, 0, 0.25);
+            --glow-blue-soft: rgba(79, 138, 255, 0.25);
+            --glow-gold-soft: rgba(250, 204, 21, 0.3);
 
-            /* Desktop specific sizes - larger base */
+            /* Nové proměnné pro glassmorphism a gradient pozadí */
+            --bg-gradient-start: #1F2937;
+            --bg-gradient-end: #11151E;
+            --card-bg-glass: rgba(42, 48, 58, 0.65); /* Průhlednost karet */
+            --card-border-glass: rgba(107, 114, 128, 0.15); /* Jemnější border pro sklo */
+
+            /* Desktop specific sizes */
             --desktop-font-size: 17.5px;
             --desktop-line-height: 1.75;
             --desktop-p-font-size: 1.15rem;
             --desktop-h1-font-size-max: 3.8rem;
             --desktop-h2-font-size-max: 2.8rem;
             --desktop-h3-font-size-max: 1.75rem;
-            --desktop-section-padding-y: 6rem;
-            --desktop-section-padding-x: 10%;
-            --desktop-card-padding: 3.2rem;
+            --desktop-section-padding-y: 5.5rem; 
+            --desktop-section-padding-x: 8%; /* Trochu užší obsah */
+            --desktop-card-padding: 3rem;
         }
 
-        /* --- ZÁKLADY --- */
+        /* --- ZÁKLADY & NOVÉ POZADÍ --- */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; } /* Base for mobile */
+        html { scroll-behavior: smooth; font-size: 16px; } 
         body {
-            background-color: var(--bg-dark-slate);
+            background-image: 
+                linear-gradient(145deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%),
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23374151' fill-opacity='0.06'%3E%3Cpath d='M0 0h40v40H0zM40 40h40v40H40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-attachment: fixed; 
             color: var(--text-primary);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             line-height: 1.7;
+            font-size: 16px; 
             position: relative; 
-        }
-        #interactive-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; overflow: hidden;
         }
         
         /* --- TYPOGRAFIE --- */
@@ -57,7 +64,7 @@
         }
         h1 { font-size: clamp(2.2rem, 5.5vw, var(--desktop-h1-font-size-max)); line-height: 1.25; margin-bottom: 1rem; color: var(--text-primary); }
         h1 .highlight { color: var(--accent-blue); }
-        h2 { font-size: clamp(1.8rem, 4.8vw, var(--desktop-h2-font-size-max)); margin-bottom: 2rem; padding-bottom: 0.7rem; border-bottom: 3px solid var(--accent-blue); display: inline-block;}
+        h2 { font-size: clamp(1.8rem, 4.8vw, var(--desktop-h2-font-size-max)); margin-bottom: 1.8rem; padding-bottom: 0.7rem; border-bottom: 3px solid var(--accent-blue); display: inline-block;}
         h3 { font-size: clamp(1.3rem, 4.2vw, var(--desktop-h3-font-size-max)); color: var(--text-primary); margin-bottom: 1rem; }
         h3 .icon { color: var(--accent-gold); margin-right: 0.7rem; vertical-align: middle; font-size: 1.1em;}
 
@@ -67,11 +74,12 @@
         strong { color: var(--text-primary); font-weight: 700; }
 
         /* --- NAVIGACE --- */
-        .navbar { /* Styles from previous good version */
+        .navbar {
             position: fixed; top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
             padding: 1.3rem 5%; z-index: 1000; 
-            background: rgba(31, 41, 55, 0.9); backdrop-filter: blur(10px);
+            background: rgba(24, 30, 41, 0.8); /* Více průhledné */
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
         }
         .logo { font-size: 1.7rem; letter-spacing: 0.5px; }
@@ -83,58 +91,68 @@
         .lang-switcher a.active { color: var(--accent-gold); text-decoration: none; border-bottom:2px solid var(--accent-gold);}
         .nav-toggle-btn { display: none; } 
 
-
         /* --- HERO SEKCE --- */
         .hero {
             padding: 10rem 5% 6rem; text-align: left; 
             min-height: 85vh; display: flex; align-items: center; 
+            max-width: 1400px; margin: 0 auto; /* Max šířka pro hero */
         }
-        .hero-content { max-width: 800px; } 
+        .hero-content { max-width: 750px; } 
         .hero .greeting { font-size: 1.3rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 0.6rem; display: block; }
         .hero .subheadline { font-size: 1.25rem; color: var(--text-secondary); margin-top: 1.5rem; margin-bottom: 3rem; }
-        .cta-button { /* Styles from previous good version, potentially with pulse */
-            display: inline-block; background: var(--accent-blue); color: var(--bg-dark-slate);
+        .cta-button {
+            display: inline-block; background: var(--accent-blue); color: #fff; /* Změna barvy textu pro lepší kontrast */
             padding: 1.1rem 2.8rem; border-radius: 8px; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.8px;
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease; border:none;
-             animation: pulse-cta 2.5s infinite ease-in-out;
+            animation: pulse-cta 2.5s infinite ease-in-out;
         }
-        @keyframes pulse-cta { /* Pulse animation from before */
-            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3); }
-            50% { transform: scale(1.03); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.45); }
-            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3); }
+        @keyframes pulse-cta { 
+            0% { transform: scale(1); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3); }
+            50% { transform: scale(1.025); box-shadow: 0 9px 28px rgba(59, 130, 246, 0.45); }
+            100% { transform: scale(1); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3); }
         }
-        .cta-button:hover { animation-play-state: paused; transform: translateY(-4px) scale(1.03) ; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5); }
+        .cta-button:hover { animation-play-state: paused; transform: translateY(-4px) scale(1.025) ; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.55); }
         .cta-secondary { /* ... */ }
 
-        /* --- SEKCE A KARTY --- */
-        .section { padding: 4.5rem 5%; }
+        /* --- SEKCE A KARTY (Glassmorphism) --- */
+        .section { padding: 4.5rem 5%; max-width: 1200px; margin: 0 auto; } /* Max šířka pro obsahové sekce */
         .content-card {
-            background-color: var(--bg-light-slate);
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 35px var(--shadow-color);
-            border: 1px solid var(--border-color);
+            background: var(--card-bg-glass);
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px); 
+            padding: 2.5rem; 
+            border-radius: 16px; 
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.05);
+            border: 1px solid var(--card-border-glass);
             margin-bottom: 3rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
         }
-        .content-card:hover { transform: translateY(-5px); box-shadow: 0 15px 45px rgba(0,0,0,0.25); }
-        /* Other .item-grid, .grid-item, .image-container, .bullet-list styles as before */
+        .content-card:hover { 
+            transform: translateY(-6px); 
+            box-shadow: 0 18px 55px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.07); 
+            background: rgba(50, 58, 70, 0.7); 
+        }
+        
         .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top:2.5rem;}
         .grid-item {
-            background: var(--bg-dark-slate); border: 1px solid var(--border-color);
+            background: rgba(31, 41, 55, 0.7); /* Tmavší karty v mřížce, mohou být také glassmorphic */
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            border: 1px solid var(--card-border-glass);
             padding: 2rem; border-radius: 10px;
             transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
-        .grid-item:hover { transform: translateY(-4px); border-color: var(--accent-blue); box-shadow: 0 5px 15px rgba(79,138,255,0.1);}
+        .grid-item:hover { transform: translateY(-4px); border-color: var(--accent-blue); box-shadow: 0 5px 20px rgba(79,138,255,0.15);}
         .grid-item .icon { font-size: 2rem; margin-bottom: 0.8rem; color: var(--accent-gold); display: inline-block;}
         .image-container { 
-            background: var(--bg-dark-slate); border-radius: 10px;
-            padding: 0.75rem; margin: 2.5rem 0;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 5px 15px var(--shadow-color);
+            background: transparent; /* Obrázky jsou na pozadí karty, můžeme ponechat */
+            border-radius: 10px;
+            padding: 0; /* Bez extra paddingu, pokud je obrázek jediný obsah */
+            margin: 2.5rem 0;
+            /* border: 1px solid var(--border-color); Mohlo by být zbytečné s glassmorphismem */
+            /* box-shadow: 0 5px 15px var(--shadow-color); */
         }
-        .image-container img { width: 100%; height: auto; display: block; border-radius: 6px; }
+        .image-container img { width: 100%; height: auto; display: block; border-radius: 8px; } /* Mírné zaoblení pro obrázky */
         .bullet-list { list-style: none; padding-left: 0;}
         .bullet-list li { padding-left: 2em; position:relative; margin-bottom:0.9em; font-size:1.05rem;}
         .bullet-list li::before {
@@ -144,8 +162,7 @@
             text-shadow: 0 0 5px var(--glow-gold-soft);
         }
         
-        /* Discord Tlačítko */
-        .btn-discord { /* Styles from previous good version */
+        .btn-discord { /* Zůstává stejné */
             display: inline-flex; align-items: center; gap: 0.8rem;
             background-color: var(--discord-blurple); color: #fff;
             padding: 1rem 2rem; border-radius: 8px; font-size: 1.1rem;
@@ -157,23 +174,26 @@
         .btn-discord svg { width: 26px; height: 26px; }
         .btn-discord:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 8px 25px rgba(88, 101, 242, 0.45); }
 
-
-        /* Patička */
-        .footer { text-align: center; padding: 3.5rem 5% 2.5rem; border-top: 1px solid var(--border-color); background: var(--bg-light-slate);}
+        .footer { text-align: center; padding: 3.5rem 5% 2.5rem; border-top: 1px solid var(--border-color); background: var(--bg-light-slate); }
 
         /* --- RESPONZIVITA --- */
-        @media (min-width: 901px) { /* Změna base fontu pro desktop a paddingů */
-            body { 
-                font-size: var(--desktop-font-size); 
-                line-height: var(--desktop-line-height);
-            }
+        @media (min-width: 1024px) { 
+            body { font-size: var(--desktop-font-size); line-height: var(--desktop-line-height); }
             p { font-size: var(--desktop-p-font-size); }
             .section { padding: var(--desktop-section-padding-y) var(--desktop-section-padding-x); }
-            .hero { padding: calc(var(--desktop-section-padding-y) + 2rem) var(--desktop-section-padding-x) var(--desktop-section-padding-y) ; }
+            .hero { padding: calc(var(--desktop-section-padding-y) + 3rem) var(--desktop-section-padding-x) var(--desktop-section-padding-y) ; }
             .content-card { padding: var(--desktop-card-padding); margin-bottom: 4rem; }
-            
-            /* Layout obrázek vedle textu pro desktop */
-             .content-with-image { display:flex; flex-direction: row; align-items:center; gap:3.5rem;} /* Větší gap */
+        }
+        @media (min-width: 901px) and (max-width: 1023px) { /* Mezistupeň pro tablety na šířku */
+            body { font-size: 16.5px; }
+            p { font-size: 1.1rem; }
+            .section { padding: 5rem 6%;}
+            .hero { padding: 9rem 6% 5rem;}
+            .content-card { padding: 2.8rem; }
+        }
+
+        @media (min-width: 901px) { /* Pro layout obrázek-text na desktopu */
+             .content-with-image { display:flex; flex-direction: row; align-items:center; gap:3.5rem;} 
              .content-with-image .text-content { flex:1.1; } 
              .content-with-image .image-container { flex:0.9; max-width:550px; margin:0;}
              .content-with-image.reverse { flex-direction: row-reverse;}
@@ -181,16 +201,16 @@
 
         @media (max-width: 900px) { 
             body { font-size: 15.5px; } 
-            .section { padding: 3.5rem 5%; }
+            .section { padding: 3.5rem 5%; max-width:100%; /* Na mobilu bereme celou šířku */ }
             .content-card { padding: 2.2rem 1.8rem; margin-bottom: 2.5rem; }
-            .hero { padding: 8rem 5% 4rem; text-align:center; } 
+            .hero { padding: 7.5rem 5% 4rem; text-align:center; } 
             .hero-content { margin: 0 auto; }
-            .cta-button, .cta-secondary, .btn-discord { width:100%; max-width:400px; margin-left:auto; margin-right:auto; display:block; } /* Max šířka pro mobilní tlačítka */
+            .cta-button, .cta-secondary, .btn-discord { width:100%; max-width:380px; margin-left:auto; margin-right:auto; display:block; } 
             .cta-button {margin-bottom:1.2rem;}
-            .cta-secondary { margin-left:auto; margin-bottom:1.2rem;} /* Upraveno pro konzistenci */
+            .cta-secondary { margin-top:0.5rem; margin-bottom: 1.2rem; }
+            .content-with-image { flex-direction: column; }
             .content-with-image .image-container { order: -1; margin-bottom: 2.5rem; }
             
-            /* Mobilní menu - stejné jako předtím */
             .nav-toggle-btn { display: block; background:none; border:none; padding:0.5rem; cursor:pointer; z-index:1001;}
             .nav-toggle-btn .bar { display: block; width: 25px; height: 2px; margin: 5px 0; background-color: var(--text-primary); transition: all 0.3s ease-in-out; }
             .nav-cluster {
@@ -211,16 +231,14 @@
             .nav-toggle-btn.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
         }
         
-        .reveal { opacity: 0; transform: translateY(25px); transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
-    <canvas id="interactive-bg"></canvas> 
+    <!-- Canvas pro animované pozadí - pokud byste nechtěl ten statický SVG, odkomentujte a smažte background-image z body -->
+    <!-- <canvas id="interactive-bg"></canvas> --> 
     
-    <!-- HTML STRUKTURA JE STEJNÁ JAKO V POSLEDNÍ VERZI S VAŠÍM TEXTEM A DISCORDEM -->
-    <!-- POUZE JS PRO INTERAKTIVNÍ POZADÍ JE NA KONCI TOHOTO BLOKU KÓDU -->
-
     <nav class="navbar">
         <a href="#" class="logo">YourChess</a>
         <div class="nav-cluster" id="nav-cluster">
@@ -244,7 +262,7 @@
                 <span class="greeting" data-lang-key="hero_greeting">Ahoj, jsem Tadeáš.</span>
                 <h1 data-lang-key="hero_title">Víc než Hra.<br><span class="highlight">Váš Vlastní High-Tech Projekt.</span></h1>
                 <p data-lang-key="hero_subtitle" class="subheadline">Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.</p>
-                <a href="https://www.indiegogo.com/" target="_blank" class="cta-button" data-lang-key="hero_cta">Podpořit na Indiegogo</a>
+                <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="cta-button" data-lang-key="hero_cta">Podpořit na Indiegogo</a>
             </div>
         </header>
 
@@ -306,14 +324,14 @@
 
         <section id="transparency" class="section">
              <div class="content-card reveal">
-                <div class="content-with-image"> <!-- Opět kontejner pro obrázek vedle textu -->
+                <div class="content-with-image">
                     <div class="text-content">
                         <h2 data-lang-key="transparency_title">Plná Transparence: <span class="highlight">Co Budete Potřebovat?</span></h2>
                         <p data-lang-key="transparency_p1">Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.</p>
                         <p data-lang-key="transparency_p2" style="font-size: 1.2em; line-height:1.5;">Dle mých propočtů se celková cena za všechny součástky pohybuje okolo <strong style="color:var(--accent-gold); font-size:1.1em;">4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který vaši investici promění ve funkční dílo.</p>
                     </div>
                     <div class="image-container">
-                        <img src="image/prototype1.jpg" alt="Prototyp YourChess">
+                        <img src="https://i.imgur.com/GgGv3fE.png" alt="Prototyp YourChess">
                     </div>
                 </div>
             </div>
@@ -333,7 +351,7 @@
                         </ul>
                     </div>
                     <div class="image-container">
-                        <img src="image/prototype2.jpg" alt="Vize YourChess v2.0">
+                        <img src="https://i.imgur.com/Pew15d5.png" alt="Vize YourChess v2.0">
                     </div>
                 </div>
             </div>
@@ -343,7 +361,7 @@
              <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="join_title">Staňte se <span class="highlight">součástí naší cesty</span></h2>
                 <p data-lang-key="join_p1" style="max-width: 650px; margin-left:auto; margin-right:auto;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.</p>
-                <a href="https://www.indiegogo.com/" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Podpořit YourChess na Indiegogo!</a>
+                <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Podpořit YourChess na Indiegogo!</a>
             </div>
         </section>
         
@@ -351,106 +369,20 @@
             <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="download_title">Stáhnout <span class="highlight">YourChess Uploader</span></h2>
                 <p data-lang-key="download_p" style="max-width: 650px; margin-left:auto; margin-right:auto;">Software pro nahrání firmware a přístup k digitálním podkladům pro backery.</p>
-                <a href="downloads/YourChessUpdater.exe" download class="cta-button" data-lang-key="download_btn" style="margin-top:1rem;">Stáhnout Uploader (.EXE)</a>
+                <a href="downloads/YourChessInstaller.exe" download class="cta-button" data-lang-key="download_btn" style="margin-top:1rem;">Stáhnout Uploader (.EXE)</a>
                 <p style="font-size:0.9rem; margin-top:1.5rem;" data-lang-key="download_note">(Vyžaduje unikátní kód pro plný přístup k souborům po podpoře kampaně.)</p>
             </div>
         </section>
     </main>
     
     <footer class="footer">
-        <p class="reveal" style="font-size:0.95rem;">© <span id="current-year"></span> Tadeáš [Vaše Příjmení] - YourChess Projekt</p>
+        <p class="reveal" style="font-size:0.95rem;">© <span id="current-year"></span> Tadeáš [Sem Vaše Příjmení] - YourChess Projekt</p>
     </footer>
 
     <script>
-    // --- JS PRO ANIMOVANÉ POZADÍ (stejné jako v předchozí verzi, upraveno) ---
-    const canvasBg = document.getElementById('interactive-bg');
-    if (canvasBg) {
-        const ctxBg = canvasBg.getContext('2d');
-        let widthBg, heightBg, bgParticles;
-
-        const bgConfig = {
-            particleColor: "rgba(79, 138, 255, 0.08)", // Jemnější modrá
-            lineColor: "rgba(79, 138, 255, 0.03)",
-            particleAmount: 0,
-            defaultSpeed: 0.1, // Pomalejší
-            variantSpeed: 0.1,
-            defaultRadius: 1.2, // Menší
-            variantRadius: 0.8,
-            linkRadius: 150, 
-            avoidMouseRadius: 60 // Oblast, kde se částice vyhýbají myši
-        };
-        let mouse = { x: null, y: null};
-
-        canvasBg.addEventListener('mousemove', (event) => {
-            mouse.x = event.clientX;
-            mouse.y = event.clientY;
-        });
-        canvasBg.addEventListener('mouseleave', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        class BgParticle {
-            constructor() { this.x = Math.random() * widthBg; this.y = Math.random() * heightBg; this.speed = bgConfig.defaultSpeed + Math.random() * bgConfig.variantSpeed; this.directionAngle = Math.floor(Math.random() * 360); this.color = bgConfig.particleColor; this.radius = bgConfig.defaultRadius + Math.random() * bgConfig.variantRadius; this.originalSpeedX = this.speed * Math.cos(this.directionAngle * Math.PI / 180); this.originalSpeedY = this.speed * Math.sin(this.directionAngle * Math.PI / 180); this.speedX = this.originalSpeedX; this.speedY = this.originalSpeedY; }
-            update() {
-                // Vyhýbání se myši
-                if (mouse.x !== null && mouse.y !== null) {
-                    let dxMouse = this.x - mouse.x;
-                    let dyMouse = this.y - mouse.y;
-                    let distanceMouse = Math.sqrt(dxMouse*dxMouse + dyMouse*dyMouse);
-                    if (distanceMouse < bgConfig.avoidMouseRadius) {
-                        // Jednoduché odstrčení od myši
-                        this.speedX += dxMouse / distanceMouse * 0.1; // 0.1 je síla odstrčení
-                        this.speedY += dyMouse / distanceMouse * 0.1;
-                    } else {
-                         // Postupný návrat k původní rychlosti
-                        this.speedX += (this.originalSpeedX - this.speedX) * 0.05;
-                        this.speedY += (this.originalSpeedY - this.speedY) * 0.05;
-                    }
-                } else {
-                     // Návrat k původní rychlosti, pokud myš není nad plátnem
-                    this.speedX += (this.originalSpeedX - this.speedX) * 0.05;
-                    this.speedY += (this.originalSpeedY - this.speedY) * 0.05;
-                }
-
-
-                if (this.x + this.radius > widthBg || this.x - this.radius < 0) {this.speedX = -this.speedX; this.originalSpeedX = -this.originalSpeedX;} 
-                if (this.y + this.radius > heightBg || this.y - this.radius < 0) {this.speedY = -this.speedY; this.originalSpeedY = -this.originalSpeedY;} 
-                this.x += this.speedX; this.y += this.speedY;
-            }
-            draw() { ctxBg.beginPath(); ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctxBg.closePath(); ctxBg.fillStyle = this.color; ctxBg.fill();}
-        }
-
-        function setupBg() { 
-            widthBg = window.innerWidth; 
-            // heightBg = window.innerHeight; // Aby se pozadí nescrollovalo, nebo document.body.scrollHeight pro celou stránku
-            heightBg = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight, document.body.clientHeight, document.documentElement.clientHeight, window.innerHeight);
-
-            canvasBg.width = widthBg; canvasBg.height = heightBg;
-            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 25000); 
-            bgParticles = [];
-            for (let i = 0; i < bgConfig.particleAmount; i++) { bgParticles.push(new BgParticle());}
-        }
-
-        function loopBg() { 
-            ctxBg.clearRect(0,0,widthBg,heightBg);
-            for(let particle of bgParticles){particle.update(); particle.draw();}
-            for(let i=0; i<bgParticles.length; i++){ for(let j=i+1; j<bgParticles.length; j++){ const distance = Math.sqrt(Math.pow(bgParticles[i].x - bgParticles[j].x, 2) + Math.pow(bgParticles[i].y - bgParticles[j].y, 2)); if(distance < bgConfig.linkRadius){ ctxBg.beginPath(); ctxBg.strokeStyle = bgConfig.lineColor; ctxBg.lineWidth = 0.3; ctxBg.moveTo(bgParticles[i].x, bgParticles[i].y); ctxBg.lineTo(bgParticles[j].x, bgParticles[j].y); ctxBg.stroke();}}}
-            window.requestAnimationFrame(loopBg);
-        }
-        
-        let resizeTimeoutBg;
-        window.addEventListener("resize", () => {
-            clearTimeout(resizeTimeoutBg);
-            resizeTimeoutBg = setTimeout(setupBg, 250); 
-        });
-        setupBg(); 
-        loopBg();
-    }
-
-    // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace - beze změny) ---
+    // JS PRO NAVIGACI, JAZYKY, SCROLL ANIMACE - STEJNÉ JAKO PŘEDTÍM
     document.addEventListener('DOMContentLoaded', () => {
-        const translations = { /* ... Stejné překlady jako v předchozí verzi ... */
+        const translations = { /* ... Vaše překlady (neměnil jsem, jsou z předchozí verze) ... */ 
             en: {
                 nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support & Community', nav_vision: 'Vision', nav_download: 'Download',
                 hero_greeting: "Hi, I'm Tadeáš.",
@@ -495,7 +427,7 @@
                 download_btn: "Download Uploader (.EXE)",
                 download_note: "(Requires a unique code for full file access after campaign support.)"
             },
-            cs: { // Váš kompletní český text zde
+            cs: { 
                 nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_vision: 'Vize', nav_download: 'Stažení',
                 hero_greeting: "Ahoj, jsem Tadeáš.",
                 hero_title: "Víc než Hra.<br><span class='highlight'>Váš Vlastní High-Tech Projekt.</span>",
@@ -535,7 +467,7 @@
                 join_p1: "Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.",
                 join_cta: "Podpořit YourChess na Indiegogo & Připojit se k Nám!",
                 download_title: "Stáhnout <span class='highlight'>YourChess Uploader</span>",
-                download_p: "Software pro nahrání firmware a přístup k digitálním podkladům pro backery (nebo pro vyzkoušení dema, pokud máte).",
+                download_p: "Software pro nahrání firmware a přístup k digitálním podkladům pro backery.",
                 download_btn: "Stáhnout Uploader (.EXE)",
                 download_note: "(Vyžaduje unikátní kód pro plný přístup k souborům po podpoře kampaně.)"
             }
@@ -548,7 +480,7 @@
                 navCluster.classList.toggle('active');
                 navToggleBtn.classList.toggle('active');
             });
-             navCluster.querySelectorAll('.nav-menu a').forEach(link => {
+            navCluster.querySelectorAll('.nav-menu a').forEach(link => {
                 link.addEventListener('click', () => {
                     if (navCluster.classList.contains('active')) {
                         navCluster.classList.remove('active');
@@ -582,7 +514,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
             });
-        }, { threshold: 0.05 }); // Nižší threshold pro dřívější spuštění animace
+        }, { threshold: 0.05 }); 
         revealElements.forEach(el => revealObserver.observe(el));
         document.getElementById('current-year').textContent = new Date().getFullYear();
     });
