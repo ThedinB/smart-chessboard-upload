@@ -21,7 +21,7 @@
     <meta property="twitter:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
     <meta property="twitter:image" content="https://VASEJMENO.github.io/image/prototype1.jpg"> <!-- ZMĚŇTE NA URL VAŠEHO HLAVNÍHO OBRÁZKU -->
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Přidejte si favicon.ico do kořenového adresáře -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> 
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,18 +32,16 @@
         :root {
             --bg-dark-slate: #181E29; 
             --bg-light-slate: #2A303C; 
-            --bg-prototype-card: #252c38; /* Trochu odlišné pozadí pro prototypovou kartu */
             --text-primary: #E8EAF0;   
             --text-secondary: #A0AEC0; 
             --accent-blue: #4F8AFF;    
             --accent-gold: #FACC15;    
             --discord-blurple: #5865F2; 
             --border-color: rgba(107, 114, 128, 0.25); 
-            --border-prototype: rgba(250, 204, 21, 0.3); /* Zlatavý border pro prototypovou kartu */
             --shadow-color: rgba(0, 0, 0, 0.25);
             --glow-blue-soft: rgba(79, 138, 255, 0.25);
+            --glow-gold-soft: rgba(250, 204, 21, 0.3);
 
-            /* Desktop specific sizes */
             --desktop-font-size: 17.5px;
             --desktop-line-height: 1.75;
             --desktop-p-font-size: 1.15rem;
@@ -69,10 +67,10 @@
         #scroll-progress-bar {
             position: fixed;
             top: 0; left: 0;
-            height: 4px; /* Výška progress baru */
+            height: 4px; 
             background: var(--accent-blue);
-            width: 0%; /* Začíná na 0 */
-            z-index: 1001; /* Nad navigací */
+            width: 0%; 
+            z-index: 1001; 
             transition: width 0.1s ease-out;
         }
         #canvas-background { 
@@ -112,7 +110,6 @@
         .lang-switcher a.active { color: var(--accent-gold); text-decoration: none; border-bottom:2px solid var(--accent-gold);}
         .nav-toggle-btn { display: none; } 
 
-
         .hero {
             padding: 10rem 5% 6rem; text-align: left; 
             min-height: 85vh; display: flex; align-items: center; 
@@ -126,7 +123,7 @@
             padding: 1.1rem 2.8rem; border-radius: 8px; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.8px;
             box-shadow: 0 6px 20px rgba(79, 138, 255, 0.4);
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease; border:none;
-            animation: pulse-cta 2.8s infinite ease-in-out;
+             animation: pulse-cta 2.8s infinite ease-in-out;
         }
         @keyframes pulse-cta { 
             0% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
@@ -137,25 +134,24 @@
         
         .section { padding: 4.5rem 5%; max-width: 1100px; margin: 0 auto; } 
         .content-card {
-            background: var(--card-bg-glass, rgba(42, 48, 58, 0.75)); /* Fallback pro starší prohlížeče */
+            background: var(--card-bg-glass, rgba(42, 48, 58, 0.75)); 
             backdrop-filter: blur(12px); 
             -webkit-backdrop-filter: blur(12px); 
             padding: 2.5rem; 
-            border-radius: 16px; /* Výraznější zaoblení */
+            border-radius: 16px; 
             box-shadow: 0 12px 45px var(--shadow-color), inset 0 1px 0px rgba(255,255,255,0.05);
             border: 1px solid var(--card-border-glass);
             margin-bottom: 3rem;
             transition: transform 0.35s ease-out, box-shadow 0.35s ease-out; 
         }
         .content-card:hover { 
-            transform: translateY(-8px) scale(1.01); /* Výraznější hover */
+            transform: translateY(-8px) scale(1.01); 
             box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0px rgba(255,255,255,0.07);
         }
-        /* Speciální karta pro prototyp */
-        .prototype-story-card {
-            background: var(--bg-prototype-card);
-            border: 1px solid var(--border-prototype); /* Zlatavý border */
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.1), 0 0 0 1px var(--border-prototype); /* Jemný glow a výraznější okraj */
+        .prototype-story-card { /* Speciální styl pro tuto kartu */
+            background: rgba(37, 42, 52, 0.8); /* Tmavší, méně průhledné */
+            border: 1px solid var(--accent-gold); 
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15), 0 0 0 1px rgba(245, 158, 11, 0.2); 
         }
         
         .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top:2.5rem;}
@@ -165,35 +161,56 @@
             transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
         .grid-item:hover { transform: translateY(-5px); border-color: var(--accent-blue); box-shadow: 0 6px 20px rgba(79,138,255,0.15);}
-        .grid-item h3 .icon { transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bounce animace ikony */ }
-        .grid-item:hover h3 .icon { transform: rotate(15deg) scale(1.1); }
+        .grid-item h3 .icon { transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .grid-item:hover h3 .icon { transform: rotate(10deg) scale(1.15); } /* Výraznější animace ikonky */
         
         .image-container { 
             background: var(--bg-dark-slate); border-radius: 10px;
             padding: 0.75rem; margin: 2.5rem 0;
             border: 1px solid var(--border-color);
             box-shadow: 0 5px 15px var(--shadow-color);
-            position: relative; overflow: hidden; /* Pro overlay */
+            position: relative; overflow: hidden;
             transition: transform 0.3s ease;
         }
-        .image-container:hover { transform: scale(1.03); }
-        .image-container::after { /* Overlay při hoveru */
+        .image-container:hover { transform: scale(1.02); } /* Jemnější scale */
+        .image-container::after { 
             content: ''; position:absolute; top:0; left:0; width:100%; height:100%;
-            background: rgba(79,138,255,0.1); opacity:0; transition: opacity 0.3s ease;
+            background: rgba(79,138,255,0.08); opacity:0; transition: opacity 0.3s ease;
         }
         .image-container:hover::after { opacity:1; }
-        .image-container img { width: 100%; height: auto; display: block; border-radius: 6px; }
+        .image-container img { width: 100%; height: auto; display: block; border-radius: 6px; } 
         
         .video-showcase { margin: 2.5rem 0; }
-        .video-container { /* Zůstává stejné */ }
+        .video-container {
+            position: relative; width: 100%; padding-bottom: 56.25%; height: 0;
+            overflow: hidden; border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
         .bullet-list { list-style: none; padding-left: 0;}
         .bullet-list li { padding-left: 2em; position:relative; margin-bottom:0.9em; font-size:1.05rem;}
-        .bullet-list li::before { /* Zůstává stejné */ }
+        .bullet-list li::before {
+            content: '✓'; color: var(--accent-gold); font-weight: bold;
+            position: absolute; left: 0; font-size: 1.1em;
+            text-shadow: 0 0 5px var(--glow-gold-soft);
+        }
         
-        .btn-discord { /* Zůstává stejné */ }
-        .footer { /* Zůstává stejné */ }
+        .btn-discord { 
+            display: inline-block; /* Změna na inline-block pro lepší centrování */
+            text-align: center;
+            background-color: var(--discord-blurple); color: #fff;
+            padding: 1rem 2.2rem; border-radius: 8px; font-size: 1.1rem;
+            text-transform: uppercase; letter-spacing: 0.6px;
+            box-shadow: 0 5px 18px rgba(88, 101, 242, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease; border: none;
+            margin-top: 2rem; 
+        }
+        .btn-discord:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 8px 25px rgba(88, 101, 242, 0.45); }
 
-        /* --- RESPONZIVITA --- */
+        .footer { text-align: center; padding: 3.5rem 5% 2.5rem; border-top: 1px solid var(--border-color); background: var(--bg-light-slate);}
+
         @media (min-width: 1024px) { 
             body { font-size: var(--desktop-font-size); line-height: var(--desktop-line-height); }
             p { font-size: var(--desktop-p-font-size); }
@@ -201,9 +218,8 @@
             .hero { padding: calc(var(--desktop-section-padding-y) + 3rem) var(--desktop-section-padding-x) var(--desktop-section-padding-y) ; }
             .content-card { padding: var(--desktop-card-padding); margin-bottom: 4rem; }
         }
-        /* Ostatní @media queries zůstávají stejné */
         @media (min-width: 901px) and (max-width: 1023px) { 
-            body { font-size: 16.8px; }
+            body { font-size: 16.8px; } 
             p { font-size: 1.1rem; }
             .section { padding: 5rem 6%;}
             .hero { padding: 9rem 6% 5rem;}
@@ -213,7 +229,7 @@
         @media (min-width: 901px) { 
              .content-with-image { display:flex; flex-direction: row; align-items:center; gap:3.5rem;} 
              .content-with-image .text-content { flex:1.1; } 
-             .content-with-image .image-container { flex:0.9; max-width:550px; margin:0;}
+             .content-with-image .image-container { flex:0.9; max-width:500px; margin:0;}
              .content-with-image.reverse { flex-direction: row-reverse;}
         }
 
@@ -227,7 +243,7 @@
             .hero-content { margin: 0 auto; }
             .cta-button, .cta-secondary, .btn-discord { width:100%; max-width:380px; margin-left:auto; margin-right:auto; display:block; } 
             .cta-button {margin-bottom:1.2rem;}
-            .cta-secondary { margin-top:0.5rem; margin-bottom: 1.2rem; }
+            .cta-secondary { margin-top:0.5rem; margin-left:0; margin-bottom:1.2rem; }
             .content-with-image .image-container { order: -1; margin-bottom: 2.5rem; }
             
             .nav-toggle-btn { display: block; background:none; border:none; padding:0.5rem; cursor:pointer; z-index:1001;}
@@ -258,8 +274,6 @@
     <div id="scroll-progress-bar"></div>
     <canvas id="canvas-background"></canvas> 
     
-    <!-- HTML obsah (navbar, main, footer) ZŮSTÁVÁ STEJNÝ jako v předchozí "dobré" verzi s vaším posledním textem. Pouze do sekce "Cesta Prototypu" jsem přidal třídu .prototype-story-card -->
-
     <nav class="navbar">
         <a href="#" class="logo">YourChess</a>
         <div class="nav-cluster" id="nav-cluster">
@@ -267,7 +281,7 @@
                 <li><a href="#who-for" data-lang-key="nav_who_for">Pro Koho</a></li>
                 <li><a href="#package" data-lang-key="nav_package">Balíček</a></li>
                 <li><a href="#support" data-lang-key="nav_support">Podpora</a></li>
-                 <li><a href="#video-promo" data-lang-key="nav_video">Video</a></li>
+                 <li><a href="#video-promo" data-lang-key="nav_video">Video</a></li> 
                 <li><a href="#vision" data-lang-key="nav_vision">Vize</a></li>
                 <li><a href="#download" data-lang-key="nav_download">Stažení</a></li>
             </ul>
@@ -321,7 +335,7 @@
                 <p data-lang-key="video_intro">Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.</p>
                 <div class="video-showcase">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID" <!-- ZMĚŇTE ID VIDEA -->
                                 title="Ukázka YourChess Prototypu" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -332,7 +346,6 @@
                  <p style="text-align:center; margin-top:2rem;" data-lang-key="video_cta_text">Zaujala vás vize? Staňte se její součástí!</p>
             </div>
         </section>
-
 
         <section id="package" class="section darker-surface">
             <div class="content-card reveal">
@@ -355,7 +368,7 @@
             </div>
         </section>
 
-         <section id="support" class="section"> <!-- Normální povrch pro sekci Podpora -->
+         <section id="support" class="section"> 
             <div class="content-card reveal">
                 <h2 data-lang-key="support_title">Víc než jen Soubory: <span class="highlight">Naše Podpora a Komunita</span></h2>
                 <p data-lang-key="support_p1">Nenecháme vás v tom samotné. Chceme, aby se vám stavba podařila a abyste z ní měli radost. Proto je součástí balíčku i náš závazek vůči vám:</p>
@@ -364,23 +377,21 @@
                     <li data-lang-key="support_item2"><strong>Exkluzivní Komunitní Skupina:</strong> Všichni backeři získají přístup do soukromé skupiny (Discord). Zde budu poskytovat online podporu, řešit problémy, sdílet tipy a společně brainstormovat.</li>
                 </ul>
                 <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="btn-discord">
-                    <svg viewBox="0 0 245 240"><path fill="currentColor" d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.6-11.1-10.2-11.1zm36.6 0c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.6-11.1-10.2-11.1z"></path><path fill="currentColor" d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6C199 29.2 189.5 20 189.5 20zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-2.2 16.1-11.9 16.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s3 9.7 16.1 11.9c-3 3.8-6.7 8.1-6.7 8.1s-22.5-.9-29.2-32.6c0 0-2.2-22.9 12.8-43.2 0 0 7.8-10.2 23.3-10.2 7.8 0 10.1 3.3 10.1 3.3l1.2 1.9s10.1.7 18.8-1.7c8.8-2.3 17.6-3 17.6-3l1.2-1.9s2.3-3.3 10.1-3.3c15.5 0 23.3 10.2 23.3 10.2 15 20.3 12.8 43.2 12.8 43.2s-6.7 31.7-29.2 32.6z"></path></svg>
+                    <!-- SVG ikona Discordu je odstraněna -->
                     <span data-lang-key="support_discord_btn">Připojit se k Discord komunitě</span>
                 </a>
             </div>
         </section>
 
-        <!-- Cesta Prototypu (nově "prototype-story-card") -->
-        <section id="prototype" class="section">
-             <div class="content-card prototype-story-card reveal"> <!-- Přidána třída -->
-                <div class="content-with-image"> <!-- Zde text vlevo, obrázek vpravo -->
+        <section id="prototype" class="section darker-surface">
+             <div class="content-card prototype-story-card reveal"> 
+                <div class="content-with-image"> 
                      <div class="text-content">
                         <h2 data-lang-key="prototype_title">Cesta Prototypu: <span class="highlight">Upřímnost a Inovace</span></h2>
                         <p data-lang-key="prototype_p1">Tento projekt je ve fázi funkčního prototypu. Vznikl jako ambiciózní studentský projekt a nese stopy autentického vývoje. Je postaven robustně, ale s vědomím, že některé věci jdou udělat lépe. Je to důkaz, že koncept funguje, a zároveň odrazový můstek pro něco mnohem většího.</p>
                         <p data-lang-key="prototype_p2">Chceme být naprosto transparentní: současná verze je skvělá, ale my sníme ještě dál.</p>
                     </div>
                     <div class="image-container">
-                        <!-- Nahraďte svým obrázkem "syrového" prototypu -->
                         <img src="image/prototype1.jpg" alt="Surový prototyp YourChess"> 
                     </div>
                 </div>
@@ -388,17 +399,25 @@
         </section>
 
 
-        <section id="transparency" class="section darker-surface">
+        <section id="transparency" class="section">
              <div class="content-card reveal">
-                <h2 data-lang-key="transparency_title">Plná Transparence: <span class="highlight">Co Budete Potřebovat?</span></h2>
-                <p data-lang-key="transparency_p1">Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.</p>
-                <p data-lang-key="transparency_p2" style="font-size: 1.2em; line-height:1.5;">Dle mých propočtů se celková cena za všechny součástky pohybuje okolo <strong style="color:var(--accent-gold); font-size:1.1em;">4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který vaši investici promění ve funkční dílo.</p>
+                <div class="content-with-image reverse"> <!-- Obrázek vlevo, text vpravo -->
+                    <div class="text-content">
+                        <h2 data-lang-key="transparency_title">Plná Transparence: <span class="highlight">Co Budete Potřebovat?</span></h2>
+                        <p data-lang-key="transparency_p1">Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.</p>
+                        <p data-lang-key="transparency_p2" style="font-size: 1.2em; line-height:1.5;">Dle mých propočtů se celková cena za všechny součástky pohybuje okolo <strong style="color:var(--accent-gold); font-size:1.1em;">4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který vaši investici promění ve funkční dílo.</p>
+                    </div>
+                     <div class="image-container"> 
+                        <!-- Další obrázek, třeba detail komponent? Nebo schéma? -->
+                        <img src="image/prototype1.jpg" alt="Ukázka komponent nebo detailu">
+                    </div>
+                </div>
             </div>
         </section>
         
-        <section id="vision" class="section">
+        <section id="vision" class="section darker-surface">
             <div class="content-card reveal">
-                <div class="content-with-image reverse">
+                 <div class="content-with-image"> <!-- Obrázek vpravo, text vlevo -->
                     <div class="text-content">
                         <h2 data-lang-key="vision_title">Naše Vize: <span class="highlight">Budoucnost YourChess</span></h2>
                         <p data-lang-key="vision_p1">Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>.</p>
@@ -416,15 +435,15 @@
             </div>
         </section>
 
-        <section id="join" class="section darker-surface">
+        <section id="join" class="section">
              <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="join_title">Staňte se <span class="highlight">součástí naší cesty</span></h2>
                 <p data-lang-key="join_p1" style="max-width: 650px; margin-left:auto; margin-right:auto;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.</p>
-                <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Podpořit YourChess na Indiegogo!</a>
+                <a href="https://www.indiegogo.com/" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Podpořit YourChess na Indiegogo!</a>
             </div>
         </section>
         
-        <section id="download" class="section">
+        <section id="download" class="section darker-surface">
             <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="download_title">Stáhnout <span class="highlight">YourChess Uploader</span></h2>
                 <p data-lang-key="download_p" style="max-width: 650px; margin-left:auto; margin-right:auto;">Software pro nahrání firmware a přístup k digitálním podkladům pro backery.</p>
@@ -439,66 +458,46 @@
     </footer>
 
     <script>
-    // --- SCROLL PROGRESS BAR ---
-    const scrollProgressBar = document.getElementById('scroll-progress-bar');
-    if (scrollProgressBar) {
-        window.addEventListener('scroll', () => {
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (scrollTop / scrollHeight) * 100;
-            scrollProgressBar.style.width = scrolled + "%";
-        });
-    }
-
-    // --- JS PRO ANIMOVANÉ POZADÍ (stejné jako v předchozí verzi, upraveno) ---
-    const canvasBg = document.getElementById('canvas-background'); // Opraveno ID na canvas-background
+    // --- JS PRO ANIMOVANÉ POZADÍ (stejné jako v předchozí verzi) ---
+    const canvasBg = document.getElementById('canvas-background'); 
     if (canvasBg) {
         const ctxBg = canvasBg.getContext('2d');
         let widthBg, heightBg, bgParticles;
 
         const bgConfig = {
-            particleColor: "rgba(79, 138, 255, 0.06)", // Ještě jemnější modrá
-            lineColor: "rgba(79, 138, 255, 0.025)", // Ještě jemnější linky
-            particleAmount: 0,
-            defaultSpeed: 0.08, 
-            variantSpeed: 0.08,
-            defaultRadius: 1, 
-            variantRadius: 0.6,
-            linkRadius: 180, // Větší dosah pro spojení, ale méně husté
-            avoidMouseRadius: 70 
+            particleColor: "rgba(79, 138, 255, 0.07)", 
+            lineColor: "rgba(79, 138, 255, 0.03)", 
+            particleAmount: 0, defaultSpeed: 0.09, variantSpeed: 0.09,
+            defaultRadius: 1.1, variantRadius: 0.7, linkRadius: 160, 
+            avoidMouseRadius: 65 
         };
         let mouse = { x: null, y: null};
 
-        // Event Listeners pro myš ponechány
         canvasBg.addEventListener('mousemove', (event) => {
-            const rect = canvasBg.getBoundingClientRect(); // Získání pozice canvasu
+            const rect = canvasBg.getBoundingClientRect();
             mouse.x = event.clientX - rect.left;
             mouse.y = event.clientY - rect.top;
         });
-        canvasBg.addEventListener('mouseleave', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
+        canvasBg.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
 
-
-        class BgParticle { /* Definice třídy BgParticle jako předtím */
-             constructor() { this.x = Math.random() * widthBg; this.y = Math.random() * heightBg; this.speed = bgConfig.defaultSpeed + Math.random() * bgConfig.variantSpeed; this.directionAngle = Math.floor(Math.random() * 360); this.color = bgConfig.particleColor; this.radius = bgConfig.defaultRadius + Math.random() * bgConfig.variantRadius; this.originalSpeedX = this.speed * Math.cos(this.directionAngle * Math.PI / 180); this.originalSpeedY = this.speed * Math.sin(this.directionAngle * Math.PI / 180); this.speedX = this.originalSpeedX; this.speedY = this.originalSpeedY; }
+        class BgParticle {
+            constructor() { this.x = Math.random() * widthBg; this.y = Math.random() * heightBg; this.speed = bgConfig.defaultSpeed + Math.random() * bgConfig.variantSpeed; this.directionAngle = Math.floor(Math.random() * 360); this.color = bgConfig.particleColor; this.radius = bgConfig.defaultRadius + Math.random() * bgConfig.variantRadius; this.originalSpeedX = this.speed * Math.cos(this.directionAngle * Math.PI / 180); this.originalSpeedY = this.speed * Math.sin(this.directionAngle * Math.PI / 180); this.speedX = this.originalSpeedX; this.speedY = this.originalSpeedY; }
             update() {
                 if (mouse.x !== null && mouse.y !== null) {
-                    let dxMouse = this.x - mouse.x;
-                    let dyMouse = this.y - mouse.y;
+                    let dxMouse = this.x - mouse.x; let dyMouse = this.y - mouse.y;
                     let distanceMouse = Math.sqrt(dxMouse*dxMouse + dyMouse*dyMouse);
                     if (distanceMouse < bgConfig.avoidMouseRadius) {
-                        this.speedX += dxMouse / distanceMouse * 0.08; 
-                        this.speedY += dyMouse / distanceMouse * 0.08;
-                    } else {
-                        this.speedX += (this.originalSpeedX - this.speedX) * 0.03;
-                        this.speedY += (this.originalSpeedY - this.speedY) * 0.03;
+                        const forceDirectionX = dxMouse / distanceMouse;
+                        const forceDirectionY = dyMouse / distanceMouse;
+                        const force = (bgConfig.avoidMouseRadius - distanceMouse) / bgConfig.avoidMouseRadius; // Větší síla blíže k myši
+                        this.speedX += forceDirectionX * force * 0.3; // Síla odstrčení
+                        this.speedY += forceDirectionY * force * 0.3;
                     }
-                } else {
-                    this.speedX += (this.originalSpeedX - this.speedX) * 0.03;
-                    this.speedY += (this.originalSpeedY - this.speedY) * 0.03;
                 }
+                // Postupný návrat k původní rychlosti, i když se vyhýbá
+                this.speedX += (this.originalSpeedX - this.speedX) * 0.02;
+                this.speedY += (this.originalSpeedY - this.speedY) * 0.02;
+
 
                 if (this.x + this.radius > widthBg || this.x - this.radius < 0) {this.speedX = -this.speedX; this.originalSpeedX = -this.originalSpeedX;} 
                 if (this.y + this.radius > heightBg || this.y - this.radius < 0) {this.speedY = -this.speedY; this.originalSpeedY = -this.originalSpeedY;} 
@@ -507,36 +506,48 @@
             draw() { ctxBg.beginPath(); ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctxBg.closePath(); ctxBg.fillStyle = this.color; ctxBg.fill();}
         }
 
-        function setupBg() {  /* setupBg jako předtím */
+        function setupBg() { 
             widthBg = window.innerWidth; 
             heightBg = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight, document.body.clientHeight, document.documentElement.clientHeight, window.innerHeight);
-
             canvasBg.width = widthBg; canvasBg.height = heightBg;
-            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 28000);  // Méně částic
+            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 26000);  
             bgParticles = [];
             for (let i = 0; i < bgConfig.particleAmount; i++) { bgParticles.push(new BgParticle());}
         }
 
-        function loopBg() { /* loopBg jako předtím */
+        function loopBg() { 
             ctxBg.clearRect(0,0,widthBg,heightBg);
             for(let particle of bgParticles){particle.update(); particle.draw();}
-            for(let i=0; i<bgParticles.length; i++){ for(let j=i+1; j<bgParticles.length; j++){ const distance = Math.sqrt(Math.pow(bgParticles[i].x - bgParticles[j].x, 2) + Math.pow(bgParticles[i].y - bgParticles[j].y, 2)); if(distance < bgConfig.linkRadius){ ctxBg.beginPath(); ctxBg.strokeStyle = bgConfig.lineColor; ctxBg.lineWidth = 0.2; ctxBg.moveTo(bgParticles[i].x, bgParticles[i].y); ctxBg.lineTo(bgParticles[j].x, bgParticles[j].y); ctxBg.stroke();}}}
+            for(let i=0; i<bgParticles.length; i++){ for(let j=i+1; j<bgParticles.length; j++){ const distance = Math.sqrt(Math.pow(bgParticles[i].x - bgParticles[j].x, 2) + Math.pow(bgParticles[i].y - bgParticles[j].y, 2)); if(distance < bgConfig.linkRadius){ ctxBg.beginPath(); ctxBg.strokeStyle = bgConfig.lineColor; ctxBg.lineWidth = 0.25; ctxBg.moveTo(bgParticles[i].x, bgParticles[i].y); ctxBg.lineTo(bgParticles[j].x, bgParticles[j].y); ctxBg.stroke();}}}
             window.requestAnimationFrame(loopBg);
         }
         
         let resizeTimeoutBg;
-        window.addEventListener("resize", () => { clearTimeout(resizeTimeoutBg); resizeTimeoutBg = setTimeout(setupBg, 250); });
+        window.addEventListener("resize", () => { clearTimeout(resizeTimeoutBg); resizeTimeoutBg = setTimeout(setupBg, 200); }); // Kratší timeout
         
-        // Spuštění až po načtení DOMu, aby se správně určila výška
-        document.addEventListener('DOMContentLoaded', () => {
-            if(canvasBg){ // Ujistíme se, že canvas existuje
-                setupBg(); 
-                loopBg();
-            }
+        // Spuštění až po načtení DOMu
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                if(canvasBg){ setupBg(); loopBg(); }
+            });
+        } else {
+            if(canvasBg){ setupBg(); loopBg(); }
+        }
+    }
+    
+    // --- Scroll Progress Bar JS ---
+    const scrollProgressBar = document.getElementById('scroll-progress-bar');
+    if (scrollProgressBar) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0; // Ochrana proti dělení nulou
+            scrollProgressBar.style.width = scrolled + "%";
         });
     }
 
-    // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace - stejný kód jako v předchozí "dobré" verzi) ---
+
+    // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace - stejný kód) ---
     document.addEventListener('DOMContentLoaded', () => {
         const translations = { /* ... Stejné překlady jako v předchozí verzi ... */ 
              en: {
@@ -583,7 +594,7 @@
                 vision_item3: "<strong>Elegant Hardware:</strong> A single, professional PCB will replace cables and simplify building.",
                 join_title: "Become <span class='highlight'>Part of Our Journey</span>",
                 join_p1: "If this project has caught your interest, I'll be grateful for any support. Get your package, build your own intelligent chessboard, and help us turn a dream into reality.",
-                join_cta: "Support YourChess on Indiegogo!",
+                join_cta: "Support YourChess on Indiegogo & Join Us!",
                 download_title: "Download <span class='highlight'>YourChess Uploader</span>",
                 download_p: "Software for firmware upload and access to digital assets for backers (or for demo if available).",
                 download_btn: "Download Uploader (.EXE)",
@@ -633,7 +644,7 @@
                 vision_item3: "<strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely.",
                 join_title: "Staňte se <span class='highlight'>součástí naší cesty</span>",
                 join_p1: "Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.",
-                join_cta: "Podpořit YourChess na Indiegogo!",
+                join_cta: "Podpořit YourChess na Indiegogo!", /* Změnil jsem z Indiegogo & Join us */
                 download_title: "Stáhnout <span class='highlight'>YourChess Uploader</span>",
                 download_p: "Software pro nahrání firmware a přístup k digitálním podkladům pro backery.",
                 download_btn: "Stáhnout Uploader (.EXE)",
