@@ -11,50 +11,44 @@
     
     <style>
         :root {
-            --bg-dark-slate: #181E29; 
-            --bg-light-slate: #2A303C; 
+            --bg-dark-slate: #1A1D24; /* Hlavní tmavé pozadí */
+            --bg-light-slate: #252A34; /* Pozadí karet */
             --text-primary: #E8EAF0;   
             --text-secondary: #A0AEC0; 
             --accent-blue: #4F8AFF;    
             --accent-gold: #FACC15;    
             --discord-blurple: #5865F2; 
-            --border-color: rgba(107, 114, 128, 0.25); 
-            --shadow-color: rgba(0, 0, 0, 0.25);
-            --glow-blue-soft: rgba(79, 138, 255, 0.25);
-            --glow-gold-soft: rgba(250, 204, 21, 0.3);
-
-            /* Nové proměnné pro glassmorphism a gradient pozadí */
-            --bg-gradient-start: #1F2937;
-            --bg-gradient-end: #11151E;
-            --card-bg-glass: rgba(42, 48, 58, 0.65); /* Průhlednost karet */
-            --card-border-glass: rgba(107, 114, 128, 0.15); /* Jemnější border pro sklo */
+            --border-color: rgba(107, 114, 128, 0.2); /* Mírně jemnější */
+            --shadow-color: rgba(0, 0, 0, 0.3); /* Trochu výraznější stín */
+            --glow-blue-soft: rgba(79, 138, 255, 0.2);
 
             /* Desktop specific sizes */
             --desktop-font-size: 17.5px;
             --desktop-line-height: 1.75;
             --desktop-p-font-size: 1.15rem;
-            --desktop-h1-font-size-max: 3.8rem;
-            --desktop-h2-font-size-max: 2.8rem;
-            --desktop-h3-font-size-max: 1.75rem;
+            --desktop-h1-font-size-max: 3.7rem;
+            --desktop-h2-font-size-max: 2.7rem;
+            --desktop-h3-font-size-max: 1.7rem;
             --desktop-section-padding-y: 5.5rem; 
-            --desktop-section-padding-x: 8%; /* Trochu užší obsah */
+            --desktop-section-padding-x: 8%; 
             --desktop-card-padding: 3rem;
         }
 
-        /* --- ZÁKLADY & NOVÉ POZADÍ --- */
+        /* --- ZÁKLADY & NOVÉ ANIMOVANÉ POZADÍ --- */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; } 
         body {
-            background-image: 
-                linear-gradient(145deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%),
-                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23374151' fill-opacity='0.06'%3E%3Cpath d='M0 0h40v40H0zM40 40h40v40H40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            background-attachment: fixed; 
+            background-color: var(--bg-dark-slate);
             color: var(--text-primary);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             line-height: 1.7;
             font-size: 16px; 
             position: relative; 
+        }
+        #canvas-background { /* Pro nové JS pozadí */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; /* Aby neblokovalo klikání */
         }
         
         /* --- TYPOGRAFIE --- */
@@ -78,8 +72,8 @@
             position: fixed; top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
             padding: 1.3rem 5%; z-index: 1000; 
-            background: rgba(24, 30, 41, 0.8); /* Více průhledné */
-            backdrop-filter: blur(12px);
+            background: rgba(26, 29, 36, 0.85); /* Lehce tmavší, méně modré */
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
         }
         .logo { font-size: 1.7rem; letter-spacing: 0.5px; }
@@ -91,68 +85,81 @@
         .lang-switcher a.active { color: var(--accent-gold); text-decoration: none; border-bottom:2px solid var(--accent-gold);}
         .nav-toggle-btn { display: none; } 
 
+
         /* --- HERO SEKCE --- */
         .hero {
             padding: 10rem 5% 6rem; text-align: left; 
             min-height: 85vh; display: flex; align-items: center; 
-            max-width: 1400px; margin: 0 auto; /* Max šířka pro hero */
+            max-width: 1400px; margin: 0 auto; /* Centrování obsahu na širokých obrazovkách */
         }
-        .hero-content { max-width: 750px; } 
+        .hero-content { max-width: 800px; } 
         .hero .greeting { font-size: 1.3rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 0.6rem; display: block; }
         .hero .subheadline { font-size: 1.25rem; color: var(--text-secondary); margin-top: 1.5rem; margin-bottom: 3rem; }
         .cta-button {
-            display: inline-block; background: var(--accent-blue); color: #fff; /* Změna barvy textu pro lepší kontrast */
+            display: inline-block; background: var(--accent-blue); color: #fff; /* Bílá pro lepší čitelnost na modré */
             padding: 1.1rem 2.8rem; border-radius: 8px; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.8px;
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 6px 20px rgba(79, 138, 255, 0.4); /* Mírně výraznější stín */
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease; border:none;
-            animation: pulse-cta 2.5s infinite ease-in-out;
+             animation: pulse-cta 2.8s infinite ease-in-out;
         }
         @keyframes pulse-cta { 
-            0% { transform: scale(1); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3); }
-            50% { transform: scale(1.025); box-shadow: 0 9px 28px rgba(59, 130, 246, 0.45); }
-            100% { transform: scale(1); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3); }
+            0% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 9px 28px rgba(79, 138, 255, 0.45); }
+            100% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
         }
-        .cta-button:hover { animation-play-state: paused; transform: translateY(-4px) scale(1.025) ; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.55); }
-        .cta-secondary { /* ... */ }
-
-        /* --- SEKCE A KARTY (Glassmorphism) --- */
-        .section { padding: 4.5rem 5%; max-width: 1200px; margin: 0 auto; } /* Max šířka pro obsahové sekce */
+        .cta-button:hover { animation-play-state: paused; transform: translateY(-4px) scale(1.02) ; box-shadow: 0 10px 30px rgba(79, 138, 255, 0.55); }
+        
+        /* --- SEKCE A KARTY --- */
+        .section { padding: 4.5rem 5%; max-width: 1100px; margin: 0 auto; } /* Max šířka pro sekce */
         .content-card {
-            background: var(--card-bg-glass);
-            backdrop-filter: blur(15px); 
-            -webkit-backdrop-filter: blur(15px); 
-            padding: 2.5rem; 
-            border-radius: 16px; 
-            box-shadow: 0 12px 40px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.05);
-            border: 1px solid var(--card-border-glass);
+            background-color: var(--bg-light-slate);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 35px var(--shadow-color);
+            border: 1px solid var(--border-color);
             margin-bottom: 3rem;
-            transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; /* Jemnější ease */
         }
-        .content-card:hover { 
-            transform: translateY(-6px); 
-            box-shadow: 0 18px 55px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.07); 
-            background: rgba(50, 58, 70, 0.7); 
-        }
+        .content-card:hover { transform: translateY(-6px); box-shadow: 0 16px 45px rgba(0,0,0,0.3); }
         
         .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top:2.5rem;}
         .grid-item {
-            background: rgba(31, 41, 55, 0.7); /* Tmavší karty v mřížce, mohou být také glassmorphic */
-            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            border: 1px solid var(--card-border-glass);
+            background: var(--bg-dark-slate); border: 1px solid var(--border-color);
             padding: 2rem; border-radius: 10px;
             transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
-        .grid-item:hover { transform: translateY(-4px); border-color: var(--accent-blue); box-shadow: 0 5px 20px rgba(79,138,255,0.15);}
+        .grid-item:hover { transform: translateY(-5px); border-color: var(--accent-blue); box-shadow: 0 6px 20px rgba(79,138,255,0.15);}
         .grid-item .icon { font-size: 2rem; margin-bottom: 0.8rem; color: var(--accent-gold); display: inline-block;}
         .image-container { 
-            background: transparent; /* Obrázky jsou na pozadí karty, můžeme ponechat */
-            border-radius: 10px;
-            padding: 0; /* Bez extra paddingu, pokud je obrázek jediný obsah */
-            margin: 2.5rem 0;
-            /* border: 1px solid var(--border-color); Mohlo by být zbytečné s glassmorphismem */
-            /* box-shadow: 0 5px 15px var(--shadow-color); */
+            background: var(--bg-dark-slate); border-radius: 10px;
+            padding: 0.75rem; margin: 2.5rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
-        .image-container img { width: 100%; height: auto; display: block; border-radius: 8px; } /* Mírné zaoblení pro obrázky */
+        .image-container img { width: 100%; height: auto; display: block; border-radius: 6px; }
+        
+        /* STYLY PRO YOUTUBE VIDEO */
+        .video-showcase { margin: 2.5rem 0; }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+
         .bullet-list { list-style: none; padding-left: 0;}
         .bullet-list li { padding-left: 2em; position:relative; margin-bottom:0.9em; font-size:1.05rem;}
         .bullet-list li::before {
@@ -162,7 +169,7 @@
             text-shadow: 0 0 5px var(--glow-gold-soft);
         }
         
-        .btn-discord { /* Zůstává stejné */
+        .btn-discord { 
             display: inline-flex; align-items: center; gap: 0.8rem;
             background-color: var(--discord-blurple); color: #fff;
             padding: 1rem 2rem; border-radius: 8px; font-size: 1.1rem;
@@ -174,7 +181,7 @@
         .btn-discord svg { width: 26px; height: 26px; }
         .btn-discord:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 8px 25px rgba(88, 101, 242, 0.45); }
 
-        .footer { text-align: center; padding: 3.5rem 5% 2.5rem; border-top: 1px solid var(--border-color); background: var(--bg-light-slate); }
+        .footer { text-align: center; padding: 3.5rem 5% 2.5rem; border-top: 1px solid var(--border-color); background: var(--bg-light-slate);}
 
         /* --- RESPONZIVITA --- */
         @media (min-width: 1024px) { 
@@ -184,31 +191,33 @@
             .hero { padding: calc(var(--desktop-section-padding-y) + 3rem) var(--desktop-section-padding-x) var(--desktop-section-padding-y) ; }
             .content-card { padding: var(--desktop-card-padding); margin-bottom: 4rem; }
         }
-        @media (min-width: 901px) and (max-width: 1023px) { /* Mezistupeň pro tablety na šířku */
-            body { font-size: 16.5px; }
+        @media (min-width: 901px) and (max-width: 1023px) { 
+            body { font-size: 16.8px; } /* Mírně větší pro tablety */
             p { font-size: 1.1rem; }
             .section { padding: 5rem 6%;}
             .hero { padding: 9rem 6% 5rem;}
             .content-card { padding: 2.8rem; }
         }
 
-        @media (min-width: 901px) { /* Pro layout obrázek-text na desktopu */
+        @media (min-width: 901px) { 
              .content-with-image { display:flex; flex-direction: row; align-items:center; gap:3.5rem;} 
              .content-with-image .text-content { flex:1.1; } 
-             .content-with-image .image-container { flex:0.9; max-width:550px; margin:0;}
+             .content-with-image .image-container { flex:0.9; max-width:500px; margin:0;}
              .content-with-image.reverse { flex-direction: row-reverse;}
         }
 
         @media (max-width: 900px) { 
-            body { font-size: 15.5px; } 
-            .section { padding: 3.5rem 5%; max-width:100%; /* Na mobilu bereme celou šířku */ }
+            body { font-size: 15.8px; } /* Mírné zvětšení pro lepší čitelnost na mobilu */
+            h1 {font-size: clamp(2rem, 7vw, 3rem); } /* Kontrola nadpisů na mobilu */
+            h2 {font-size: clamp(1.6rem, 6vw, 2.2rem); }
+            .section { padding: 3.5rem 5%; max-width:100%; }
             .content-card { padding: 2.2rem 1.8rem; margin-bottom: 2.5rem; }
-            .hero { padding: 7.5rem 5% 4rem; text-align:center; } 
+            .hero { padding: 8rem 5% 4rem; text-align:center; } 
             .hero-content { margin: 0 auto; }
             .cta-button, .cta-secondary, .btn-discord { width:100%; max-width:380px; margin-left:auto; margin-right:auto; display:block; } 
             .cta-button {margin-bottom:1.2rem;}
-            .cta-secondary { margin-top:0.5rem; margin-bottom: 1.2rem; }
-            .content-with-image { flex-direction: column; }
+            .cta-secondary { margin-left:auto; margin-bottom:1.2rem;} 
+            .content-with-image { flex-direction: column; } /* Obrázek bude nahoře */
             .content-with-image .image-container { order: -1; margin-bottom: 2.5rem; }
             
             .nav-toggle-btn { display: block; background:none; border:none; padding:0.5rem; cursor:pointer; z-index:1001;}
@@ -236,8 +245,7 @@
     </style>
 </head>
 <body>
-    <!-- Canvas pro animované pozadí - pokud byste nechtěl ten statický SVG, odkomentujte a smažte background-image z body -->
-    <!-- <canvas id="interactive-bg"></canvas> --> 
+    <canvas id="canvas-background"></canvas> 
     
     <nav class="navbar">
         <a href="#" class="logo">YourChess</a>
@@ -246,6 +254,7 @@
                 <li><a href="#who-for" data-lang-key="nav_who_for">Pro Koho</a></li>
                 <li><a href="#package" data-lang-key="nav_package">Balíček</a></li>
                 <li><a href="#support" data-lang-key="nav_support">Podpora</a></li>
+                 <li><a href="#video-promo" data-lang-key="nav_video">Video</a></li> <!-- Nový odkaz -->
                 <li><a href="#vision" data-lang-key="nav_vision">Vize</a></li>
                 <li><a href="#download" data-lang-key="nav_download">Stažení</a></li>
             </ul>
@@ -273,20 +282,50 @@
             </div>
         </section>
 
+        <!-- Sekce Pro Koho Je Tento Projekt? -->
         <section id="who-for" class="section darker-surface">
+             <div class="content-card reveal">
+                <div class="content-with-image">
+                    <div class="text-content">
+                        <h2 data-lang-key="who_title">Pro Koho Je Tento Projekt?</h2>
+                        <p data-lang-key="who_intro">Tato kampaň je pro vás, pokud:</p>
+                        <ul class="bullet-list">
+                            <li data-lang-key="who_1">Milujete stavět, pájet a oživovat elektroniku.</li>
+                            <li data-lang-key="who_2">Jste vášnivý šachista, který sní o interaktivním herním zážitku.</li>
+                            <li data-lang-key="who_3">Chcete podpořit inovativní projekt a být u jeho zrodu od samého začátku.</li>
+                            <li data-lang-key="who_4">Nebojíte se výzvy a láká vás hrdost z vlastnoručně postaveného zařízení.</li>
+                        </ul>
+                    </div>
+                     <div class="image-container">
+                        <img src="image/prototype1.jpg" alt="Prototyp šachovnice YourChess">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sekce Video Prezentace -->
+        <section id="video-promo" class="section">
             <div class="content-card reveal">
-                <h2 data-lang-key="who_title">Pro Koho Je Tento Projekt?</h2>
-                 <p data-lang-key="who_intro">Tato kampaň je pro vás, pokud:</p>
-                <ul class="bullet-list">
-                    <li data-lang-key="who_1">Milujete stavět, pájet a oživovat elektroniku.</li>
-                    <li data-lang-key="who_2">Jste vášnivý šachista, který sní o interaktivním herním zážitku.</li>
-                    <li data-lang-key="who_3">Chcete podpořit inovativní projekt a být u jeho zrodu od samého začátku.</li>
-                    <li data-lang-key="who_4">Nebojíte se výzvy a láká vás hrdost z vlastnoručně postaveného zařízení.</li>
-                </ul>
+                <h2 data-lang-key="video_title">YourChess v Akci</h2>
+                <p data-lang-key="video_intro">Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.</p>
+                <div class="video-showcase">
+                    <div class="video-container">
+                        <!-- Nahraďte YOUR_YOUTUBE_VIDEO_ID IDčkem vašeho videa -->
+                        <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID" 
+                                title="YouTube video player - YourChess Prototype" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                 <p style="text-align:center; margin-top:1.5rem;" data-lang-key="video_cta_text">Zaujala vás vize? Staňte se její součástí!</p>
             </div>
         </section>
 
-        <section id="package" class="section">
+
+        <!-- Co Získáte -->
+        <section id="package" class="section darker-surface">
             <div class="content-card reveal">
                 <h2 data-lang-key="package_title">Co Získáte v <span class="highlight">Exkluzivním Balíčku</span>?</h2>
                 <p data-lang-key="package_intro">Vaší podporou si nekupujete jen soubory. Kupujete si vstupenku do světa YourChess.</p>
@@ -307,7 +346,7 @@
             </div>
         </section>
 
-         <section id="support" class="section darker-surface">
+         <section id="support" class="section">
             <div class="content-card reveal">
                 <h2 data-lang-key="support_title">Víc než jen Soubory: <span class="highlight">Naše Podpora a Komunita</span></h2>
                 <p data-lang-key="support_p1">Nenecháme vás v tom samotné. Chceme, aby se vám stavba podařila a abyste z ní měli radost. Proto je součástí balíčku i náš závazek vůči vám:</p>
@@ -322,24 +361,17 @@
             </div>
         </section>
 
-        <section id="transparency" class="section">
+        <section id="transparency" class="section darker-surface">
              <div class="content-card reveal">
-                <div class="content-with-image">
-                    <div class="text-content">
-                        <h2 data-lang-key="transparency_title">Plná Transparence: <span class="highlight">Co Budete Potřebovat?</span></h2>
-                        <p data-lang-key="transparency_p1">Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.</p>
-                        <p data-lang-key="transparency_p2" style="font-size: 1.2em; line-height:1.5;">Dle mých propočtů se celková cena za všechny součástky pohybuje okolo <strong style="color:var(--accent-gold); font-size:1.1em;">4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který vaši investici promění ve funkční dílo.</p>
-                    </div>
-                    <div class="image-container">
-                        <img src="https://i.imgur.com/GgGv3fE.png" alt="Prototyp YourChess">
-                    </div>
-                </div>
+                 <h2 data-lang-key="transparency_title">Plná Transparence: <span class="highlight">Co Budete Potřebovat?</span></h2>
+                <p data-lang-key="transparency_p1">Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.</p>
+                <p data-lang-key="transparency_p2" style="font-size: 1.2em; line-height:1.5;">Dle mých propočtů se celková cena za všechny součástky pohybuje okolo <strong style="color:var(--accent-gold); font-size:1.1em;">4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který vaši investici promění ve funkční dílo.</p>
             </div>
         </section>
         
-        <section id="vision" class="section darker-surface">
+        <section id="vision" class="section">
             <div class="content-card reveal">
-                 <div class="content-with-image reverse">
+                <div class="content-with-image reverse"> <!-- Obrázek vpravo -->
                     <div class="text-content">
                         <h2 data-lang-key="vision_title">Naše Vize: <span class="highlight">Budoucnost YourChess</span></h2>
                         <p data-lang-key="vision_p1">Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>, která bude menší, lehčí, rychlejší, lépe přenositelná, hezčí a chytřejší.</p>
@@ -351,13 +383,13 @@
                         </ul>
                     </div>
                     <div class="image-container">
-                        <img src="https://i.imgur.com/Pew15d5.png" alt="Vize YourChess v2.0">
+                        <img src="image/prototype2.jpg" alt="Vize YourChess v2.0">
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="join" class="section">
+        <section id="join" class="section darker-surface">
              <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="join_title">Staňte se <span class="highlight">součástí naší cesty</span></h2>
                 <p data-lang-key="join_p1" style="max-width: 650px; margin-left:auto; margin-right:auto;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.</p>
@@ -365,7 +397,7 @@
             </div>
         </section>
         
-        <section id="download" class="section darker-surface">
+        <section id="download" class="section">
             <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="download_title">Stáhnout <span class="highlight">YourChess Uploader</span></h2>
                 <p data-lang-key="download_p" style="max-width: 650px; margin-left:auto; margin-right:auto;">Software pro nahrání firmware a přístup k digitálním podkladům pro backery.</p>
@@ -376,15 +408,107 @@
     </main>
     
     <footer class="footer">
-        <p class="reveal" style="font-size:0.95rem;">© <span id="current-year"></span> Tadeáš [Sem Vaše Příjmení] - YourChess Projekt</p>
+        <p class="reveal" style="font-size:0.95rem;">© <span id="current-year"></span> Tadeáš [Vaše Příjmení] - YourChess Projekt</p>
     </footer>
 
     <script>
-    // JS PRO NAVIGACI, JAZYKY, SCROLL ANIMACE - STEJNÉ JAKO PŘEDTÍM
+    // --- JS PRO ANIMOVANÉ ŠACHOVNICOVÉ POZADÍ ---
+    const canvas = document.getElementById('canvas-background');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let gridSize = 50; // Velikost čtverce v mřížce
+        let squares = [];
+        let animationFrameId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.body.scrollHeight; // Výška celé stránky
+            createSquares();
+        }
+
+        function createSquares() {
+            squares = [];
+            const cols = Math.ceil(canvas.width / gridSize);
+            const rows = Math.ceil(canvas.height / gridSize);
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    squares.push({
+                        x: j * gridSize,
+                        y: i * gridSize,
+                        opacity: Math.random() * 0.02 + 0.005, // Velmi nízká základní opacita
+                        targetOpacity: Math.random() * 0.02 + 0.005,
+                        isGlowing: false,
+                        glowTime: 0,
+                        pulseSpeed: Math.random() * 0.002 + 0.001
+                    });
+                }
+            }
+        }
+
+        let lastScrollY = window.scrollY;
+        let scrollFactor = 0;
+
+        function drawSquares() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Výpočet posunu na základě scrollu pro paralaxní efekt
+            let currentScrollY = window.scrollY;
+            scrollFactor += (currentScrollY - lastScrollY) * 0.1; // Malý faktor pro jemný paralaxní posun
+            lastScrollY = currentScrollY;
+            
+            // Omezení scrollFactor, aby se moc neposunul
+            scrollFactor = Math.max(-gridSize * 2, Math.min(gridSize * 2, scrollFactor));
+
+
+            squares.forEach(square => {
+                if (square.isGlowing) {
+                    square.opacity = Math.sin(square.glowTime) * 0.06 + 0.015; // Max opacita při glow 0.075
+                    square.glowTime += square.pulseSpeed * 5; // Rychlejší pulz
+                    if (square.glowTime > Math.PI) {
+                        square.isGlowing = false;
+                        square.glowTime = 0;
+                        square.targetOpacity = Math.random() * 0.02 + 0.005; 
+                    }
+                } else {
+                    // Postupné přiblížení k targetOpacity
+                    if (square.opacity < square.targetOpacity) square.opacity += 0.0001;
+                    else if (square.opacity > square.targetOpacity) square.opacity -= 0.0001;
+
+                    // Občas náhodně spustí "glow"
+                    if (Math.random() < 0.0002) { // Velmi malá šance
+                        square.isGlowing = true;
+                    }
+                }
+                
+                ctx.fillStyle = `rgba(79, 138, 255, ${square.opacity})`; // --accent-blue s dynamickou opacitou
+                
+                // Aplikace scrollFactor na pozici y
+                let yPos = square.y - scrollFactor;
+                
+                // Zajistíme, aby se čtverce "omotávaly" při scrollu
+                while(yPos < -gridSize) yPos += canvas.height + gridSize;
+                while(yPos > canvas.height) yPos -= canvas.height + gridSize;
+
+                ctx.fillRect(square.x, yPos, gridSize -1 , gridSize -1 ); // -1 pro linky
+            });
+            animationFrameId = requestAnimationFrame(drawSquares);
+        }
+
+        window.addEventListener('resize', () => {
+            cancelAnimationFrame(animationFrameId);
+            resizeCanvas();
+            drawSquares();
+        });
+
+        resizeCanvas();
+        drawSquares();
+    }
+    
+    // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace - beze změny) ---
     document.addEventListener('DOMContentLoaded', () => {
-        const translations = { /* ... Vaše překlady (neměnil jsem, jsou z předchozí verze) ... */ 
+        const translations = { /* ... Všechny vaše CZ a EN překlady ... */ 
             en: {
-                nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support & Community', nav_vision: 'Vision', nav_download: 'Download',
+                nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support & Community', nav_video: 'Video', nav_vision: 'Vision', nav_download: 'Download',
                 hero_greeting: "Hi, I'm Tadeáš.",
                 hero_title: "More Than a Game.<br><span class='highlight'>Your Own High-Tech Project.</span>",
                 hero_subtitle: "For the past year, I've poured myself into a project born from my passion for electronics and love for chess. Today, a functional prototype stands before you, and I invite you to become part of its continuing journey.",
@@ -397,6 +521,9 @@
                 who_2: "You're a passionate chess player dreaming of an interactive gaming experience.",
                 who_3: "You want to support an innovative project and be there from its very inception.",
                 who_4: "You're not afraid of a challenge and are drawn to the pride of a self-built device.",
+                video_title: "YourChess in Action",
+                video_intro: "Take a look at a short demonstration of the prototype and the possibilities YourChess offers.",
+                video_cta_text: "Intrigued by the vision? Become a part of it!",
                 package_title: "What Do You Get in the <span class='highlight'>Exclusive Package</span>?",
                 package_intro: "With your support, you're not just buying files. You're buying a ticket into the world of YourChess.",
                 package_item1_title: "<span class='icon'>💻</span>The Chessboard's Brain",
@@ -428,7 +555,7 @@
                 download_note: "(Requires a unique code for full file access after campaign support.)"
             },
             cs: { 
-                nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_vision: 'Vize', nav_download: 'Stažení',
+                nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_video: 'Video', nav_vision: 'Vize', nav_download: 'Stažení',
                 hero_greeting: "Ahoj, jsem Tadeáš.",
                 hero_title: "Víc než Hra.<br><span class='highlight'>Váš Vlastní High-Tech Projekt.</span>",
                 hero_subtitle: "Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.",
@@ -441,6 +568,9 @@
                 who_2: "Jste vášnivý šachista, který sní o interaktivním herním zážitku.",
                 who_3: "Chcete podpořit inovativní projekt a být u jeho zrodu od samého začátku.",
                 who_4: "Nebojíte se výzvy a láká vás hrdost z vlastnoručně postaveného zařízení.",
+                video_title: "YourChess v Akci",
+                video_intro: "Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.",
+                video_cta_text: "Zaujala vás vize? Staňte se její součástí!",
                 package_title: "Co Získáte v <span class='highlight'>Exkluzivním Balíčku</span>?",
                 package_intro: "Vaší podporou si nekupujete jen soubory. Kupujete si vstupenku do světa YourChess.",
                 package_item1_title: "<span class='icon'>💻</span>Mozek Šachovnice",
@@ -480,7 +610,7 @@
                 navCluster.classList.toggle('active');
                 navToggleBtn.classList.toggle('active');
             });
-            navCluster.querySelectorAll('.nav-menu a').forEach(link => {
+             navCluster.querySelectorAll('.nav-menu a').forEach(link => {
                 link.addEventListener('click', () => {
                     if (navCluster.classList.contains('active')) {
                         navCluster.classList.remove('active');
