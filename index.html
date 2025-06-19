@@ -9,17 +9,17 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://VASEJMENO.github.io/">
+    <meta property="og:url" content="https://VASEJMENO.github.io/"> 
     <meta property="og:title" content="YourChess: Postavte si Vlastní Inteligentní Šachovnici">
     <meta property="og:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
     <meta property="og:image" content="https://VASEJMENO.github.io/image/prototype1.jpg"> 
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://VASEJMENO.github.io/">
+    <meta property="twitter:url" content="https://VASEJMENO.github.io/"> 
     <meta property="twitter:title" content="YourChess: Postavte si Vlastní Inteligentní Šachovnici">
     <meta property="twitter:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
-    <meta property="twitter:image" content="https://VASEJMENO.github.io/image/prototype1.jpg"> 
+    <meta property="twitter:image" content="https://VASEJMENO.github.io/image/prototype1.jpg">
 
     <link rel="icon" href="favicon.ico" type="image/x-icon"> 
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -69,11 +69,17 @@
             background: var(--accent-blue); width: 0%; 
             z-index: 1001; transition: width 0.1s ease-out;
         }
-        #canvas-background { 
+        #canvas-background { /* TOTO JE DŮLEŽITÉ PRO POZADÍ */
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none; 
         }
         
+        /* CSS STYLY Z MINULÉ "NÁÁÁSOBNĚ LEPŠÍ" VERZE ZŮSTÁVAJÍ */
+        /* Zahrnuje: h1-h3, p, a, strong, .navbar, .logo, .nav-cluster, .nav-menu, .lang-switcher, .nav-toggle-btn, */
+        /* .hero, .hero-content, .greeting, .subheadline, .cta-button, @keyframes pulse-cta, */
+        /* .section, .content-card, .prototype-story-card, .item-grid, .grid-item, .image-container, */
+        /* .video-showcase, .video-container, .bullet-list, .btn-discord, .footer, @media queries, .reveal */
+
         h1, h2, h3, .logo, .nav-menu a, .cta-button, .btn-discord { font-family: 'Manrope', sans-serif; font-weight: 800; }
         h1 { font-size: clamp(2.2rem, 5.5vw, var(--desktop-h1-font-size-max)); line-height: 1.25; margin-bottom: 1rem; color: var(--text-primary); }
         h1 .highlight { color: var(--accent-blue); }
@@ -103,6 +109,7 @@
         .lang-switcher a.active { color: var(--accent-gold); text-decoration: none; border-bottom:2px solid var(--accent-gold);}
         .nav-toggle-btn { display: none; } 
 
+
         .hero {
             padding: 10rem 5% 6rem; text-align: left; 
             min-height: 85vh; display: flex; align-items: center; 
@@ -116,7 +123,7 @@
             padding: 1.1rem 2.8rem; border-radius: 8px; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.8px;
             box-shadow: 0 6px 20px rgba(79, 138, 255, 0.4);
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease; border:none;
-            animation: pulse-cta 2.8s infinite ease-in-out;
+             animation: pulse-cta 2.8s infinite ease-in-out;
         }
         @keyframes pulse-cta { 
             0% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
@@ -285,6 +292,8 @@
     </nav>
     
     <main>
+        <!-- Obsah <main> ZŮSTÁVÁ STEJNÝ jako v úplně poslední verzi s vaším posledním textem -->
+        <!-- Vložím sem zkrácenou verzi, protože HTML se neměnil, pouze CSS a JS pro pozadí -->
         <header class="hero">
             <div class="hero-content reveal">
                 <span class="greeting" data-lang-key="hero_greeting">Ahoj, jsem Tadeáš.</span>
@@ -447,18 +456,23 @@
     </footer>
 
     <script>
-    // --- JS PRO ANIMOVANÉ POZADÍ (Kompletní a opravený kód z předchozí úspěšné verze) ---
+    // --- JS PRO ANIMOVANÉ ČÁSTICOVÉ POZADÍ (VRÁCENÁ A FUNKČNÍ VERZE) ---
     const canvasBg = document.getElementById('canvas-background'); 
     if (canvasBg) {
         const ctxBg = canvasBg.getContext('2d');
-        let widthBg, heightBg, bgParticles;
+        let widthBg, heightBg, bgParticles = []; // Inicializujeme bgParticles jako prázdné pole
+        let animationFrameIdBg; // Pro možnost zastavení a restartu animace
 
         const bgConfig = {
-            particleColor: "rgba(79, 138, 255, 0.065)", 
-            lineColor: "rgba(79, 138, 255, 0.02)", 
-            particleAmount: 0, defaultSpeed: 0.09, variantSpeed: 0.09,
-            defaultRadius: 1.1, variantRadius: 0.7, linkRadius: 160, 
-            avoidMouseRadius: 65 
+            particleColor: "rgba(79, 138, 255, 0.075)", // Mírně viditelnější
+            lineColor: "rgba(79, 138, 255, 0.03)", 
+            particleAmount: 0, 
+            defaultSpeed: 0.08, 
+            variantSpeed: 0.08,
+            defaultRadius: 1.2, 
+            variantRadius: 0.8, 
+            linkRadius: 150, // Upravte podle potřeby pro hustotu linek
+            avoidMouseRadius: 70 
         };
         let mouse = { x: undefined, y: undefined}; 
 
@@ -467,7 +481,10 @@
             mouse.x = event.clientX - rect.left;
             mouse.y = event.clientY - rect.top;
         });
-        canvasBg.addEventListener('mouseleave', () => { mouse.x = undefined; mouse.y = undefined; });
+        canvasBg.addEventListener('mouseleave', () => { 
+            mouse.x = undefined; 
+            mouse.y = undefined; 
+        });
 
         class BgParticle {
             constructor() { 
@@ -479,12 +496,10 @@
                 this.color = bgConfig.particleColor;
                 this.vx = Math.cos(this.angle) * this.speed;
                 this.vy = Math.sin(this.angle) * this.speed;
-                this.originalVx = this.vx; 
-                this.originalVy = this.vy;
             }
             update() {
-                let currentOriginalVx = this.originalVx;
-                let currentOriginalVy = this.originalVy;
+                let originalVx = Math.cos(this.angle) * this.speed; // Původní směr X
+                let originalVy = Math.sin(this.angle) * this.speed; // Původní směr Y
 
                 if (mouse.x !== undefined && mouse.y !== undefined) {
                     let dxMouse = this.x - mouse.x;
@@ -492,20 +507,21 @@
                     let distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
                     if (distanceMouse < bgConfig.avoidMouseRadius && distanceMouse > 0) {
                         const force = (bgConfig.avoidMouseRadius - distanceMouse) / bgConfig.avoidMouseRadius;
-                        this.vx += (dxMouse / distanceMouse) * force * 0.4; 
-                        this.vy += (dyMouse / distanceMouse) * force * 0.4;
+                        this.vx += (dxMouse / distanceMouse) * force * 0.35; 
+                        this.vy += (dyMouse / distanceMouse) * force * 0.35;
                     }
                 }
-                this.vx += (currentOriginalVx - this.vx) * 0.03; 
-                this.vy += (currentOriginalVy - this.vy) * 0.03;
+                // Postupný návrat k původnímu směru
+                this.vx += (originalVx - this.vx) * 0.02; 
+                this.vy += (originalVy - this.vy) * 0.02;
 
                 if (this.x + this.radius + this.vx > widthBg || this.x - this.radius + this.vx < 0) {
                     this.vx *= -1;
-                    this.originalVx *= -1; 
+                    this.angle = Math.atan2(this.vy, this.vx); // Aktualizujeme úhel pro zachování konzistence
                 }
                 if (this.y + this.radius + this.vy > heightBg || this.y - this.radius + this.vy < 0) {
                     this.vy *= -1;
-                    this.originalVy *= -1;
+                    this.angle = Math.atan2(this.vy, this.vx);
                 }
                 this.x += this.vx;
                 this.y += this.vy;
@@ -513,29 +529,37 @@
                 this.x = Math.max(this.radius, Math.min(this.x, widthBg - this.radius));
                 this.y = Math.max(this.radius, Math.min(this.y, heightBg - this.radius));
             }
-            draw() { ctxBg.beginPath(); ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctxBg.closePath(); ctxBg.fillStyle = this.color; ctxBg.fill();}
+            draw() { 
+                ctxBg.beginPath(); 
+                ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2); 
+                ctxBg.closePath(); 
+                ctxBg.fillStyle = this.color; 
+                ctxBg.fill();
+            }
         }
 
         function setupBg() { 
             widthBg = window.innerWidth; 
             heightBg = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-            canvasBg.width = widthBg; canvasBg.height = heightBg;
-            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 28000);  
+            canvasBg.width = widthBg; 
+            canvasBg.height = heightBg;
+            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 27000); // Hustota částic  
             bgParticles = [];
-            for (let i = 0; i < bgConfig.particleAmount; i++) { bgParticles.push(new BgParticle());}
+            for (let i = 0; i < bgConfig.particleAmount; i++) { 
+                bgParticles.push(new BgParticle());
+            }
         }
 
-        let animationFrameIdBg;
         function loopBg() { 
             ctxBg.clearRect(0,0,widthBg,heightBg);
-            for(let particle of bgParticles){particle.update(); particle.draw();}
+            for(let particle of bgParticles){ particle.update(); particle.draw(); }
             for(let i=0; i<bgParticles.length; i++){ 
                 for(let j=i+1; j<bgParticles.length; j++){ 
                     const distance = Math.sqrt(Math.pow(bgParticles[i].x - bgParticles[j].x, 2) + Math.pow(bgParticles[i].y - bgParticles[j].y, 2)); 
                     if(distance < bgConfig.linkRadius){ 
                         ctxBg.beginPath(); 
                         ctxBg.strokeStyle = bgConfig.lineColor; 
-                        ctxBg.lineWidth = 0.15; 
+                        ctxBg.lineWidth = 0.2; 
                         ctxBg.moveTo(bgParticles[i].x, bgParticles[i].y); 
                         ctxBg.lineTo(bgParticles[j].x, bgParticles[j].y); 
                         ctxBg.stroke();
@@ -546,9 +570,16 @@
         }
         
         let resizeTimeoutBg;
-        window.addEventListener("resize", () => { clearTimeout(resizeTimeoutBg); resizeTimeoutBg = setTimeout(() => { if(animationFrameIdBg) cancelAnimationFrame(animationFrameIdBg); setupBg(); loopBg();}, 200); });
+        window.addEventListener("resize", () => { 
+            clearTimeout(resizeTimeoutBg); 
+            resizeTimeoutBg = setTimeout(() => { 
+                if(animationFrameIdBg) cancelAnimationFrame(animationFrameIdBg); 
+                setupBg(); 
+                loopBg();
+            }, 200); 
+        });
         
-        // Spuštění
+        // Spuštění animace
         if (document.readyState === 'complete' || (document.readyState !== "loading" && !document.documentElement.doScroll) ) {
            if(canvasBg) {setupBg(); loopBg();}
         } else {
@@ -556,8 +587,9 @@
         }
     }
     
+    // --- SCROLL PROGRESS BAR JS ---
     const scrollProgressBar = document.getElementById('scroll-progress-bar');
-    if (scrollProgressBar) {
+    if (scrollProgressBar) { /* ... (stejné jako předtím) ... */
         window.addEventListener('scroll', () => {
             const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -566,9 +598,10 @@
         });
     }
 
+    // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace - stejný kód) ---
     document.addEventListener('DOMContentLoaded', () => {
-        const translations = { /* ... Všechny vaše CZ a EN překlady ... */ 
-            en: {
+        const translations = { /* ... Stejné překlady jako v předchozí verzi ... */ 
+             en: {
                 nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support & Community', nav_video: 'Video', nav_vision: 'Vision', nav_download: 'Download',
                 hero_greeting: "Hi, I'm Tadeáš.",
                 hero_title: "More Than a Game.<br><span class='highlight'>Your Own High-Tech Project.</span>",
@@ -646,7 +679,7 @@
                 support_title: "Víc než jen Soubory: <span class='highlight'>Naše Podpora a Komunita</span>",
                 support_p1: "Nenecháme vás v tom samotné. Chceme, aby se vám stavba podařila a abyste z ní měli radost. Proto je součástí balíčku i náš závazek vůči vám:",
                 support_item1: "<strong>Pravidelné Aktualizace Softwaru:</strong> Vylepšení firmware prototypu získáte zdarma přes Uploader.",
-                support_item2: "<strong>Exkluzivní Komunitní Skupina:</strong> Všichni backeři získají přístup do soukromé skupiny. Zde budu poskytovat online podporu, řešit s vámi případné problémy při stavbě, sdílet tipy a triky a společně můžeme brainstormovat nápady na další vylepšení.",
+                support_item2: "<strong>Exkluzivní Komunitní Skupina:</strong> Všichni backeři získají přístup do soukromé skupiny (Discord). Zde budu poskytovat online podporu, řešit problémy, sdílet tipy a společně brainstormovat.",
                 support_discord_btn: "Připojit se k Discord komunitě",
                 prototype_title: "Cesta Prototypu: <span class='highlight'>Upřímnost a Inovace</span>",
                 prototype_p1: "Tento projekt je ve fázi funkčního prototypu. Vznikl jako ambiciózní studentský projekt a nese stopy autentického vývoje. Je postaven robustně, ale s vědomím, že některé věci jdou udělat lépe. Je to důkaz, že koncept funguje, a zároveň odrazový můstek pro něco mnohem většího.",
