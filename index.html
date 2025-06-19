@@ -9,17 +9,17 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://VASEJMENO.github.io/"> <!-- ZMĚŇTE NA VAŠI URL -->
+    <meta property="og:url" content="https://VASEJMENO.github.io/">
     <meta property="og:title" content="YourChess: Postavte si Vlastní Inteligentní Šachovnici">
     <meta property="og:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
-    <meta property="og:image" content="https://VASEJMENO.github.io/image/prototype1.jpg"> <!-- ZMĚŇTE NA URL VAŠEHO HLAVNÍHO OBRÁZKU -->
+    <meta property="og:image" content="https://VASEJMENO.github.io/image/prototype1.jpg"> 
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://VASEJMENO.github.io/"> <!-- ZMĚŇTE NA VAŠI URL -->
+    <meta property="twitter:url" content="https://VASEJMENO.github.io/">
     <meta property="twitter:title" content="YourChess: Postavte si Vlastní Inteligentní Šachovnici">
     <meta property="twitter:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
-    <meta property="twitter:image" content="https://VASEJMENO.github.io/image/prototype1.jpg"> <!-- ZMĚŇTE NA URL VAŠEHO HLAVNÍHO OBRÁZKU -->
+    <meta property="twitter:image" content="https://VASEJMENO.github.io/image/prototype1.jpg"> 
 
     <link rel="icon" href="favicon.ico" type="image/x-icon"> 
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -116,7 +116,7 @@
             padding: 1.1rem 2.8rem; border-radius: 8px; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.8px;
             box-shadow: 0 6px 20px rgba(79, 138, 255, 0.4);
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease; border:none;
-             animation: pulse-cta 2.8s infinite ease-in-out;
+            animation: pulse-cta 2.8s infinite ease-in-out;
         }
         @keyframes pulse-cta { 
             0% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
@@ -191,8 +191,7 @@
         }
         
         .btn-discord { 
-            display: inline-block;
-            text-align: center;
+            display: inline-block; text-align: center;
             background-color: var(--discord-blurple); color: #fff;
             padding: 1rem 2.2rem; border-radius: 8px; font-size: 1.1rem;
             text-transform: uppercase; letter-spacing: 0.6px;
@@ -265,7 +264,7 @@
 </head>
 <body>
     <div id="scroll-progress-bar"></div>
-    <canvas id="canvas-background"></canvas> <!-- Canvas pro animované pozadí JE ZPĚT -->
+    <canvas id="canvas-background"></canvas> 
     
     <nav class="navbar">
         <a href="#" class="logo">YourChess</a>
@@ -448,69 +447,61 @@
     </footer>
 
     <script>
-    // --- JS PRO ANIMOVANÉ ČÁSTICOVÉ POZADÍ (KOMPLETNÍ A OPRAVENÝ KÓD) ---
+    // --- JS PRO ANIMOVANÉ POZADÍ (Kompletní a opravený kód z předchozí úspěšné verze) ---
     const canvasBg = document.getElementById('canvas-background'); 
     if (canvasBg) {
         const ctxBg = canvasBg.getContext('2d');
         let widthBg, heightBg, bgParticles;
 
-        // Konfigurace pro částice pozadí
         const bgConfig = {
             particleColor: "rgba(79, 138, 255, 0.065)", 
             lineColor: "rgba(79, 138, 255, 0.02)", 
-            particleAmount: 0, 
-            defaultSpeed: 0.09, 
-            variantSpeed: 0.09,
-            defaultRadius: 1.1, 
-            variantRadius: 0.7, 
-            linkRadius: 160, 
+            particleAmount: 0, defaultSpeed: 0.09, variantSpeed: 0.09,
+            defaultRadius: 1.1, variantRadius: 0.7, linkRadius: 160, 
             avoidMouseRadius: 65 
         };
-        let mouse = { x: undefined, y: undefined };
+        let mouse = { x: undefined, y: undefined}; 
 
         canvasBg.addEventListener('mousemove', (event) => {
             const rect = canvasBg.getBoundingClientRect();
             mouse.x = event.clientX - rect.left;
             mouse.y = event.clientY - rect.top;
         });
-        canvasBg.addEventListener('mouseleave', () => { 
-            mouse.x = undefined; 
-            mouse.y = undefined; 
-        });
+        canvasBg.addEventListener('mouseleave', () => { mouse.x = undefined; mouse.y = undefined; });
 
         class BgParticle {
-            constructor() {
-                this.x = Math.random() * widthBg;
-                this.y = Math.random() * heightBg;
+            constructor() { 
+                this.x = Math.random() * widthBg; 
+                this.y = Math.random() * heightBg; 
                 this.angle = Math.random() * Math.PI * 2;
-                this.speed = bgConfig.defaultSpeed + Math.random() * bgConfig.variantSpeed;
+                this.speed = bgConfig.defaultSpeed + Math.random() * bgConfig.variantSpeed; 
                 this.radius = bgConfig.defaultRadius + Math.random() * bgConfig.variantRadius;
                 this.color = bgConfig.particleColor;
                 this.vx = Math.cos(this.angle) * this.speed;
                 this.vy = Math.sin(this.angle) * this.speed;
-                this.originalVx = this.vx; // Uložíme původní směr
+                this.originalVx = this.vx; 
                 this.originalVy = this.vy;
             }
             update() {
-                // Interakce s myší
+                let currentOriginalVx = this.originalVx;
+                let currentOriginalVy = this.originalVy;
+
                 if (mouse.x !== undefined && mouse.y !== undefined) {
                     let dxMouse = this.x - mouse.x;
                     let dyMouse = this.y - mouse.y;
                     let distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
                     if (distanceMouse < bgConfig.avoidMouseRadius && distanceMouse > 0) {
                         const force = (bgConfig.avoidMouseRadius - distanceMouse) / bgConfig.avoidMouseRadius;
-                        this.vx += (dxMouse / distanceMouse) * force * 0.4; // Síla odpuzování
+                        this.vx += (dxMouse / distanceMouse) * force * 0.4; 
                         this.vy += (dyMouse / distanceMouse) * force * 0.4;
                     }
                 }
-                // Postupný návrat k původnímu směru/rychlosti
-                this.vx += (this.originalVx - this.vx) * 0.03; 
-                this.vy += (this.originalVy - this.vy) * 0.03;
+                this.vx += (currentOriginalVx - this.vx) * 0.03; 
+                this.vy += (currentOriginalVy - this.vy) * 0.03;
 
-                // Odraz od okrajů
                 if (this.x + this.radius + this.vx > widthBg || this.x - this.radius + this.vx < 0) {
                     this.vx *= -1;
-                    this.originalVx *= -1; // Obrátit i původní směr
+                    this.originalVx *= -1; 
                 }
                 if (this.y + this.radius + this.vy > heightBg || this.y - this.radius + this.vy < 0) {
                     this.vy *= -1;
@@ -519,65 +510,45 @@
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // Pojistka
                 this.x = Math.max(this.radius, Math.min(this.x, widthBg - this.radius));
                 this.y = Math.max(this.radius, Math.min(this.y, heightBg - this.radius));
             }
-            draw() {
-                ctxBg.beginPath();
-                ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctxBg.closePath();
-                ctxBg.fillStyle = this.color;
-                ctxBg.fill();
-            }
+            draw() { ctxBg.beginPath(); ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctxBg.closePath(); ctxBg.fillStyle = this.color; ctxBg.fill();}
         }
 
-        function setupBg() {
-            widthBg = window.innerWidth;
+        function setupBg() { 
+            widthBg = window.innerWidth; 
             heightBg = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-            canvasBg.width = widthBg;
-            canvasBg.height = heightBg;
-            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 28000);
+            canvasBg.width = widthBg; canvasBg.height = heightBg;
+            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 28000);  
             bgParticles = [];
-            for (let i = 0; i < bgConfig.particleAmount; i++) {
-                bgParticles.push(new BgParticle());
-            }
+            for (let i = 0; i < bgConfig.particleAmount; i++) { bgParticles.push(new BgParticle());}
         }
 
         let animationFrameIdBg;
-        function loopBg() {
-            ctxBg.clearRect(0, 0, widthBg, heightBg);
-            for (let particle of bgParticles) {
-                particle.update();
-                particle.draw();
-            }
-            for (let i = 0; i < bgParticles.length; i++) {
-                for (let j = i + 1; j < bgParticles.length; j++) {
-                    const distance = Math.sqrt(Math.pow(bgParticles[i].x - bgParticles[j].x, 2) + Math.pow(bgParticles[i].y - bgParticles[j].y, 2));
-                    if (distance < bgConfig.linkRadius) {
-                        ctxBg.beginPath();
-                        ctxBg.strokeStyle = bgConfig.lineColor;
-                        ctxBg.lineWidth = 0.15;
-                        ctxBg.moveTo(bgParticles[i].x, bgParticles[i].y);
-                        ctxBg.lineTo(bgParticles[j].x, bgParticles[j].y);
+        function loopBg() { 
+            ctxBg.clearRect(0,0,widthBg,heightBg);
+            for(let particle of bgParticles){particle.update(); particle.draw();}
+            for(let i=0; i<bgParticles.length; i++){ 
+                for(let j=i+1; j<bgParticles.length; j++){ 
+                    const distance = Math.sqrt(Math.pow(bgParticles[i].x - bgParticles[j].x, 2) + Math.pow(bgParticles[i].y - bgParticles[j].y, 2)); 
+                    if(distance < bgConfig.linkRadius){ 
+                        ctxBg.beginPath(); 
+                        ctxBg.strokeStyle = bgConfig.lineColor; 
+                        ctxBg.lineWidth = 0.15; 
+                        ctxBg.moveTo(bgParticles[i].x, bgParticles[i].y); 
+                        ctxBg.lineTo(bgParticles[j].x, bgParticles[j].y); 
                         ctxBg.stroke();
                     }
                 }
             }
             animationFrameIdBg = window.requestAnimationFrame(loopBg);
         }
-
+        
         let resizeTimeoutBg;
-        window.addEventListener("resize", () => {
-            clearTimeout(resizeTimeoutBg);
-            resizeTimeoutBg = setTimeout(() => {
-                cancelAnimationFrame(animationFrameIdBg); // Zastaví předchozí animaci
-                setupBg();
-                loopBg(); // Spustí novou
-            }, 200);
-        });
-
-        // Zajistíme spuštění až po načtení celého DOM, aby byla správně výška body
+        window.addEventListener("resize", () => { clearTimeout(resizeTimeoutBg); resizeTimeoutBg = setTimeout(() => { if(animationFrameIdBg) cancelAnimationFrame(animationFrameIdBg); setupBg(); loopBg();}, 200); });
+        
+        // Spuštění
         if (document.readyState === 'complete' || (document.readyState !== "loading" && !document.documentElement.doScroll) ) {
            if(canvasBg) {setupBg(); loopBg();}
         } else {
@@ -585,9 +556,8 @@
         }
     }
     
-    // --- SCROLL PROGRESS BAR JS ---
     const scrollProgressBar = document.getElementById('scroll-progress-bar');
-    if (scrollProgressBar) { /* ... (stejné jako předtím) ... */
+    if (scrollProgressBar) {
         window.addEventListener('scroll', () => {
             const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -596,10 +566,9 @@
         });
     }
 
-    // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace - stejný kód) ---
     document.addEventListener('DOMContentLoaded', () => {
-        const translations = { /* ... Vaše překlady ... */ 
-             en: {
+        const translations = { /* ... Všechny vaše CZ a EN překlady ... */ 
+            en: {
                 nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support & Community', nav_video: 'Video', nav_vision: 'Vision', nav_download: 'Download',
                 hero_greeting: "Hi, I'm Tadeáš.",
                 hero_title: "More Than a Game.<br><span class='highlight'>Your Own High-Tech Project.</span>",
@@ -649,7 +618,7 @@
                 download_btn: "Download Uploader (.EXE)",
                 download_note: "(Requires a unique code for full file access after campaign support.)"
             },
-            cs: { // Váš kompletní český text zde
+            cs: { 
                 nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_video: 'Video', nav_vision: 'Vize', nav_download: 'Stažení',
                 hero_greeting: "Ahoj, jsem Tadeáš.",
                 hero_title: "Víc než Hra.<br><span class='highlight'>Váš Vlastní High-Tech Projekt.</span>",
