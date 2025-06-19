@@ -116,7 +116,7 @@
             padding: 1.1rem 2.8rem; border-radius: 8px; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.8px;
             box-shadow: 0 6px 20px rgba(79, 138, 255, 0.4);
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease; border:none;
-            animation: pulse-cta 2.8s infinite ease-in-out;
+             animation: pulse-cta 2.8s infinite ease-in-out;
         }
         @keyframes pulse-cta { 
             0% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
@@ -448,121 +448,146 @@
     </footer>
 
     <script>
-    // --- JS PRO ANIMOVANÉ ČÁSTICOVÉ POZADÍ (KOMPLETNÍ KÓD) ---
+    // --- JS PRO ANIMOVANÉ ČÁSTICOVÉ POZADÍ (KOMPLETNÍ A OPRAVENÝ KÓD) ---
     const canvasBg = document.getElementById('canvas-background'); 
     if (canvasBg) {
         const ctxBg = canvasBg.getContext('2d');
         let widthBg, heightBg, bgParticles;
 
+        // Konfigurace pro částice pozadí
         const bgConfig = {
             particleColor: "rgba(79, 138, 255, 0.065)", 
             lineColor: "rgba(79, 138, 255, 0.02)", 
-            particleAmount: 0, defaultSpeed: 0.09, variantSpeed: 0.09,
-            defaultRadius: 1.1, variantRadius: 0.7, linkRadius: 160, 
+            particleAmount: 0, 
+            defaultSpeed: 0.09, 
+            variantSpeed: 0.09,
+            defaultRadius: 1.1, 
+            variantRadius: 0.7, 
+            linkRadius: 160, 
             avoidMouseRadius: 65 
         };
-        let mouse = { x: undefined, y: undefined}; 
+        let mouse = { x: undefined, y: undefined };
 
         canvasBg.addEventListener('mousemove', (event) => {
             const rect = canvasBg.getBoundingClientRect();
             mouse.x = event.clientX - rect.left;
             mouse.y = event.clientY - rect.top;
         });
-        canvasBg.addEventListener('mouseleave', () => { mouse.x = undefined; mouse.y = undefined; });
+        canvasBg.addEventListener('mouseleave', () => { 
+            mouse.x = undefined; 
+            mouse.y = undefined; 
+        });
 
         class BgParticle {
-            constructor() { 
-                this.x = Math.random() * widthBg; 
-                this.y = Math.random() * heightBg; 
+            constructor() {
+                this.x = Math.random() * widthBg;
+                this.y = Math.random() * heightBg;
                 this.angle = Math.random() * Math.PI * 2;
-                this.speed = bgConfig.defaultSpeed + Math.random() * bgConfig.variantSpeed; 
+                this.speed = bgConfig.defaultSpeed + Math.random() * bgConfig.variantSpeed;
                 this.radius = bgConfig.defaultRadius + Math.random() * bgConfig.variantRadius;
                 this.color = bgConfig.particleColor;
-                // Pro plynulejší návrat k původnímu směru
                 this.vx = Math.cos(this.angle) * this.speed;
                 this.vy = Math.sin(this.angle) * this.speed;
+                this.originalVx = this.vx; // Uložíme původní směr
+                this.originalVy = this.vy;
             }
             update() {
-                let originalVx = Math.cos(this.angle) * this.speed;
-                let originalVy = Math.sin(this.angle) * this.speed;
-
+                // Interakce s myší
                 if (mouse.x !== undefined && mouse.y !== undefined) {
                     let dxMouse = this.x - mouse.x;
                     let dyMouse = this.y - mouse.y;
                     let distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-                    if (distanceMouse < bgConfig.avoidMouseRadius && distanceMouse > 0) { // distanceMouse > 0 aby se zabránilo dělení nulou
+                    if (distanceMouse < bgConfig.avoidMouseRadius && distanceMouse > 0) {
                         const force = (bgConfig.avoidMouseRadius - distanceMouse) / bgConfig.avoidMouseRadius;
-                        // Aplikujeme sílu k aktuální rychlosti, ale s omezením
-                        this.vx += (dxMouse / distanceMouse) * force * 0.4; 
+                        this.vx += (dxMouse / distanceMouse) * force * 0.4; // Síla odpuzování
                         this.vy += (dyMouse / distanceMouse) * force * 0.4;
                     }
                 }
                 // Postupný návrat k původnímu směru/rychlosti
-                this.vx += (originalVx - this.vx) * 0.03; // Faktor tlumení
-                this.vy += (originalVy - this.vy) * 0.03;
+                this.vx += (this.originalVx - this.vx) * 0.03; 
+                this.vy += (this.originalVy - this.vy) * 0.03;
 
-                // Odraz od okrajů s úpravou úhlu a pozice
+                // Odraz od okrajů
                 if (this.x + this.radius + this.vx > widthBg || this.x - this.radius + this.vx < 0) {
-                    this.vx = -this.vx;
-                    this.angle = Math.atan2(this.vy, this.vx); // Aktualizace úhlu po odrazu
-                    originalVx = -originalVx; // Obrátí i původní směr pro konzistenci
+                    this.vx *= -1;
+                    this.originalVx *= -1; // Obrátit i původní směr
                 }
                 if (this.y + this.radius + this.vy > heightBg || this.y - this.radius + this.vy < 0) {
-                    this.vy = -this.vy;
-                    this.angle = Math.atan2(this.vy, this.vx);
-                    originalVy = -originalVy;
+                    this.vy *= -1;
+                    this.originalVy *= -1;
                 }
-                this.x += this.vx; 
+                this.x += this.vx;
                 this.y += this.vy;
 
-                // Pojistka, aby částice neuvízly mimo hranice
+                // Pojistka
                 this.x = Math.max(this.radius, Math.min(this.x, widthBg - this.radius));
                 this.y = Math.max(this.radius, Math.min(this.y, heightBg - this.radius));
             }
-            draw() { ctxBg.beginPath(); ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctxBg.closePath(); ctxBg.fillStyle = this.color; ctxBg.fill();}
+            draw() {
+                ctxBg.beginPath();
+                ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctxBg.closePath();
+                ctxBg.fillStyle = this.color;
+                ctxBg.fill();
+            }
         }
 
-        function setupBg() { 
-            widthBg = window.innerWidth; 
+        function setupBg() {
+            widthBg = window.innerWidth;
             heightBg = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-            canvasBg.width = widthBg; canvasBg.height = heightBg;
-            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 28000);  
+            canvasBg.width = widthBg;
+            canvasBg.height = heightBg;
+            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 28000);
             bgParticles = [];
-            for (let i = 0; i < bgConfig.particleAmount; i++) { bgParticles.push(new BgParticle());}
+            for (let i = 0; i < bgConfig.particleAmount; i++) {
+                bgParticles.push(new BgParticle());
+            }
         }
 
-        function loopBg() { 
-            ctxBg.clearRect(0,0,widthBg,heightBg);
-            for(let particle of bgParticles){particle.update(); particle.draw();}
-            for(let i=0; i<bgParticles.length; i++){ 
-                for(let j=i+1; j<bgParticles.length; j++){ 
-                    const distance = Math.sqrt(Math.pow(bgParticles[i].x - bgParticles[j].x, 2) + Math.pow(bgParticles[i].y - bgParticles[j].y, 2)); 
-                    if(distance < bgConfig.linkRadius){ 
-                        ctxBg.beginPath(); 
-                        ctxBg.strokeStyle = bgConfig.lineColor; 
-                        ctxBg.lineWidth = 0.15; 
-                        ctxBg.moveTo(bgParticles[i].x, bgParticles[i].y); 
-                        ctxBg.lineTo(bgParticles[j].x, bgParticles[j].y); 
+        let animationFrameIdBg;
+        function loopBg() {
+            ctxBg.clearRect(0, 0, widthBg, heightBg);
+            for (let particle of bgParticles) {
+                particle.update();
+                particle.draw();
+            }
+            for (let i = 0; i < bgParticles.length; i++) {
+                for (let j = i + 1; j < bgParticles.length; j++) {
+                    const distance = Math.sqrt(Math.pow(bgParticles[i].x - bgParticles[j].x, 2) + Math.pow(bgParticles[i].y - bgParticles[j].y, 2));
+                    if (distance < bgConfig.linkRadius) {
+                        ctxBg.beginPath();
+                        ctxBg.strokeStyle = bgConfig.lineColor;
+                        ctxBg.lineWidth = 0.15;
+                        ctxBg.moveTo(bgParticles[i].x, bgParticles[i].y);
+                        ctxBg.lineTo(bgParticles[j].x, bgParticles[j].y);
                         ctxBg.stroke();
                     }
                 }
             }
-            window.requestAnimationFrame(loopBg);
+            animationFrameIdBg = window.requestAnimationFrame(loopBg);
         }
-        
+
         let resizeTimeoutBg;
-        window.addEventListener("resize", () => { clearTimeout(resizeTimeoutBg); resizeTimeoutBg = setTimeout(setupBg, 200); });
-        
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => { if(canvasBg){ setupBg(); loopBg(); }});
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimeoutBg);
+            resizeTimeoutBg = setTimeout(() => {
+                cancelAnimationFrame(animationFrameIdBg); // Zastaví předchozí animaci
+                setupBg();
+                loopBg(); // Spustí novou
+            }, 200);
+        });
+
+        // Zajistíme spuštění až po načtení celého DOM, aby byla správně výška body
+        if (document.readyState === 'complete' || (document.readyState !== "loading" && !document.documentElement.doScroll) ) {
+           if(canvasBg) {setupBg(); loopBg();}
         } else {
-            if(canvasBg){ setupBg(); loopBg(); }
+            document.addEventListener('DOMContentLoaded', () => { if(canvasBg){ setupBg(); loopBg(); }});
         }
     }
     
     // --- SCROLL PROGRESS BAR JS ---
     const scrollProgressBar = document.getElementById('scroll-progress-bar');
-    if (scrollProgressBar) {
+    if (scrollProgressBar) { /* ... (stejné jako předtím) ... */
         window.addEventListener('scroll', () => {
             const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -573,8 +598,8 @@
 
     // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace - stejný kód) ---
     document.addEventListener('DOMContentLoaded', () => {
-        const translations = { /* ... Všechny vaše CZ a EN překlady (stejné jako naposled) ... */ 
-            en: {
+        const translations = { /* ... Vaše překlady ... */ 
+             en: {
                 nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support & Community', nav_video: 'Video', nav_vision: 'Vision', nav_download: 'Download',
                 hero_greeting: "Hi, I'm Tadeáš.",
                 hero_title: "More Than a Game.<br><span class='highlight'>Your Own High-Tech Project.</span>",
@@ -624,7 +649,7 @@
                 download_btn: "Download Uploader (.EXE)",
                 download_note: "(Requires a unique code for full file access after campaign support.)"
             },
-            cs: { 
+            cs: { // Váš kompletní český text zde
                 nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_video: 'Video', nav_vision: 'Vize', nav_download: 'Stažení',
                 hero_greeting: "Ahoj, jsem Tadeáš.",
                 hero_title: "Víc než Hra.<br><span class='highlight'>Váš Vlastní High-Tech Projekt.</span>",
