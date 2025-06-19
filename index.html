@@ -72,12 +72,7 @@
             z-index: -1; pointer-events: none; 
         }
         
-        /* CSS STYLY Z MINULÉ "NÁÁÁSOBNĚ LEPŠÍ" VERZE ZŮSTÁVAJÍ */
-        /* Zahrnuje: h1-h3, p, a, strong, .navbar, .logo, .nav-cluster, .nav-menu, .lang-switcher, .nav-toggle-btn, */
-        /* .hero, .hero-content, .greeting, .subheadline, .cta-button, @keyframes pulse-cta, */
-        /* .section, .content-card, .prototype-story-card, .item-grid, .grid-item, .image-container, */
-        /* .video-showcase, .video-container, .bullet-list, .btn-discord, .footer, @media queries, .reveal */
-
+        /* Ostatní CSS zůstává beze změny... */
         h1, h2, h3, .logo, .nav-menu a, .cta-button, .btn-discord { font-family: 'Manrope', sans-serif; font-weight: 800; }
         h1 { font-size: clamp(2.2rem, 5.5vw, var(--desktop-h1-font-size-max)); line-height: 1.25; margin-bottom: 1rem; color: var(--text-primary); }
         h1 .highlight { color: var(--accent-blue); }
@@ -298,14 +293,12 @@
                 <a href="https://www.indiegogo.com/" target="_blank" class="cta-button" data-lang-key="hero_cta">Podpořit na Indiegogo</a>
             </div>
         </header>
-
         <section id="intro" class="section">
             <div class="content-card reveal">
                 <p data-lang-key="intro_p1" style="font-size:1.2em; color:var(--text-primary); font-weight:500;">Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.</p>
                 <p data-lang-key="intro_p2">Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong></p>
             </div>
         </section>
-
         <section id="who-for" class="section darker-surface">
              <div class="content-card reveal">
                  <div class="content-with-image">
@@ -325,24 +318,19 @@
                  </div>
              </div>
         </section>
-        
         <section id="video-promo" class="section">
             <div class="content-card reveal">
                 <h2 data-lang-key="video_title">YourChess v <span class="highlight">Akci</span></h2>
                 <p data-lang-key="video_intro">Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.</p>
                 <div class="video-showcase">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID" title="Ukázka YourChess Prototypu" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                allowfullscreen>
+                        <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID" title="Ukázka YourChess Prototypu" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
                         </iframe>
                     </div>
                 </div>
                  <p style="text-align:center; margin-top:2rem;" data-lang-key="video_cta_text">Zaujala vás vize? Staňte se její součástí!</p>
             </div>
         </section>
-
         <section id="package" class="section darker-surface">
             <div class="content-card reveal">
                 <h2 data-lang-key="package_title">Co Získáte v <span class="highlight">Exkluzivním Balíčku</span>?</h2>
@@ -363,7 +351,6 @@
                 </div>
             </div>
         </section>
-
          <section id="support" class="section"> 
             <div class="content-card reveal">
                 <h2 data-lang-key="support_title">Víc než jen Soubory: <span class="highlight">Naše Podpora a Komunita</span></h2>
@@ -377,7 +364,6 @@
                 </a>
             </div>
         </section>
-
         <section id="prototype" class="section darker-surface">
              <div class="content-card prototype-story-card reveal"> 
                  <div class="content-with-image"> 
@@ -392,7 +378,6 @@
                  </div>
              </div>
         </section>
-
         <section id="transparency" class="section">
              <div class="content-card reveal">
                  <div class="content-with-image reverse"> 
@@ -407,7 +392,6 @@
                  </div>
              </div>
         </section>
-        
         <section id="vision" class="section darker-surface">
             <div class="content-card reveal">
                  <div class="content-with-image"> 
@@ -427,7 +411,6 @@
                  </div>
             </div>
         </section>
-
         <section id="join" class="section">
              <div class="content-card reveal" style="text-align:center;">
                  <h2 data-lang-key="join_title">Staňte se <span class="highlight">součástí naší cesty</span></h2>
@@ -435,7 +418,6 @@
                  <a href="https://www.indiegogo.com/" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Podpořit YourChess na Indiegogo!</a> 
              </div>
         </section>
-        
         <section id="download" class="section darker-surface">
             <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="download_title">Stáhnout <span class="highlight">YourChess Uploader</span></h2>
@@ -451,34 +433,33 @@
     </footer>
 
     <script>
-    // --- JS PRO ANIMOVANÉ ČÁSTICOVÉ POZADÍ (VRÁCENÁ A FUNKČNÍ VERZE) ---
+    // --- JS PRO ANIMOVANÉ ČÁSTICOVÉ POZADÍ (VYLEPŠENÁ VERZE) ---
     const canvasBg = document.getElementById('canvas-background'); 
     if (canvasBg) {
         const ctxBg = canvasBg.getContext('2d');
-        let widthBg, heightBg, bgParticles = []; // Inicializujeme bgParticles jako prázdné pole
-        let animationFrameIdBg; // Pro možnost zastavení a restartu animace
+        let widthBg, heightBg, bgParticles = [];
+        let animationFrameIdBg;
 
+        // ***** ZDE JSOU PROVEDENÉ ZMĚNY *****
         const bgConfig = {
-            particleColor: "rgba(79, 138, 255, 0.075)", // Mírně viditelnější
-            lineColor: "rgba(79, 138, 255, 0.03)", 
-            particleAmount: 0, 
-            defaultSpeed: 0.08, 
-            variantSpeed: 0.08,
-            defaultRadius: 1.2, 
-            variantRadius: 0.8, 
-            linkRadius: 150, // Upravte podle potřeby pro hustotu linek
-            avoidMouseRadius: 70 
+            particleColor: "rgba(79, 138, 255, 0.3)",   // ZVÝŠENÁ VIDITELNOST ČÁSTIC
+            defaultSpeed: 0.3,                          // ZVÝŠENÁ ZÁKLADNÍ RYCHLOST
+            variantSpeed: 0.3,                          // ZVÝŠENÁ VARIABILITA RYCHLOSTI
+            defaultRadius: 1.5,                         // VĚTŠÍ ZÁKLADNÍ POLOMĚR
+            variantRadius: 1.2,                         // VĚTŠÍ VARIABILITA POLOMĚRU
+            linkRadius: 160,                            // Mírně větší dosah pro spojnice
+            avoidMouseRadius: 80                        // Mírně větší dosah repulze od myši
         };
+        // ***** KONEC ZMĚN *****
+
         let mouse = { x: undefined, y: undefined}; 
 
-        // Funkce pro aktualizaci pozice myši. Je důležité použít getBoundingClientRect pro přesnost, pokud má canvas okraje nebo je posunutý.
         function updateMousePosition(event) {
             const rect = canvasBg.getBoundingClientRect();
             mouse.x = event.clientX - rect.left;
             mouse.y = event.clientY - rect.top;
         }
 
-        // Přidání posluchačů na celou stránku pro plynulejší sledování myši
         window.addEventListener('mousemove', updateMousePosition);
         window.addEventListener('mouseleave', () => { 
             mouse.x = undefined; 
@@ -497,29 +478,30 @@
                 this.vy = Math.sin(this.angle) * this.speed;
             }
             update() {
-                // Interakce s myší
                 if (mouse.x !== undefined && mouse.y !== undefined) {
                     let dxMouse = this.x - mouse.x;
                     let dyMouse = this.y - mouse.y;
                     let distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-                    // Pokud je myš blízko, částice se od ní odpudí
                     if (distanceMouse < bgConfig.avoidMouseRadius && distanceMouse > 0) {
                         const force = (bgConfig.avoidMouseRadius - distanceMouse) / bgConfig.avoidMouseRadius;
-                        this.vx += (dxMouse / distanceMouse) * force * 0.35; 
-                        this.vy += (dyMouse / distanceMouse) * force * 0.35;
+                        this.vx += (dxMouse / distanceMouse) * force * 0.5; // Zvýšená síla od myši
+                        this.vy += (dyMouse / distanceMouse) * force * 0.5;
                     }
                 }
                 
-                // Postupný návrat k původní rychlosti a směru (zpomalení po interakci s myší)
-                 this.vx *= 0.98;
-                 this.vy *= 0.98;
+                // Postupný návrat k původní rychlosti a směru
+                let baseVx = Math.cos(this.angle) * this.speed;
+                let baseVy = Math.sin(this.angle) * this.speed;
+                this.vx += (baseVx - this.vx) * 0.01;
+                this.vy += (baseVy - this.vy) * 0.01;
 
-                // Odrazy od okrajů
                 if (this.x + this.radius > widthBg || this.x - this.radius < 0) {
                     this.vx *= -1;
+                    this.angle = Math.atan2(this.vy, this.vx);
                 }
                 if (this.y + this.radius > heightBg || this.y - this.radius < 0) {
                     this.vy *= -1;
+                    this.angle = Math.atan2(this.vy, this.vx);
                 }
 
                 this.x += this.vx;
@@ -535,12 +517,11 @@
         }
 
         function setupBg() { 
-            // Důležité: Rozměry canvasu se musí přizpůsobit velikosti okna, ne jen dokumentu, protože je fixní
             widthBg = window.innerWidth; 
             heightBg = window.innerHeight;
             canvasBg.width = widthBg; 
             canvasBg.height = heightBg;
-            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 25000); // Hustota částic  
+            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 25000); 
             bgParticles = [];
             for (let i = 0; i < bgConfig.particleAmount; i++) { 
                 bgParticles.push(new BgParticle());
@@ -550,16 +531,16 @@
         function loopBg() { 
             ctxBg.clearRect(0,0,widthBg,heightBg);
             for(let particle of bgParticles){ particle.update(); particle.draw(); }
-            // Kreslení spojnic mezi částicemi
             for(let i=0; i<bgParticles.length; i++){ 
                 for(let j=i+1; j<bgParticles.length; j++){ 
                     const distance = Math.hypot(bgParticles[i].x - bgParticles[j].x, bgParticles[i].y - bgParticles[j].y);
                     if(distance < bgConfig.linkRadius){ 
                         ctxBg.beginPath(); 
-                        // Intenzita spojnice závisí na vzdálenosti
                         const opacity = 1 - (distance / bgConfig.linkRadius);
-                        ctxBg.strokeStyle = `rgba(79, 138, 255, ${opacity * 0.1})`; 
-                        ctxBg.lineWidth = 0.5; 
+                        // ***** ZDE JE PROVEDENÁ ZMĚNA *****
+                        ctxBg.strokeStyle = `rgba(79, 138, 255, ${opacity * 0.25})`; // ZVÝŠENÁ VIDITELNOST ČAR
+                        ctxBg.lineWidth = 0.8; // ZVÝŠENÁ TLOUŠŤKA ČAR
+                        // ***** KONEC ZMĚN *****
                         ctxBg.moveTo(bgParticles[i].x, bgParticles[i].y); 
                         ctxBg.lineTo(bgParticles[j].x, bgParticles[j].y); 
                         ctxBg.stroke();
@@ -569,7 +550,6 @@
             animationFrameIdBg = window.requestAnimationFrame(loopBg);
         }
         
-        // Zajištění správného překreslení při změně velikosti okna
         let resizeTimeoutBg;
         window.addEventListener("resize", () => { 
             clearTimeout(resizeTimeoutBg); 
@@ -580,25 +560,14 @@
             }, 200); 
         });
         
-        // Spuštění animace
         setupBg();
         loopBg();
     }
     
-    // --- SCROLL PROGRESS BAR JS ---
-    const scrollProgressBar = document.getElementById('scroll-progress-bar');
-    if (scrollProgressBar) { /* ... (stejné jako předtím) ... */
-        window.addEventListener('scroll', () => {
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0; 
-            scrollProgressBar.style.width = scrolled + "%";
-        });
-    }
-
     // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace - stejný kód) ---
     document.addEventListener('DOMContentLoaded', () => {
-        const translations = { /* ... Stejné překlady jako v předchozí verzi ... */ 
+        // ... veškerý ostatní JS zůstává beze změny
+        const translations = {
              en: {
                  nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support & Community', nav_video: 'Video', nav_vision: 'Vision', nav_download: 'Download',
                  hero_greeting: "Hi, I'm Tadeáš.",
@@ -640,7 +609,7 @@
                  vision_p2: "What we plan for v2.0:",
                  vision_item1: "<strong>Online Play:</strong> Transitioning to ESP32 will enable Lichess connectivity.",
                  vision_item2: "<strong>Advanced AI:</strong> Implementing a stronger chess engine with selectable ELO.",
-                 vision_item3: "<strong>Elegant Hardware:</strong> A single, professional PCB will replace cables and simplify building.",
+                 vision_item3: "<strong>Elegantní Hardware:</strong> A single, professional PCB will replace cables and simplify building.",
                  join_title: "Become <span class='highlight'>Part of Our Journey</span>",
                  join_p1: "If this project has caught your interest, I'll be grateful for any support. Get your package, build your own intelligent chessboard, and help us turn a dream into reality.",
                  join_cta: "Support YourChess on Indiegogo & Join Us!",
@@ -745,6 +714,16 @@
         }, { threshold: 0.05 }); 
         revealElements.forEach(el => revealObserver.observe(el));
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const scrollProgressBar = document.getElementById('scroll-progress-bar');
+        if (scrollProgressBar) {
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0; 
+                scrollProgressBar.style.width = scrolled + "%";
+            });
+        }
     });
     </script>
 </body>
