@@ -35,12 +35,11 @@
             --accent-blue: #4F8AFF;   
             --accent-gold: #FACC15;   
             --discord-blurple: #5865F2; 
-            --youtube-red: #FF0000; /* Přidána barva pro YouTube */
+            --youtube-red: #FF0000;
             --border-color: rgba(107, 114, 128, 0.25); 
             --shadow-color: rgba(0, 0, 0, 0.25);
             --glow-blue-soft: rgba(79, 138, 255, 0.25);
             --glow-gold-soft: rgba(250, 204, 21, 0.3);
-
             --desktop-font-size: 17.5px;
             --desktop-line-height: 1.75;
             --desktop-p-font-size: 1.15rem;
@@ -51,7 +50,6 @@
             --desktop-section-padding-x: 8%; 
             --desktop-card-padding: 3rem;
         }
-
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; } 
         body {
@@ -72,8 +70,6 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none; 
         }
-        
-        /* Ostatní CSS... */
         h1, h2, h3, .logo, .nav-menu a, .cta-button, .btn-discord, .btn-youtube { font-family: 'Manrope', sans-serif; font-weight: 800; }
         h1 { font-size: clamp(2.2rem, 5.5vw, var(--desktop-h1-font-size-max)); line-height: 1.25; margin-bottom: 1rem; color: var(--text-primary); }
         h1 .highlight { color: var(--accent-blue); }
@@ -84,7 +80,6 @@
         a { color: var(--accent-blue); text-decoration: none; font-weight: 500; }
         a:hover { text-decoration: underline; filter: brightness(1.15); }
         strong { color: var(--text-primary); font-weight: 700; }
-
         .navbar {
             position: fixed; top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
@@ -101,7 +96,6 @@
         .lang-switcher a { font-size: 0.95rem; font-weight: 700; color:var(--text-secondary); margin-left:0.3rem;}
         .lang-switcher a.active { color: var(--accent-gold); text-decoration: none; border-bottom:2px solid var(--accent-gold);}
         .nav-toggle-btn { display: none; } 
-
         .hero {
             padding: 10rem 5% 6rem; text-align: left; 
             min-height: 85vh; display: flex; align-items: center; 
@@ -110,7 +104,6 @@
         .hero-content { max-width: 800px; } 
         .hero .greeting { font-size: 1.3rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 0.6rem; display: block; }
         .hero .subheadline { font-size: 1.25rem; color: var(--text-secondary); margin-top: 1.5rem; margin-bottom: 3rem; }
-        
         .cta-button {
             display: inline-block; background: var(--accent-blue); color: #fff; 
             padding: 1.1rem 2.8rem; border-radius: 8px; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.8px;
@@ -124,7 +117,6 @@
             100% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
         }
         .cta-button:hover { animation-play-state: paused; transform: translateY(-4px) scale(1.025) ; box-shadow: 0 10px 30px rgba(79, 138, 255, 0.55); }
-        
         .section { padding: 4.5rem 5%; max-width: 1100px; margin: 0 auto; } 
         .content-card {
             background: var(--card-bg-glass, rgba(42, 48, 58, 0.75)); 
@@ -146,7 +138,6 @@
             border: 1px solid var(--border-prototype); 
             box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15), 0 0 0 1px rgba(245, 158, 11, 0.15); 
         }
-        
         .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top:2.5rem;}
         .grid-item {
             background: var(--bg-dark-slate); border: 1px solid var(--border-color);
@@ -156,7 +147,6 @@
         .grid-item:hover { transform: translateY(-5px); border-color: var(--accent-blue); box-shadow: 0 6px 20px rgba(79,138,255,0.15);}
         .grid-item h3 .icon { transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
         .grid-item:hover h3 .icon { transform: rotate(10deg) scale(1.15); } 
-        
         .image-container { 
             background: var(--bg-dark-slate); border-radius: 10px;
             padding: 0.75rem; margin: 2.5rem 0;
@@ -172,7 +162,6 @@
         }
         .image-container:hover::after { opacity:1; }
         .image-container img { width: 100%; height: auto; display: block; border-radius: 6px; } 
-        
         .video-showcase { margin: 2.5rem 0; }
         .video-container {
             position: relative; width: 100%; padding-bottom: 56.25%; height: 0;
@@ -181,12 +170,10 @@
             box-shadow: 0 5px 15px var(--shadow-color);
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        
         .video-cta-container {
             text-align: center;
             margin-top: 2rem;
         }
-
         .bullet-list { list-style: none; padding-left: 0;}
         .bullet-list li { padding-left: 2em; position:relative; margin-bottom:0.9em; font-size:1.05rem;}
         .bullet-list li::before {
@@ -194,7 +181,6 @@
             position: absolute; left: 0; font-size: 1.1em;
             text-shadow: 0 0 5px var(--glow-gold-soft);
         }
-        
         .btn-discord { 
             display: inline-flex; align-items: center; justify-content: center;
             background-color: var(--discord-blurple); color: #fff;
@@ -205,8 +191,6 @@
             margin-top: 2rem; 
         }
         .btn-discord:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 8px 25px rgba(88, 101, 242, 0.45); }
-
-        /* ===== NOVÝ STYL PRO YOUTUBE TLAČÍTKO ===== */
         .btn-youtube {
             display: inline-flex; align-items: center; justify-content: center; gap: 0.8rem;
             background-color: var(--youtube-red); color: #fff;
@@ -225,11 +209,7 @@
             height: 1.5em;
             fill: currentColor;
         }
-        /* ===== KONEC NOVÉHO STYLU ===== */
-
-
         .footer { text-align: center; padding: 3.5rem 5% 2.5rem; border-top: 1px solid var(--border-color); background: var(--bg-light-slate);}
-
         @media (min-width: 1024px) { 
             body { font-size: var(--desktop-font-size); line-height: var(--desktop-line-height); }
             p { font-size: var(--desktop-p-font-size); }
@@ -280,7 +260,6 @@
             .nav-toggle-btn.active .bar:nth-child(2) { opacity: 0; }
             .nav-toggle-btn.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
         }
-        
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
     </style>
@@ -323,6 +302,7 @@
                 <p data-lang-key="intro_p2">Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong></p>
             </div>
         </section>
+
         <section id="who-for" class="section darker-surface">
             <div class="content-card reveal">
                 <div class="content-with-image">
@@ -354,8 +334,6 @@
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen>
                         </iframe>
-
-
                     </div>
                 </div>
                 <div class="video-cta-container">
@@ -370,6 +348,7 @@
                 </div>
             </div>
         </section>
+        
         <section id="package" class="section darker-surface">
             <div class="content-card reveal">
                 <h2 data-lang-key="package_title">Co Získáte v <span class="highlight">Exkluzivním Balíčku</span>?</h2>
@@ -390,6 +369,7 @@
                 </div>
             </div>
         </section>
+        
         <section id="support" class="section"> 
              <div class="content-card reveal">
                 <h2 data-lang-key="support_title">Víc než jen Soubory: <span class="highlight">Naše Podpora a Komunita</span></h2>
@@ -403,6 +383,7 @@
                 </a>
             </div>
         </section>
+        
         <section id="prototype" class="section darker-surface">
             <div class="content-card prototype-story-card reveal"> 
                 <div class="content-with-image"> 
@@ -417,6 +398,7 @@
                 </div>
             </div>
        </section>
+       
        <section id="transparency" class="section">
             <div class="content-card reveal">
                 <div class="content-with-image reverse"> 
@@ -431,6 +413,7 @@
                 </div>
             </div>
        </section>
+       
        <section id="vision" class="section darker-surface">
            <div class="content-card reveal">
                 <div class="content-with-image"> 
@@ -450,6 +433,7 @@
                 </div>
            </div>
        </section>
+       
        <section id="join" class="section">
             <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="join_title">Staňte se <span class="highlight">součástí naší cesty</span></h2>
@@ -457,6 +441,7 @@
                 <a href="https://www.indiegogo.com/" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Podpořit YourChess na Indiegogo!</a> 
             </div>
        </section>
+       
        <section id="download" class="section darker-surface">
            <div class="content-card reveal" style="text-align:center;">
                <h2 data-lang-key="download_title">Stáhnout <span class="highlight">YourChess Uploader</span></h2>
@@ -472,20 +457,18 @@
     </footer>
 
     <script>
-    // --- JS PRO ANIMOVANÉ POZADÍ (ZŮSTÁVÁ STEJNÝ) ---
+    // JS PRO ANIMACI POZADÍ ZŮSTÁVÁ STEJNÝ
     const canvasBg = document.getElementById('canvas-background'); 
     if (canvasBg) {
+        // ... (kód pro animaci pozadí je zde, beze změny)
         const ctxBg = canvasBg.getContext('2d');
         let widthBg, heightBg, bgParticles = [];
         let animationFrameIdBg;
         const bgConfig = {
             particleColor: "rgba(79, 138, 255, 0.3)",
-            defaultSpeed: 0.3,
-            variantSpeed: 0.3,
-            defaultRadius: 1.5,
-            variantRadius: 1.2,
-            linkRadius: 160,
-            avoidMouseRadius: 80
+            defaultSpeed: 0.3, variantSpeed: 0.3,
+            defaultRadius: 1.5, variantRadius: 1.2,
+            linkRadius: 160, avoidMouseRadius: 80
         };
         let mouse = { x: undefined, y: undefined}; 
         function updateMousePosition(event) {
@@ -494,14 +477,10 @@
             mouse.y = event.clientY - rect.top;
         }
         window.addEventListener('mousemove', updateMousePosition);
-        window.addEventListener('mouseleave', () => { 
-            mouse.x = undefined; 
-            mouse.y = undefined; 
-        });
+        window.addEventListener('mouseleave', () => { mouse.x = undefined; mouse.y = undefined; });
         class BgParticle {
             constructor() { 
-                this.x = Math.random() * widthBg; 
-                this.y = Math.random() * heightBg; 
+                this.x = Math.random() * widthBg; this.y = Math.random() * heightBg; 
                 this.angle = Math.random() * Math.PI * 2;
                 this.speed = bgConfig.defaultSpeed + Math.random() * bgConfig.variantSpeed; 
                 this.radius = bgConfig.defaultRadius + Math.random() * bgConfig.variantRadius;
@@ -511,8 +490,7 @@
             }
             update() {
                 if (mouse.x !== undefined && mouse.y !== undefined) {
-                    let dxMouse = this.x - mouse.x;
-                    let dyMouse = this.y - mouse.y;
+                    let dxMouse = this.x - mouse.x; let dyMouse = this.y - mouse.y;
                     let distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
                     if (distanceMouse < bgConfig.avoidMouseRadius && distanceMouse > 0) {
                         const force = (bgConfig.avoidMouseRadius - distanceMouse) / bgConfig.avoidMouseRadius;
@@ -522,37 +500,26 @@
                 }
                 let baseVx = Math.cos(this.angle) * this.speed;
                 let baseVy = Math.sin(this.angle) * this.speed;
-                this.vx += (baseVx - this.vx) * 0.01;
-                this.vy += (baseVy - this.vy) * 0.01;
+                this.vx += (baseVx - this.vx) * 0.01; this.vy += (baseVy - this.vy) * 0.01;
                 if (this.x + this.radius > widthBg || this.x - this.radius < 0) {
-                    this.vx *= -1;
-                    this.angle = Math.atan2(this.vy, this.vx);
+                    this.vx *= -1; this.angle = Math.atan2(this.vy, this.vx);
                 }
                 if (this.y + this.radius > heightBg || this.y - this.radius < 0) {
-                    this.vy *= -1;
-                    this.angle = Math.atan2(this.vy, this.vx);
+                    this.vy *= -1; this.angle = Math.atan2(this.vy, this.vx);
                 }
-                this.x += this.vx;
-                this.y += this.vy;
+                this.x += this.vx; this.y += this.vy;
             }
             draw() { 
-                ctxBg.beginPath(); 
-                ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2); 
-                ctxBg.closePath(); 
-                ctxBg.fillStyle = this.color; 
-                ctxBg.fill();
+                ctxBg.beginPath(); ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2); 
+                ctxBg.closePath(); ctxBg.fillStyle = this.color; ctxBg.fill();
             }
         }
         function setupBg() { 
-            widthBg = window.innerWidth; 
-            heightBg = window.innerHeight;
-            canvasBg.width = widthBg; 
-            canvasBg.height = heightBg;
+            widthBg = window.innerWidth; heightBg = window.innerHeight;
+            canvasBg.width = widthBg; canvasBg.height = heightBg;
             bgConfig.particleAmount = Math.floor(widthBg * heightBg / 25000); 
             bgParticles = [];
-            for (let i = 0; i < bgConfig.particleAmount; i++) { 
-                bgParticles.push(new BgParticle());
-            }
+            for (let i = 0; i < bgConfig.particleAmount; i++) { bgParticles.push(new BgParticle()); }
         }
         function loopBg() { 
             ctxBg.clearRect(0,0,widthBg,heightBg);
@@ -578,8 +545,7 @@
             clearTimeout(resizeTimeoutBg); 
             resizeTimeoutBg = setTimeout(() => { 
                 if(animationFrameIdBg) cancelAnimationFrame(animationFrameIdBg); 
-                setupBg(); 
-                loopBg();
+                setupBg(); loopBg();
             }, 200); 
         });
         setupBg();
@@ -588,31 +554,114 @@
     
     // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace) ---
     document.addEventListener('DOMContentLoaded', () => {
-        // ZMĚNA ZDE: Přidány překlady pro nové tlačítko
-        const translations = {
-             en: {
-                 // ... ostatní EN překlady
-                 video_title: "YourChess in <span class='highlight'>Action</span>",
-                 video_intro: "Take a look at a short demonstration of the prototype and the possibilities YourChess offers.",
-                 video_cta_text: "Intrigued by the vision? Become a part of it and follow our progress!",
-                 video_youtube_btn: "Subscribe on YouTube", // <-- NOVÝ PŘEKLAD
-                 // ... ostatní EN překlady
-                 package_title: "What Do You Get in the <span class='highlight'>Exclusive Package</span>?",
-                 // ... atd.
-             },
-             cs: { 
-                 // ... ostatní CZ překlady
-                 video_title: "YourChess v <span class='highlight'>Akci</span>",
-                 video_intro: "Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.",
-                 video_cta_text: "Zaujala vás vize? Staňte se její součástí a sledujte náš postup!",
-                 video_youtube_btn: "Sledovat na YouTube", // <-- NOVÝ PŘEKLAD
-                 // ... ostatní CZ překlady
-                 package_title: "Co Získáte v <span class='highlight'>Exkluzivním Balíčku</span>?",
-                 // ... atd.
-             }
-        };
 
-        // Zbytek JS kódu pro navigaci, jazyky, animace atd. zůstává stejný
+        // ===== ZMĚNA JE ZDE: Kompletní a opravený slovník =====
+        const translations = {
+            en: {
+                nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support', nav_video: 'Video', nav_vision: 'Vision', nav_download: 'Download',
+                hero_greeting: "Hi, I'm Tadeáš.",
+                hero_title: "More Than a Game.<br><span class='highlight'>Your Own High-Tech Project.</span>",
+                hero_subtitle: "For the past year, I've poured myself into a project born from my passion for electronics and love for chess. Today, a functional prototype stands before you, and I invite you to become part of its continuing journey.",
+                hero_cta: "Support on Indiegogo",
+                intro_p1: "This isn't a shop for a finished product. This is an invitation for you – for enthusiasts, DIYers, and tech fans who want to participate in creating something unique.",
+                intro_p2: "We offer you a unique opportunity to assemble your own fully functional prototype of an intelligent chessboard. We've put in hundreds of hours of development and debugging to provide you with the perfect instructions and software. You will enjoy the best feeling – <strong>the pride when a device you built with your own hands, comes to life for the first time.</strong>",
+                who_title: "Who Is This Project For?",
+                who_intro: "This campaign is for you if:",
+                who_1: "You love building, soldering, and bringing electronics to life.",
+                who_2: "You're a passionate chess player dreaming of an interactive gaming experience.",
+                who_3: "You want to support an innovative project and be there from its very inception.",
+                who_4: "You're not afraid of a challenge and are drawn to the pride of a self-built device.",
+                video_title: "YourChess in <span class='highlight'>Action</span>",
+                video_intro: "Take a look at a short demonstration of the prototype and the possibilities YourChess offers.",
+                video_cta_text: "Intrigued by the vision? Become a part of it and follow our progress!",
+                video_youtube_btn: "Follow on YouTube",
+                package_title: "What Do You Get in the <span class='highlight'>Exclusive Package</span>?",
+                package_intro: "With your support, you're not just buying files. You're buying a ticket into the world of YourChess.",
+                package_item1_title: "<span class='icon'>💻</span>The Chessboard's Brain",
+                package_item1_desc: "Exclusive \"YourChess Uploader\" (Windows) with firmware and file access.",
+                package_item2_title: "<span class='icon'>🏗️</span>Complete Digital Plans",
+                package_item2_desc: "STL models for 3D printing and Gerber data for professional PCB manufacturing.",
+                package_item3_title: "<span class='icon'>📖</span>Detailed Manual",
+                package_item3_desc: "A comprehensive guide (PDF) for building, wiring, and setup.",
+                support_title: "More Than Just Files: <span class='highlight'>Our Support & Community</span>",
+                support_p1: "We won't leave you on your own. We want you to succeed and enjoy the process. That's why the package also includes our commitment to you:",
+                support_item1: "<strong>Regular Software Updates:</strong> Get prototype firmware improvements free via the Uploader.",
+                support_item2: "<strong>Exclusive Community Group:</strong> All backers get access to a private group (Discord). Here, I'll provide online support, solve issues, share tips, and brainstorm together.",
+                support_discord_btn: "Join the Discord Community",
+                prototype_title: "Prototype's Journey: <span class='highlight'>Honesty & Innovation</span>",
+                prototype_p1: "This project is at the functional prototype stage. It originated as an ambitious student project and bears the marks of authentic development. It's built robustly, but with the knowledge that some things can be done better. It's proof that the concept works, and at the same time, a stepping stone for something much bigger.",
+                prototype_p2: "We want to be completely transparent: the current version is great, but we dream even bigger.",
+                transparency_title: "Full Transparency: <span class='highlight'>What Will You Need?</span>",
+                transparency_p1: "Our digital package does not include physical components. You'll need to purchase those yourself. The manual will provide a detailed list.",
+                transparency_p2: "According to my calculations, the total cost for all components is around <strong style='color:var(--accent-gold); font-size:1.1em;'>4400 CZK (approx. 180 EUR)</strong>. Our package is therefore the key that turns your investment into a functional piece of work.",
+                vision_title: "Our Vision: <span class='highlight'>The Future of YourChess</span>",
+                vision_p1: "This prototype is amazing, but it's just the first step. Your support will allow us to fund the development of <strong>YourChess v2.0</strong>.",
+                vision_p2: "What we plan for v2.0:",
+                vision_item1: "<strong>Online Play:</strong> Transitioning to ESP32 will enable Lichess connectivity.",
+                vision_item2: "<strong>Advanced AI:</strong> Implementing a stronger chess engine with selectable ELO.",
+                vision_item3: "<strong>Elegant Hardware:</strong> A single, professional PCB will replace cables.",
+                join_title: "Become <span class='highlight'>Part of Our Journey</span>",
+                join_p1: "If this project has caught your interest, I'll be grateful for any support. Get your package, build your own intelligent chessboard, and help us turn a dream into reality.",
+                join_cta: "Support YourChess on Indiegogo!",
+                download_title: "Download <span class='highlight'>YourChess Uploader</span>",
+                download_p: "Software for firmware upload and access to digital assets for backers.",
+                download_btn: "Download Uploader (.EXE)",
+                download_note: "(Requires a unique code for full file access after campaign support.)"
+            },
+            cs: { 
+                nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_video: 'Video', nav_vision: 'Vize', nav_download: 'Stažení',
+                hero_greeting: "Ahoj, jsem Tadeáš.",
+                hero_title: "Víc než Hra.<br><span class='highlight'>Váš Vlastní High-Tech Projekt.</span>",
+                hero_subtitle: "Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.",
+                hero_cta: "Podpořit na Indiegogo",
+                intro_p1: "Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.",
+                intro_p2: "Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong>",
+                who_title: "Pro Koho Je Tento Projekt?",
+                who_intro: "Tato kampaň je pro vás, pokud:",
+                who_1: "Milujete stavět, pájet a oživovat elektroniku.",
+                who_2: "Jste vášnivý šachista, který sní o interaktivním herním zážitku.",
+                who_3: "Chcete podpořit inovativní projekt a být u jeho zrodu od samého začátku.",
+                who_4: "Nebojíte se výzvy a láká vás hrdost z vlastnoručně postaveného zařízení.",
+                video_title: "YourChess v <span class='highlight'>Akci</span>",
+                video_intro: "Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.",
+                video_cta_text: "Zaujala vás vize? Staňte se její součástí a sledujte náš postup!",
+                video_youtube_btn: "Sledovat na YouTube",
+                package_title: "Co Získáte v <span class='highlight'>Exkluzivním Balíčku</span>?",
+                package_intro: "Vaší podporou si nekupujete jen soubory. Kupujete si vstupenku do světa YourChess.",
+                package_item1_title: "<span class='icon'>💻</span>Mozek Šachovnice",
+                package_item1_desc: "Exkluzivní \"YourChess Uploader\" (Windows) s firmwarem a přístupem k souborům.",
+                package_item2_title: "<span class='icon'>🏗️</span>Kompletní Digitální Plány",
+                package_item2_desc: "STL modely pro 3D tisk a Gerber data pro výrobu profesionálních PCB.",
+                package_item3_title: "<span class='icon'>📖</span>Podrobný Návod",
+                package_item3_desc: "Detailní průvodce (PDF) stavbou, zapojením a zprovozněním.",
+                support_title: "Víc než jen Soubory: <span class='highlight'>Naše Podpora a Komunita</span>",
+                support_p1: "Nenecháme vás v tom samotné. Chceme, aby se vám stavba podařila a abyste z ní měli radost. Proto je součástí balíčku i náš závazek vůči vám:",
+                support_item1: "<strong>Pravidelné Aktualizace Softwaru:</strong> Vylepšení firmware prototypu získáte zdarma přes Uploader.",
+                support_item2: "<strong>Exkluzivní Komunitní Skupina:</strong> Všichni backeři získají přístup do soukromé skupiny (Discord). Zde budu poskytovat online podporu, řešit problémy, sdílet tipy a společně brainstormovat.",
+                support_discord_btn: "Připojit se k Discord komunitě",
+                prototype_title: "Cesta Prototypu: <span class='highlight'>Upřímnost a Inovace</span>",
+                prototype_p1: "Tento projekt je ve fázi funkčního prototypu. Vznikl jako ambiciózní studentský projekt a nese stopy autentického vývoje. Je postaven robustně, ale s vědomím, že některé věci jdou udělat lépe. Je to důkaz, že koncept funguje, a zároveň odrazový můstek pro něco mnohem většího.",
+                prototype_p2: "Chceme být naprosto transparentní: současná verze je skvělá, ale my sníme ještě dál.",
+                transparency_title: "Plná Transparence: <span class='highlight'>Co Budete Potřebovat?</span>",
+                transparency_p1: "Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.",
+                transparency_p2: "Dle mých propočtů se celková cena za všechny součástky pohybuje okolo <strong style='color:var(--accent-gold); font-size:1.1em;'>4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který vaši investici promění ve funkční dílo.",
+                vision_title: "Naše Vize: <span class='highlight'>Budoucnost YourChess</span>",
+                vision_p1: "Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>.",
+                vision_p2: "Co plánujeme pro v2.0:",
+                vision_item1: "<strong>Online Hra:</strong> Přechod na ESP32 umožní připojení na Lichess.",
+                vision_item2: "<strong>Pokročilá AI:</strong> Implementace silnějšího šachového engine s volitelným ELO.",
+                vision_item3: "<strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely.",
+                join_title: "Staňte se <span class='highlight'>součástí naší cesty</span>",
+                join_p1: "Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.",
+                join_cta: "Podpořit YourChess na Indiegogo!",
+                download_title: "Stáhnout <span class='highlight'>YourChess Uploader</span>",
+                download_p: "Software pro nahrání firmware a přístup k digitálním podkladům pro backery.",
+                download_btn: "Stáhnout Uploader (.EXE)",
+                download_note: "(Vyžaduje unikátní kód pro plný přístup k souborům po podpoře kampaně.)"
+            }
+        };
+        // ===== KONEC ZMĚN VE SLOVNÍKU =====
+
         const navToggleBtn = document.getElementById('nav-toggle');
         const navCluster = document.getElementById('nav-cluster');
         if (navToggleBtn && navCluster) { 
@@ -632,9 +681,11 @@
 
         const langCz = document.getElementById('lang-cz');
         const langEn = document.getElementById('lang-en');
+
+        // ===== ZMĚNA ZDE: Opravená logika funkce =====
         const setLanguage = (lang) => { 
-            // Načtení všech překladů pro daný jazyk
-            const currentTranslations = { ...translations.cs, ...translations[lang] };
+            const currentTranslations = translations[lang]; // Použije se přímo správný slovník
+            if (!currentTranslations) return; // Pokud slovník neexistuje, nic se nestane
 
             document.querySelectorAll('[data-lang-key]').forEach(el => {
                 const key = el.dataset.langKey;
@@ -648,12 +699,13 @@
                 langEn.classList.toggle('active', lang === 'en');
             }
         };
+        // ===== KONEC ZMĚN VE FUNKCI =====
+
         if(langCz && langEn){
             langCz.addEventListener('click', (e) => { e.preventDefault(); setLanguage('cs'); });
             langEn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
         }
         
-        // Načtení uloženého jazyka nebo default 'cs'
         const savedLang = localStorage.getItem('yourchess_lang') || 'cs';
         setLanguage(savedLang);
         
