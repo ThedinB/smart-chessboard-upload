@@ -277,8 +277,7 @@
                 <li><a href="#support" data-lang-key="nav_support">Podpora</a></li>
                 <li><a href="#video-promo" data-lang-key="nav_video">Video</a></li>
                 <li><a href="#vision" data-lang-key="nav_vision">Vize</a></li>
-                <li><a href="#download" data-lang-key="nav_download">Stažení</a></li>
-            </ul>
+                </ul>
             <div class="lang-switcher">
                 <a href="#" id="lang-cz" class="active">CZ</a> | <a href="#" id="lang-en">EN</a>
             </div>
@@ -292,7 +291,7 @@
                 <span class="greeting" data-lang-key="hero_greeting">Ahoj, jsem Tadeáš.</span>
                 <h1 data-lang-key="hero_title">Víc než Hra.<br><span class="highlight">Váš Vlastní High-Tech Projekt.</span></h1>
                 <p data-lang-key="hero_subtitle" class="subheadline">Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.</p>
-                <a href="https://www.indiegogo.com/" target="_blank" class="cta-button" data-lang-key="hero_cta">Podpořit na Indiegogo</a>
+                <a href="https://VASEJMENO.gumroad.com/l/PRODUKT" target="_blank" class="cta-button" data-lang-key="hero_cta">Získat na Gumroad</a>
             </div>
         </header>
 
@@ -308,7 +307,7 @@
                 <div class="content-with-image">
                     <div class="text-content">
                         <h2 data-lang-key="who_title">Pro Koho Je Tento Projekt?</h2>
-                        <p data-lang-key="who_intro">Tato kampaň je pro vás, pokud:</p>
+                        <p data-lang-key="who_intro">Tento projekt je pro vás, pokud:</p>
                         <ul class="bullet-list">
                             <li data-lang-key="who_1">Milujete stavět, pájet a oživovat elektroniku.</li>
                             <li data-lang-key="who_2">Jste vášnivý šachista, který sní o interaktivním herním zážitku.</li>
@@ -438,29 +437,21 @@
             <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="join_title">Staňte se <span class="highlight">součástí naší cesty</span></h2>
                 <p data-lang-key="join_p1" style="max-width: 650px; margin-left:auto; margin-right:auto;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.</p>
-                <a href="https://www.indiegogo.com/" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Podpořit YourChess na Indiegogo!</a> 
+                <a href="https://VASEJMENO.gumroad.com/l/PRODUKT" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Získejte YourChess na Gumroad!</a> 
             </div>
        </section>
        
-       <section id="download" class="section darker-surface">
-           <div class="content-card reveal" style="text-align:center;">
-               <h2 data-lang-key="download_title">Stáhnout <span class="highlight">YourChess Uploader</span></h2>
-               <p data-lang-key="download_p" style="max-width: 650px; margin-left:auto; margin-right:auto;">Software pro nahrání firmware a přístup k digitálním podkladům pro backery.</p>
-               <a href="downloads/YourChessUploader.exe" download class="cta-button" data-lang-key="download_btn" style="margin-top:1rem;">Stáhnout Uploader (.EXE)</a>
-               <p style="font-size:0.9rem; margin-top:1.5rem;" data-lang-key="download_note">(Vyžaduje unikátní kód pro plný přístup k souborům po podpoře kampaně.)</p>
-           </div>
-       </section>
-    </main>
+       </main>
     
     <footer class="footer">
         <p class="reveal" style="font-size:0.95rem;">© <span id="current-year"></span> Tadeáš Bendák - YourChess</p>
     </footer>
 
     <script>
-    // JS PRO ANIMACI POZADÍ ZŮSTÁVÁ STEJNÝ
+    // JS pro animaci pozadí zůstává stejný
     const canvasBg = document.getElementById('canvas-background'); 
     if (canvasBg) {
-        // ... (kód pro animaci pozadí je zde, beze změny)
+        // ... (kód pro animaci pozadí)
         const ctxBg = canvasBg.getContext('2d');
         let widthBg, heightBg, bgParticles = [];
         let animationFrameIdBg;
@@ -552,21 +543,19 @@
         loopBg();
     }
     
-    // --- OSTATNÍ JS (Navigace, Jazyky, Scroll Animace) ---
     document.addEventListener('DOMContentLoaded', () => {
 
-        // ===== ZMĚNA JE ZDE: Kompletní a opravený slovník =====
         const translations = {
             en: {
-                nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support', nav_video: 'Video', nav_vision: 'Vision', nav_download: 'Download',
+                nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support', nav_video: 'Video', nav_vision: 'Vision',
                 hero_greeting: "Hi, I'm Tadeáš.",
                 hero_title: "More Than a Game.<br><span class='highlight'>Your Own High-Tech Project.</span>",
                 hero_subtitle: "For the past year, I've poured myself into a project born from my passion for electronics and love for chess. Today, a functional prototype stands before you, and I invite you to become part of its continuing journey.",
-                hero_cta: "Support on Indiegogo",
+                hero_cta: "Get it on Gumroad", // ZMĚNA
                 intro_p1: "This isn't a shop for a finished product. This is an invitation for you – for enthusiasts, DIYers, and tech fans who want to participate in creating something unique.",
                 intro_p2: "We offer you a unique opportunity to assemble your own fully functional prototype of an intelligent chessboard. We've put in hundreds of hours of development and debugging to provide you with the perfect instructions and software. You will enjoy the best feeling – <strong>the pride when a device you built with your own hands, comes to life for the first time.</strong>",
                 who_title: "Who Is This Project For?",
-                who_intro: "This campaign is for you if:",
+                who_intro: "This project is for you if:",
                 who_1: "You love building, soldering, and bringing electronics to life.",
                 who_2: "You're a passionate chess player dreaming of an interactive gaming experience.",
                 who_3: "You want to support an innovative project and be there from its very inception.",
@@ -599,25 +588,21 @@
                 vision_p2: "What we plan for v2.0:",
                 vision_item1: "<strong>Online Play:</strong> Transitioning to ESP32 will enable Lichess connectivity.",
                 vision_item2: "<strong>Advanced AI:</strong> Implementing a stronger chess engine with selectable ELO.",
-                vision_item3: "<strong>Elegant Hardware:</strong> A single, professional PCB will replace cables.",
+                vision_item3: "<strong>Elegantní Hardware:</strong> A single, professional PCB will replace cables.",
                 join_title: "Become <span class='highlight'>Part of Our Journey</span>",
                 join_p1: "If this project has caught your interest, I'll be grateful for any support. Get your package, build your own intelligent chessboard, and help us turn a dream into reality.",
-                join_cta: "Support YourChess on Indiegogo!",
-                download_title: "Download <span class='highlight'>YourChess Uploader</span>",
-                download_p: "Software for firmware upload and access to digital assets for backers.",
-                download_btn: "Download Uploader (.EXE)",
-                download_note: "(Requires a unique code for full file access after campaign support.)"
+                join_cta: "Get YourChess on Gumroad!", // ZMĚNA
             },
             cs: { 
-                nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_video: 'Video', nav_vision: 'Vize', nav_download: 'Stažení',
+                nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_video: 'Video', nav_vision: 'Vize',
                 hero_greeting: "Ahoj, jsem Tadeáš.",
                 hero_title: "Víc než Hra.<br><span class='highlight'>Váš Vlastní High-Tech Projekt.</span>",
                 hero_subtitle: "Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.",
-                hero_cta: "Podpořit na Indiegogo",
+                hero_cta: "Získat na Gumroad", // ZMĚNA
                 intro_p1: "Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.",
                 intro_p2: "Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong>",
                 who_title: "Pro Koho Je Tento Projekt?",
-                who_intro: "Tato kampaň je pro vás, pokud:",
+                who_intro: "Tento projekt je pro vás, pokud:",
                 who_1: "Milujete stavět, pájet a oživovat elektroniku.",
                 who_2: "Jste vášnivý šachista, který sní o interaktivním herním zážitku.",
                 who_3: "Chcete podpořit inovativní projekt a být u jeho zrodu od samého začátku.",
@@ -653,14 +638,9 @@
                 vision_item3: "<strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely.",
                 join_title: "Staňte se <span class='highlight'>součástí naší cesty</span>",
                 join_p1: "Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.",
-                join_cta: "Podpořit YourChess na Indiegogo!",
-                download_title: "Stáhnout <span class='highlight'>YourChess Uploader</span>",
-                download_p: "Software pro nahrání firmware a přístup k digitálním podkladům pro backery.",
-                download_btn: "Stáhnout Uploader (.EXE)",
-                download_note: "(Vyžaduje unikátní kód pro plný přístup k souborům po podpoře kampaně.)"
+                join_cta: "Získejte YourChess na Gumroad!", // ZMĚNA
             }
         };
-        // ===== KONEC ZMĚN VE SLOVNÍKU =====
 
         const navToggleBtn = document.getElementById('nav-toggle');
         const navCluster = document.getElementById('nav-cluster');
@@ -682,10 +662,9 @@
         const langCz = document.getElementById('lang-cz');
         const langEn = document.getElementById('lang-en');
 
-        // ===== ZMĚNA ZDE: Opravená logika funkce =====
         const setLanguage = (lang) => { 
-            const currentTranslations = translations[lang]; // Použije se přímo správný slovník
-            if (!currentTranslations) return; // Pokud slovník neexistuje, nic se nestane
+            const currentTranslations = translations[lang]; 
+            if (!currentTranslations) return;
 
             document.querySelectorAll('[data-lang-key]').forEach(el => {
                 const key = el.dataset.langKey;
@@ -699,7 +678,6 @@
                 langEn.classList.toggle('active', lang === 'en');
             }
         };
-        // ===== KONEC ZMĚN VE FUNKCI =====
 
         if(langCz && langEn){
             langCz.addEventListener('click', (e) => { e.preventDefault(); setLanguage('cs'); });
