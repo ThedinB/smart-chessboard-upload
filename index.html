@@ -4,23 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>YourChess: Postavte si Vlastní Inteligentní Šachovnici</title>
-    <meta name="description" content="Staňte se součástí vývoje YourChess! Získejte exkluzivní digitální podklady a postavte si vlastní inteligentní šachovnici. Podpořte budoucnost šachu.">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://VASEJMENO.github.io/"> 
-    <meta property="og:title" content="YourChess: Postavte si Vlastní Inteligentní Šachovnici">
-    <meta property="og:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
-    <meta property="og:image" content="https://VASEJMENO.github.io/image/prototype3.jpg"> 
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://VASEJMENO.github.io/"> 
-    <meta property="twitter:title" content="YourChess: Postavte si Vlastní Inteligentní Šachovnici">
-    <meta property="twitter:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
-    <meta property="twitter:image" content="https://VASEJMENO.github.io/image/prototype1.jpg">
-
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> 
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>YourChess | Postav si inteligentní šachovnici</title>
+    <meta name="description" content="Stavíš rád? Miluješ šachy? Získej podklady a postav si vlastní inteligentní šachovnici. Open-source, kompletní dokumentace, aktivní komunita.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,732 +13,424 @@
     
     <style>
         :root {
-            --bg-dark-slate: #0f172a; 
-            --bg-light-slate: #1e293b; 
-            --text-primary: #f1f5f9;   
-            --text-secondary: #94a3b8; 
-            --accent-blue: #3b82f6;   
-            --accent-gold: #f59e0b;   
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --accent-blue: #3b82f6;
             --accent-purple: #8b5cf6;
-            --discord-blurple: #5865F2; 
-            --youtube-red: #FF0000;
-            --shadow-color: rgba(0, 0, 0, 0.3);
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-            background: linear-gradient(135deg, var(--bg-dark-slate) 0%, #0c1426 100%);
+            background: var(--bg-dark);
             color: var(--text-primary);
             font-family: 'Inter', sans-serif;
+            line-height: 1.6;
             overflow-x: hidden;
-            line-height: 1.7;
-            min-height: 100vh;
         }
         
-        /* ANIMATIONS */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* ADHD FRIENDLY LAYOUT */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+        .compact-section {
+            padding: 60px 0;
         }
         
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
-        }
-        
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        /* HERO SECTION */
+        /* HERO - ULTRA COMPACT */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
-            overflow: hidden;
-            padding: 0 5%;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 50%);
-            z-index: -1;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
         }
         
         .hero-content {
-            max-width: 800px;
-            position: relative;
-            z-index: 2;
-            animation: fadeInUp 1s ease-out;
+            max-width: 600px;
         }
         
-        .hero-badge {
+        .badge {
             display: inline-block;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            background: var(--accent-blue);
             color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-size: 1rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 700;
-            margin-bottom: 2rem;
-            animation: float 3s ease-in-out infinite;
-            border: 2px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
         }
         
         h1 {
             font-family: 'Manrope', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
             font-weight: 800;
         }
         
-        h1 .highlight {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
         .hero-subtitle {
-            font-size: clamp(1.1rem, 3vw, 1.4rem);
             color: var(--text-secondary);
-            margin-bottom: 3rem;
-            line-height: 1.6;
-            animation: fadeInUp 1s ease-out 0.2s both;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
         }
         
         .cta-button {
             display: inline-flex;
             align-items: center;
-            gap: 0.8rem;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            gap: 10px;
+            background: var(--accent-blue);
             color: white;
-            padding: 1.3rem 3rem;
-            border-radius: 15px;
+            padding: 15px 30px;
+            border-radius: 10px;
             font-family: 'Manrope', sans-serif;
-            font-size: 1.2rem;
             font-weight: 700;
             text-decoration: none;
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 1s ease-out 0.4s both;
-            animation: glow 2s ease-in-out infinite;
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s;
-        }
-        
-        .cta-button:hover::before {
-            left: 100%;
         }
         
         .cta-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.6);
+            transform: translateY(-2px);
+            background: var(--accent-purple);
         }
         
-        /* NAVIGATION */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.5rem 5%;
-            z-index: 1000;
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            animation: fadeInUp 0.8s ease-out;
-        }
-        
-        .logo {
-            font-family: 'Manrope', sans-serif;
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-        }
-        
-        /* SECTIONS */
-        .section {
-            padding: 8rem 5%;
-            position: relative;
-        }
-        
-        .section-title {
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(2.2rem, 5vw, 3.5rem);
-            text-align: center;
-            margin-bottom: 4rem;
-            font-weight: 800;
-        }
-        
-        .section-title .highlight {
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* CONTENT CARDS */
-        .content-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 25px;
-            padding: 3rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-        
-        .content-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-        }
-        
-        .content-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            background: rgba(255,255,255,0.08);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-        }
-        
-        /* CONTENT WITH IMAGE LAYOUT */
-        .content-with-image {
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-            margin-bottom: 4rem;
-        }
-        
-        .content-with-image .text-content {
-            flex: 1;
-            animation: slideInLeft 1s ease-out;
-        }
-        
-        .content-with-image .image-container {
-            flex: 1;
-            animation: slideInRight 1s ease-out;
-        }
-        
-        .content-with-image.reverse .text-content {
-            animation: slideInRight 1s ease-out;
-        }
-        
-        .content-with-image.reverse .image-container {
-            animation: slideInLeft 1s ease-out;
-        }
-        
-        /* IMAGE CONTAINER */
-        .image-container {
-            border-radius: 20px;
-            overflow: hidden;
-            border: 3px solid rgba(255,255,255,0.1);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            transition: all 0.4s ease;
-            position: relative;
-        }
-        
-        .image-container:hover {
-            transform: scale(1.05) rotate(2deg);
-            border-color: var(--accent-blue);
-            box-shadow: 0 30px 60px rgba(59, 130, 246, 0.3);
-        }
-        
-        .image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.4s ease;
-        }
-        
-        .image-container:hover img {
-            transform: scale(1.1);
-        }
-        
-        /* FEATURES GRID */
-        .features-grid {
+        /* COMPACT GRID */
+        .compact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
         }
         
         .feature-card {
-            background: rgba(255,255,255,0.05);
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-gold));
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-blue);
+            transition: all 0.3s ease;
         }
         
         .feature-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            background: rgba(255,255,255,0.08);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: translateY(-5px);
+            border-left-color: var(--accent-orange);
         }
         
         .feature-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            display: block;
-            animation: float 4s ease-in-out infinite;
+            font-size: 2rem;
+            margin-bottom: 15px;
         }
         
-        /* VIDEO SECTION */
-        .video-container {
-            border-radius: 25px;
+        /* IMAGE GRID */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .image-card {
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            aspect-ratio: 1;
             position: relative;
-            border: 3px solid rgba(255,255,255,0.1);
-            transition: all 0.4s ease;
         }
         
-        .video-container:hover {
-            transform: scale(1.02);
-            border-color: var(--accent-gold);
-            box-shadow: 0 35px 70px rgba(245, 158, 11, 0.2);
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .image-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* VIDEO */
+        .video-wrapper {
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 30px 0;
+            background: var(--bg-card);
+            padding: 20px;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 8px;
+            overflow: hidden;
         }
         
         .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 500px;
-            display: block;
+            height: 100%;
             border: none;
         }
         
-        /* BULLET LIST */
-        .bullet-list {
-            list-style: none;
-            padding-left: 0;
+        /* SOCIAL BUTTONS */
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
         }
         
-        .bullet-list li {
-            padding-left: 3rem;
-            position: relative;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            animation: fadeInUp 0.6s ease-out;
-        }
-        
-        .bullet-list li::before {
-            content: '⚡';
-            position: absolute;
-            left: 0;
-            font-size: 1.5rem;
-            color: var(--accent-gold);
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        /* BUTTONS */
-        .btn-discord, .btn-youtube {
+        .social-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 1.2rem 2.5rem;
-            border-radius: 12px;
-            font-family: 'Manrope', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 8px;
             text-decoration: none;
+            font-weight: 600;
             transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            animation: fadeInUp 0.8s ease-out;
         }
         
-        .btn-discord {
-            background: var(--discord-blurple);
+        .social-btn.discord {
+            background: #5865F2;
             color: white;
-            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.3);
         }
         
-        .btn-youtube {
-            background: var(--youtube-red);
+        .social-btn.youtube {
+            background: #FF0000;
             color: white;
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.3);
         }
         
-        .btn-discord:hover, .btn-youtube:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        .social-btn:hover {
+            transform: translateY(-2px);
         }
         
-        /* FLOATING ELEMENTS */
-        .floating-element {
-            position: absolute;
+        /* TYPOGRAPHY */
+        h2 {
+            font-family: 'Manrope', sans-serif;
             font-size: 2rem;
-            opacity: 0.1;
-            z-index: -1;
-            animation: float 6s ease-in-out infinite;
-            pointer-events: none;
+            margin-bottom: 30px;
+            font-weight: 800;
         }
         
-        /* FOOTER */
-        .footer {
-            text-align: center;
-            padding: 4rem 5%;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 4rem;
-            background: rgba(15, 23, 42, 0.8);
+        h3 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
         }
         
-        /* RESPONSIVE DESIGN */
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        
+        /* UTILITY */
+        .text-center { text-align: center; }
+        .mb-20 { margin-bottom: 20px; }
+        .mb-30 { margin-bottom: 30px; }
+        
+        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .hero {
-                text-align: center;
-                padding: 6rem 5% 3rem;
+            .container {
+                padding: 0 15px;
             }
             
-            .content-with-image {
-                flex-direction: column;
-                gap: 2rem;
+            h1 {
+                font-size: 2rem;
             }
             
-            .content-with-image.reverse {
-                flex-direction: column-reverse;
+            h2 {
+                font-size: 1.7rem;
             }
             
-            .features-grid {
+            .compact-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
             }
             
-            .section {
-                padding: 4rem 5%;
+            .social-buttons {
+                justify-content: center;
             }
-            
-            .video-container iframe {
-                height: 300px;
-            }
-            
-            .content-card {
-                padding: 2rem;
-            }
-        }
-        
-        /* CUSTOM SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--bg-dark-slate);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 10px;
-            border: 2px solid var(--bg-dark-slate);
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-purple));
-        }
-        
-        /* ANIMATION CLASSES */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-        
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <!-- Floating Background Elements -->
-    <div class="floating-element" style="top: 10%; left: 5%;">♛</div>
-    <div class="floating-element" style="top: 20%; right: 10%;">♜</div>
-    <div class="floating-element" style="bottom: 15%; left: 15%;">⚡</div>
-    <div class="floating-element" style="bottom: 25%; right: 5%;">🔧</div>
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <a href="#" class="logo">YourChess</a>
-    </nav>
-
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">🚀 EXKLUZIVNĚ NA GUMROAD</div>
-            <h1>Víc než Hra.<br><span class="highlight">Váš Vlastní High-Tech Projekt.</span></h1>
-            <p class="hero-subtitle">
-                Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. 
-                Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.
-            </p>
-            <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button">
-                🚀 Získat na Gumroad
-            </a>
-        </div>
-    </section>
-
-    <!-- Intro Section -->
-    <section class="section">
-        <div class="content-card animate-on-scroll">
-            <p style="font-size:1.3em; color:var(--text-primary); font-weight:600; text-align: center; margin-bottom: 2rem;">
-                Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, 
-                kteří se chtějí podílet na vzniku něčeho unikátního.
-            </p>
-            <p style="text-align: center; font-size: 1.1em;">
-                Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. 
-                My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. 
-                Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong>
-            </p>
-        </div>
-    </section>
-
-    <!-- Who For Section -->
-    <section class="section">
-        <h2 class="section-title">Pro <span class="highlight">Koho</span> Je Tento Projekt?</h2>
-        <div class="content-with-image animate-on-scroll">
-            <div class="text-content">
-                <p>Tento projekt je pro vás, pokud:</p>
-                <ul class="bullet-list">
-                    <li>Milujete stavět, pájet a oživovat elektroniku.</li>
-                    <li>Jste vášnivý šachista, který sní o interaktivním herním zážitku.</li>
-                    <li>Chcete podpořit inovativní projekt a být u jeho zrodu od samého začátku.</li>
-                    <li>Nebojíte se výzvy a láká vás hrdost z vlastnoručně postaveného zařízení.</li>
-                </ul>
-            </div>
-            <div class="image-container">
-                <img src="image/prototype4.jpg" alt="Prototyp šachovnice YourChess - sestavování">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">🚀 BETA VERZE DOSTUPNÁ</div>
+                <h1>Postav si vlastní<br>inteligentní šachovnici</h1>
+                <p class="hero-subtitle">
+                    Kompletní open-source projekt včetně 3D modelů, firmware a komunitní podpory. 
+                    Pro kutily, šachové nadšence a techology early adopters.
+                </p>
+                <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button">
+                    ⚡ Získat na Gumroad
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Video Section -->
-    <section class="section">
-        <h2 class="section-title">YourChess v <span class="highlight">Akci</span></h2>
-        <div class="content-card animate-on-scroll">
-            <p style="text-align: center; margin-bottom: 2rem;">Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.</p>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/03WkcMXqUA4" 
-                        title="Ukázka YourChess Prototypu" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                </iframe>
+    <!-- What You Get -->
+    <section class="compact-section">
+        <div class="container">
+            <h2 class="text-center">Co přesně <span style="color: var(--accent-blue);">dostaneš</span>?</h2>
+            
+            <div class="compact-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Kompletní firmware</h3>
+                    <p>YourChess Uploader pro Windows + zdrojové kódy. Vše připraveno k použití.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📐</div>
+                    <h3>3D modely & PCB design</h3>
+                    <p>STL soubory pro tisk, Gerber data pro výrobu desek. Profesionální dokumentace.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Návod k sestavení</h3>
+                    <p>Podrobný PDF manuál od A do Z. Všechny kroky, součástky, zapojení.</p>
+                </div>
             </div>
-            <div style="text-align: center; margin-top: 2rem;">
-                <p style="margin-bottom: 1.5rem;">Zaujala vás vize? Staňte se její součástí a sledujte náš postup!</p>
-                <a href="https://www.youtube.com/@YourChessOfficial" target="_blank" class="btn-youtube">
+        </div>
+    </section>
+
+    <!-- Prototype Images -->
+    <section class="compact-section">
+        <div class="container">
+            <h2 class="text-center">Funkční <span style="color: var(--accent-orange);">prototypy</span></h2>
+            <p class="text-center mb-30">Reálné fotky z vývoje - vše funguje a je otestováno</p>
+            
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="image/prototype1.jpg" alt="Prototyp YourChess - elektronika">
+                </div>
+                <div class="image-card">
+                    <img src="image/prototype2.jpg" alt="Prototyp YourChess - design">
+                </div>
+                <div class="image-card">
+                    <img src="image/prototype3.jpg" alt="Prototyp YourChess - detaily">
+                </div>
+                <div class="image-card">
+                    <img src="image/prototype4.jpg" alt="Prototyp YourChess - sestavování">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Demo -->
+    <section class="compact-section">
+        <div class="container">
+            <h2 class="text-center">Podívej se na <span style="color: var(--accent-green);">demo</span></h2>
+            
+            <div class="video-wrapper">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/03WkcMXqUA4" 
+                            title="YourChess Demo" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            
+            <p class="text-center">Reálná ukázka funkčního prototypu - detekce tahů, komunikace s engine, full stack řešení</p>
+        </div>
+    </section>
+
+    <!-- For Whom -->
+    <section class="compact-section">
+        <div class="container">
+            <h2 class="text-center">Pro koho je <span style="color: var(--accent-purple);">YourChess</span>?</h2>
+            
+            <div class="compact-grid">
+                <div class="feature-card">
+                    <h3>🛠️ Kutilové & Makerové</h3>
+                    <p>Pokud rád stavíš, pájíš a oživuješ elektroniku, tohle je projekt pro tebe.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>♟️ Šachoví nadšenci</h3>
+                    <p>Chceš hrát šachy na nové úrovni? Inteligentní šachovnice změní vše.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>🚀 Early Adopters</h3>
+                    <p>Buď u zrodu revoluce v šachu. Získej přístup k exkluzivní komunitě.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community & Support -->
+    <section class="compact-section">
+        <div class="container">
+            <h2 class="text-center">Komunita & <span style="color: var(--accent-blue);">podpora</span></h2>
+            
+            <div class="compact-grid">
+                <div class="feature-card">
+                    <h3>💬 Discord komunita</h3>
+                    <p>Přímá komunikace s vývojářem, řešení problémů, sdílení nápadů.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>🔄 Průběžné aktualizace</h3>
+                    <p>Nové funkce zdarma. Tvůj balíček se stále zlepšuje.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>🎥 YouTube kanál</h3>
+                    <p>Průběžné reporty z vývoje, tutoriály, novinky z projektu.</p>
+                </div>
+            </div>
+            
+            <div class="social-buttons text-center">
+                <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="social-btn discord">
+                    💬 Připojit se na Discord
+                </a>
+                <a href="https://www.youtube.com/@YourChessOfficial" target="_blank" class="social-btn youtube">
                     ▶️ Sledovat na YouTube
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Package Section -->
-    <section class="section">
-        <h2 class="section-title">Co Získáte v <span class="highlight">Exkluzivním Balíčku</span>?</h2>
-        <div class="content-card animate-on-scroll">
-            <p style="text-align: center; margin-bottom: 3rem; font-size: 1.2em;">
-                Vaší podporou si nekupujete jen soubory. Kupujete si vstupenku do světa YourChess.
-            </p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <span class="feature-icon">💻</span>
-                    <h3>Mozek Šachovnice</h3>
-                    <p>Exkluzivní "YourChess Uploader" (Windows) s firmwarem a přístupem k souborům.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🏗️</span>
-                    <h3>Kompletní Digitální Plány</h3>
-                    <p>STL modely pro 3D tisk a Gerber data pro výrobu profesionálních PCB.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">📖</span>
-                    <h3>Podrobný Návod</h3>
-                    <p>Detailní průvodce (PDF) stavbou, zapojením a zprovozněním.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Support Section -->
-    <section class="section">
-        <h2 class="section-title">Víc než jen Soubory: <span class="highlight">Naše Podpora a Komunita</span></h2>
-        <div class="content-with-image reverse animate-on-scroll">
-            <div class="text-content">
-                <p>Nenecháme vás v tom samotné. Chceme, aby se vám stavba podařila a abyste z ní měli radost. Proto je součástí balíčku i náš závazek vůči vám:</p>
-                <ul class="bullet-list">
-                    <li><strong>Pravidelné Aktualizace Softwaru:</strong> Vylepšení firmware prototypu získáte zdarma přes Uploader.</li>
-                    <li><strong>Exkluzivní Komunitní Skupina:</strong> Všichni backeři získají přístup do soukromé skupiny (Discord). Zde budu poskytovat online podporu, řešit problémy, sdílet tipy a společně brainstormovat.</li>
-                </ul>
-                <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="btn-discord" style="margin-top: 2rem;">
-                    💬 Připojit se k Discord komunitě
-                </a>
-            </div>
-            <div class="image-container">
-                <img src="image/prototype1.jpg" alt="Surový prototyp YourChess">
-            </div>
-        </div>
-    </section>
-
-    <!-- Vision Section -->
-    <section class="section">
-        <h2 class="section-title">Naše <span class="highlight">Vize</span></h2>
-        <div class="content-with-image animate-on-scroll">
-            <div class="text-content">
-                <p>Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>.</p>
-                <p>Co plánujeme pro v2.0:</p>
-                <ul class="bullet-list">
-                    <li><strong>Online Hra:</strong> Přechod na ESP32 umožní připojení na Lichess.</li>
-                    <li><strong>Pokročilá AI:</strong> Implementace silnějšího šachového engine s volitelným ELO.</li>
-                    <li><strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely.</li>
-                </ul>
-            </div>
-            <div class="image-container">
-                <img src="image/prototype2.jpg" alt="Vize YourChess v2.0">
-            </div>
-        </div>
-    </section>
-
     <!-- Final CTA -->
-    <section class="section">
-        <div class="content-card animate-on-scroll" style="text-align: center;">
-            <h2 class="section-title" style="margin-bottom: 2rem;">Staňte se <span class="highlight">součástí naší cesty</span></h2>
-            <p style="font-size: 1.2em; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, 
-                postavte si vlastní inteligentní šachovnici a pomožte nám přetavit sen v realitu.
-            </p>
-            <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button">
-                🚀 Získejte YourChess na Gumroad!
-            </a>
+    <section class="compact-section">
+        <div class="container">
+            <div class="feature-card text-center">
+                <h2>Začni ještě dnes</h2>
+                <p class="mb-20">
+                    Získej kompletní balíček a staň se součástí komunity, která mění šachový svět.
+                </p>
+                <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button">
+                    🚀 Získat YourChess - 180€
+                </a>
+                <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-secondary);">
+                    💡 Cena součástek: ~4400 Kč | 📦 Digitální okamžité doručení
+                </p>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <p style="font-size: 1.1rem; margin-bottom: 1rem;">© 2024 Tadeáš Bendák - YourChess</p>
-        <p style="color: var(--text-secondary);">Postavte si budoucnost šachu vlastníma rukama</p>
+    <footer class="compact-section" style="padding: 40px 0; border-top: 1px solid #333;">
+        <div class="container text-center">
+            <p>© 2024 Tadeáš Bendák - YourChess</p>
+            <p style="color: var(--text-secondary); margin-top: 10px; font-size: 0.9rem;">
+                Open-source project | Made with ♥ for the maker community
+            </p>
+        </div>
     </footer>
-
-    <script>
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all elements with animate-on-scroll class
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Add parallax effect to floating elements
-        document.addEventListener('mousemove', (e) => {
-            const floatingElements = document.querySelectorAll('.floating-element');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            floatingElements.forEach((element, index) => {
-                const speed = (index + 1) * 0.5;
-                const x = (mouseX - 0.5) * speed * 50;
-                const y = (mouseY - 0.5) * speed * 50;
-                
-                element.style.transform = `translate(${x}px, ${y}px) rotate(${x * 0.5}deg)`;
-            });
-        });
-
-        // Add loaded class to body when page loads
-        window.addEventListener('load', () => {
-            document.body.classList.add('loaded');
-            
-            // Stagger animations for feature cards
-            const featureCards = document.querySelectorAll('.feature-card');
-            featureCards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.2}s`;
-            });
-            
-            // Stagger animations for bullet list items
-            const listItems = document.querySelectorAll('.bullet-list li');
-            listItems.forEach((item, index) => {
-                item.style.animationDelay = `${index * 0.1}s`;
-            });
-        });
-    </script>
 </body>
 </html>
