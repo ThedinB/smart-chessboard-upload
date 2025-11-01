@@ -3,588 +3,662 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ YOURCHESS | DIY Smart Chess Board</title>
+    
+    <title>YourChess: Postavte si Vlastní Inteligentní Šachovnici</title>
+    <meta name="description" content="Staňte se součástí vývoje YourChess! Získejte exkluzivní digitální podklady a postavte si vlastní inteligentní šachovnici. Podpořte budoucnost šachu.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://VASEJMENO.github.io/"> 
+    <meta property="og:title" content="YourChess: Postavte si Vlastní Inteligentní Šachovnici">
+    <meta property="og:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
+    <meta property="og:image" content="https://VASEJMENO.github.io/image/prototype3.jpg"> 
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://VASEJMENO.github.io/"> 
+    <meta property="twitter:title" content="YourChess: Postavte si Vlastní Inteligentní Šachovnici">
+    <meta property="twitter:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
+    <meta property="twitter:image" content="https://VASEJMENO.github.io/image/prototype1.jpg">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> 
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@400;500;600&display=swap');
-        
         :root {
-            --neon-blue: #00f3ff;
-            --neon-purple: #b967ff;
-            --neon-pink: #ff2d95;
-            --neon-green: #00ff88;
-            --bg-dark: #0a0a0f;
-            --bg-darker: #050508;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
+            --bg-dark-slate: #0f172a; 
+            --bg-light-slate: #1e293b; 
+            --text-primary: #f8fafc;   
+            --text-secondary: #94a3b8; 
+            --accent-blue: #3b82f6;   
+            --accent-gold: #f59e0b;   
+            --accent-purple: #8b5cf6;
+            --discord-blurple: #5865F2; 
+            --youtube-red: #FF0000;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            background: var(--bg-dark);
+            background: linear-gradient(135deg, var(--bg-dark-slate) 0%, #0c1426 100%);
             color: var(--text-primary);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            line-height: 1.4;
+            line-height: 1.7;
+            min-height: 100vh;
         }
         
-        .matrix-bg {
+        /* Modern Navigation */
+        .navbar {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 243, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(185, 103, 255, 0.1) 0%, transparent 50%),
-                linear-gradient(45deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
-            z-index: -2;
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .scanlines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 243, 255, 0.03) 2px,
-                rgba(0, 243, 255, 0.03) 4px
-            );
-            pointer-events: none;
-            z-index: -1;
+        .logo {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
         }
         
-        .glitch-container {
-            position: relative;
+        .nav-cluster {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--text-primary);
+        }
+        
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .lang-switcher a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-switcher a.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+        
+        /* Hero Section - Modern */
+        .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 2rem;
-        }
-        
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        
-        .cyber-header {
-            text-align: center;
-            margin-bottom: 4rem;
+            padding: 0 5%;
             position: relative;
+            overflow: hidden;
         }
         
-        .cyber-title {
-            font-size: clamp(2rem, 8vw, 6rem);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-        
-        .cyber-title .glitch {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .cyber-title .glitch::before,
-        .cyber-title .glitch::after {
-            content: attr(data-text);
+        .hero::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .cyber-title .glitch::before {
-            animation: glitch-1 0.5s infinite linear alternate-reverse;
-            color: var(--neon-pink);
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
             z-index: -1;
         }
         
-        .cyber-title .glitch::after {
-            animation: glitch-2 0.5s infinite linear alternate-reverse;
-            color: var(--neon-green);
-            z-index: -2;
+        .hero-content {
+            max-width: 650px;
         }
         
-        @keyframes glitch-1 {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-        
-        @keyframes glitch-2 {
-            0% { transform: translate(0); }
-            20% { transform: translate(2px, 2px); }
-            40% { transform: translate(2px, -2px); }
-            60% { transform: translate(-2px, 2px); }
-            80% { transform: translate(-2px, -2px); }
-            100% { transform: translate(0); }
-        }
-        
-        .cyber-subtitle {
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            color: var(--text-secondary);
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
             margin-bottom: 2rem;
-            font-family: 'Inter', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .neon-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: transparent;
-            color: var(--neon-blue);
-            border: 2px solid var(--neon-blue);
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
+        h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
         }
         
-        .neon-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.4), transparent);
-            transition: left 0.5s;
+        .highlight {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        .neon-button:hover::before {
-            left: 100%;
-        }
-        
-        .neon-button:hover {
-            background: var(--neon-blue);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px var(--neon-blue),
-                       0 0 40px var(--neon-blue),
-                       0 0 60px var(--neon-blue);
-            transform: translateY(-2px);
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 2rem 0;
-        }
-        
-        .cyber-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-        
-        .cyber-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(0, 243, 255, 0.2);
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .cyber-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-        }
-        
-        .cyber-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--neon-blue);
-            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2);
-        }
-        
-        .card-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--neon-blue);
-        }
-        
-        .card-text {
+        .hero-subtitle {
+            font-size: 1.2rem;
             color: var(--text-secondary);
-            font-family: 'Inter', sans-serif;
+            margin-bottom: 3rem;
             line-height: 1.6;
         }
         
-        .image-showcase {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 3rem 0;
-        }
-        
-        .cyber-image {
-            position: relative;
-            border: 2px solid rgba(0, 243, 255, 0.3);
-            overflow: hidden;
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: var(--shadow);
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         
-        .cyber-image:hover {
-            border-color: var(--neon-blue);
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3);
         }
         
-        .cyber-image img {
+        /* Sections */
+        .section {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .content-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+            font-weight: 800;
+        }
+        
+        h3 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        /* Content with Image Layout */
+        .content-with-image {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+        
+        .content-with-image .text-content {
+            flex: 1;
+        }
+        
+        .content-with-image .image-container {
+            flex: 1;
+        }
+        
+        .image-container {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-container:hover {
+            transform: scale(1.02);
+        }
+        
+        .image-container img {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
+            height: auto;
             display: block;
         }
         
-        .terminal {
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--neon-green);
-            padding: 2rem;
-            margin: 3rem 0;
-            position: relative;
-            font-family: 'JetBrains Mono', monospace;
+        /* Video */
+        .video-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
         }
         
-        .terminal::before {
-            content: '>>> YOURCHESS_TERMINAL';
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            background: var(--bg-dark);
-            padding: 0 10px;
-            color: var(--neon-green);
-            font-size: 0.9rem;
+        .video-container iframe {
+            width: 100%;
+            height: 400px;
+            display: block;
+            border: none;
         }
         
-        .terminal-text {
-            color: var(--neon-green);
-            line-height: 1.8;
-        }
-        
-        .blink {
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-        
-        .stats-grid {
+        /* Features Grid */
+        .item-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
         
-        .stat-item {
-            text-align: center;
-            padding: 1.5rem;
-            border: 1px solid rgba(185, 103, 255, 0.3);
-            position: relative;
+        .grid-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
         }
         
-        .stat-number {
+        .grid-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+        }
+        
+        .icon {
             font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--neon-purple);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            display: block;
         }
         
-        .stat-label {
+        /* Bullet List */
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .bullet-list li {
+            padding-left: 2.5rem;
+            position: relative;
+            margin-bottom: 1rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
         }
         
-        .pulse {
-            animation: pulse 2s infinite;
+        .bullet-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: bold;
+            font-size: 1.2rem;
         }
         
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
+        /* Buttons */
+        .btn-discord, .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
         }
         
+        .btn-discord {
+            background: var(--discord-blurple);
+            color: white;
+        }
+        
+        .btn-youtube {
+            background: var(--youtube-red);
+            color: white;
+        }
+        
+        .btn-discord:hover, .btn-youtube:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 4rem 5%;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-light-slate);
+            margin-top: 4rem;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .glitch-container {
-                padding: 1rem;
+            .navbar {
+                padding: 1rem 5%;
             }
             
-            .button-group {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero {
+                text-align: center;
+                padding: 6rem 5% 3rem;
+            }
+            
+            .content-with-image {
                 flex-direction: column;
-                align-items: center;
+                gap: 2rem;
             }
             
-            .neon-button {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
+            .content-with-image.reverse {
+                flex-direction: column-reverse;
             }
             
-            .cyber-grid {
-                grid-template-columns: 1fr;
+            .section {
+                padding: 4rem 5%;
             }
+            
+            .content-card {
+                padding: 2rem;
+            }
+            
+            .video-container iframe {
+                height: 250px;
+            }
+        }
+        
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="matrix-bg"></div>
-    <div class="scanlines"></div>
-    
-    <div class="glitch-container">
-        <div class="main-content">
-            <!-- HERO SECTION -->
-            <div class="cyber-header">
-                <h1 class="cyber-title">
-                    <span class="glitch" data-text="YOURCHESS">YOURCHESS</span>
-                </h1>
-                <p class="cyber-subtitle">
-                    ⚡ BUILD YOUR OWN F*CKING SMART CHESS BOARD ⚡
-                </p>
-                
-                <div class="button-group">
-                    <a href="https://yourchess.gumroad.com/l/yourchess" class="neon-button">
-                        🚀 GET THAT SHIT
-                    </a>
-                    <a href="https://discord.gg/ZkV3BXafp7" class="neon-button" style="border-color: var(--neon-purple); color: var(--neon-purple);">
-                        💬 JOIN THE HIVE
-                    </a>
-                </div>
-            </div>
-            
-            <!-- TERMINAL OUTPUT -->
-            <div class="terminal">
-                <div class="terminal-text">
-                    <div>> INITIALIZING YOURCHESS_PROTOCOL...</div>
-                    <div>> STATUS: <span class="blink">OPERATIONAL</span></div>
-                    <div>> FIRMWARE: READY</div>
-                    <div>> HARDWARE_DESIGN: VERIFIED</div>
-                    <div>> COMMUNITY: ACTIVE</div>
-                    <div>> BUILD_IN_PROGRESS: TRUE</div>
-                    <div>> AWAITING_USER_INPUT...</div>
-                </div>
-            </div>
-            
-            <!-- FEATURES GRID -->
-            <div class="cyber-grid">
-                <div class="cyber-card">
-                    <div class="card-icon">💻</div>
-                    <h3 class="card-title">FULL STACK</h3>
-                    <p class="card-text">
-                        Complete firmware, hardware designs, 3D models. 
-                        Everything you need to build a working smart chess board.
-                    </p>
-                </div>
-                
-                <div class="cyber-card">
-                    <div class="card-icon">🔧</div>
-                    <h3 class="card-title">OPEN SOURCE</h3>
-                    <p class="card-text">
-                        Modify, improve, customize. This is your project now. 
-                        Make it better. Make it yours.
-                    </p>
-                </div>
-                
-                <div class="cyber-card">
-                    <div class="card-icon">🤖</div>
-                    <h3 class="card-title">ACTIVE DEV</h3>
-                    <p class="card-text">
-                        Regular updates, new features, community-driven improvements. 
-                        This thing is evolving fast.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- PROTOTYPE IMAGES -->
-            <div class="image-showcase">
-                <div class="cyber-image">
-                    <img src="image/prototype1.jpg" alt="YourChess Prototype 1">
-                </div>
-                <div class="cyber-image">
-                    <img src="image/prototype2.jpg" alt="YourChess Prototype 2">
-                </div>
-                <div class="cyber-image">
-                    <img src="image/prototype3.jpg" alt="YourChess Prototype 3">
-                </div>
-                <div class="cyber-image">
-                    <img src="image/prototype4.jpg" alt="YourChess Prototype 4">
-                </div>
-            </div>
-            
-            <!-- STATS -->
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number pulse">100%</div>
-                    <div class="stat-label">Functional</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number pulse">24/7</div>
-                    <div class="stat-label">Support</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number pulse">∞</div>
-                    <div class="stat-label">Possibilities</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number pulse">v2.0</div>
-                    <div class="stat-label">Coming</div>
-                </div>
-            </div>
-            
-            <!-- FINAL CTA -->
-            <div style="text-align: center; margin: 4rem 0;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: var(--neon-blue);">
-                    STOP SCROLLING. START BUILDING.
-                </h2>
-                <div class="button-group">
-                    <a href="https://yourchess.gumroad.com/l/yourchess" class="neon-button" style="font-size: 1.3rem; padding: 1.5rem 3rem;">
-                        ⚡ GET ACCESS NOW ⚡
-                    </a>
-                </div>
-                <p style="color: var(--text-secondary); margin-top: 2rem; font-family: 'Inter', sans-serif;">
-                    Join 150+ makers already building their own smart chess boards
-                </p>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">YourChess</a>
+        <div class="nav-cluster">
+            <ul class="nav-menu">
+                <li><a href="#who-for">Pro Koho</a></li>
+                <li><a href="#package">Balíček</a></li>
+                <li><a href="#support">Podpora</a></li>
+                <li><a href="#video-promo">Video</a></li>
+                <li><a href="#vision">Vize</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <a href="#" id="lang-cz" class="active">CZ</a>
+                <a href="#" id="lang-en">EN</a>
             </div>
         </div>
-    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content reveal">
+            <div class="hero-badge">Ahoj, jsem Tadeáš</div>
+            <h1>Víc než Hra.<br><span class="highlight">Váš Vlastní High-Tech Projekt.</span></h1>
+            <p class="hero-subtitle">Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.</p>
+            <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button">Získat na Gumroad</a>
+        </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section id="intro" class="section">
+        <div class="content-card reveal">
+            <p style="font-size:1.3em; color:var(--text-primary); font-weight:500; text-align: center; margin-bottom: 2rem;">Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.</p>
+            <p style="text-align: center;">Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong></p>
+        </div>
+    </section>
+
+    <!-- Who For Section -->
+    <section id="who-for" class="section">
+        <div class="content-card reveal">
+            <div class="content-with-image">
+                <div class="text-content">
+                    <h2>Pro Koho Je Tento Projekt?</h2>
+                    <p>Tento projekt je pro vás, pokud:</p>
+                    <ul class="bullet-list">
+                        <li>Milujete stavět, pájet a oživovat elektroniku.</li>
+                        <li>Jste vášnivý šachista, který sní o interaktivním herním zážitku.</li>
+                        <li>Chcete podpořit inovativní projekt a být u jeho zrodu od samého začátku.</li>
+                        <li>Nebojíte se výzvy a láká vás hrdost z vlastnoručně postaveného zařízení.</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="image/prototype4.jpg" alt="Prototyp šachovnice YourChess - sestavování">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video-promo" class="section">
+        <div class="content-card reveal">
+            <h2>YourChess v <span class="highlight">Akci</span></h2>
+            <p>Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.</p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/03WkcMXqUA4" 
+                        title="Ukázka YourChess Prototypu" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <p>Zaujala vás vize? Staňte se její součástí a sledujte náš postup!</p>
+                <a href="https://www.youtube.com/@YourChessOfficial" target="_blank" class="btn-youtube">
+                    Sledovat na YouTube
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Package Section -->
+    <section id="package" class="section">
+        <div class="content-card reveal">
+            <h2>Co Získáte v <span class="highlight">Exkluzivním Balíčku</span>?</h2>
+            <p>Vaší podporou si nekupujete jen soubory. Kupujete si vstupenku do světa YourChess.</p>
+            <div class="item-grid">
+                <div class="grid-item">
+                    <span class="icon">💻</span>
+                    <h3>Mozek Šachovnice</h3>
+                    <p>Exkluzivní "YourChess Uploader" (Windows) s firmwarem a přístupem k souborům.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="icon">🏗️</span>
+                    <h3>Kompletní Digitální Plány</h3>
+                    <p>STL modely pro 3D tisk a Gerber data pro výrobu profesionálních PCB.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="icon">📖</span>
+                    <h3>Podrobný Návod</h3>
+                    <p>Detailní průvodce (PDF) stavbou, zapojením a zprovozněním.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" class="section">
+        <div class="content-card reveal">
+            <h2>Víc než jen Soubory: <span class="highlight">Naše Podpora a Komunita</span></h2>
+            <p>Nenecháme vás v tom samotné. Chceme, aby se vám stavba podařila a abyste z ní měli radost. Proto je součástí balíčku i náš závazek vůči vám:</p>
+            <ul class="bullet-list">
+                <li><strong>Pravidelné Aktualizace Softwaru:</strong> Vylepšení firmware prototypu získáte zdarma přes Uploader.</li>
+                <li><strong>Exkluzivní Komunitní Skupina:</strong> Všichni backeři získají přístup do soukromé skupiny (Discord). Zde budu poskytovat online podporu, řešit problémy, sdílet tipy a společně brainstormovat.</li>
+            </ul>
+            <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="btn-discord">
+                Připojit se k Discord komunitě
+            </a>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section id="vision" class="section">
+        <div class="content-card reveal">
+            <div class="content-with-image reverse">
+                <div class="text-content">
+                    <h2>Naše Vize: <span class="highlight">Budoucnost YourChess</span></h2>
+                    <p>Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>.</p>
+                    <p>Co plánujeme pro v2.0:</p>
+                    <ul class="bullet-list">
+                        <li><strong>Online Hra:</strong> Přechod na ESP32 umožní připojení na Lichess.</li>
+                        <li><strong>Pokročilá AI:</strong> Implementace silnějšího šachového engine s volitelným ELO.</li>
+                        <li><strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely.</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="image/prototype2.jpg" alt="Vize YourChess v2.0">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="section">
+        <div class="content-card reveal" style="text-align: center;">
+            <h2>Staňte se <span class="highlight">součástí naší cesty</span></h2>
+            <p style="font-size: 1.2em; margin-bottom: 3rem;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomožte nám přetavit sen v realitu.</p>
+            <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button">Získejte YourChess na Gumroad!</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p style="font-size: 1.1rem; margin-bottom: 1rem;">© <span id="current-year"></span> Tadeáš Bendák - YourChess</p>
+        <p style="color: var(--text-secondary);">Postavte si budoucnost šachu vlastníma rukama</p>
+    </footer>
 
     <script>
-        // Matrix rain effect
-        function createMatrixRain() {
-            const chars = "01";
-            const container = document.querySelector('.matrix-bg');
-            
-            for (let i = 0; i < 50; i++) {
-                const element = document.createElement('div');
-                element.style.position = 'fixed';
-                element.style.color = 'rgba(0, 243, 255, 0.1)';
-                element.style.fontSize = Math.random() * 10 + 10 + 'px';
-                element.style.left = Math.random() * 100 + 'vw';
-                element.style.top = '-20px';
-                element.style.animation = `fall ${Math.random() * 5 + 3}s linear infinite`;
-                element.style.animationDelay = Math.random() * 5 + 's';
-                element.textContent = chars[Math.floor(Math.random() * chars.length)];
-                container.appendChild(element);
+        // Language switching
+        const translations = {
+            en: {
+                // ... (stejné překlady jako v původním kódu)
+            },
+            cs: {
+                // ... (původní české texty)
             }
+        };
+
+        const langCz = document.getElementById('lang-cz');
+        const langEn = document.getElementById('lang-en');
+
+        const setLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            localStorage.setItem('yourchess_lang', lang);
             
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fall {
-                    to {
-                        transform: translateY(100vh) rotate(360deg);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-        
-        // Glitch effect on hover
-        document.querySelectorAll('.neon-button').forEach(button => {
-            button.addEventListener('mouseenter', function() {
-                this.style.animation = 'glitch-1 0.3s linear';
-            });
-            
-            button.addEventListener('mouseleave', function() {
-                this.style.animation = 'none';
-            });
+            langCz.classList.toggle('active', lang === 'cs');
+            langEn.classList.toggle('active', lang === 'en');
+        };
+
+        langCz.addEventListener('click', (e) => {
+            e.preventDefault();
+            setLanguage('cs');
         });
-        
-        // Random terminal messages
-        const terminalMessages = [
-            "> USER_DETECTED: POTENTIAL_BUILDER",
-            "> SYSTEM_READY: AWAITING_CONFIRMATION", 
-            "> COMMUNITY_ACTIVE: 150+_MAKERS_ONLINE",
-            "> FIRMWARE_UPDATE: V2.0_IN_DEVELOPMENT",
-            "> HARDWARE_VERIFIED: ALL_SYSTEMS_GO",
-            "> BUILD_QUEUE: JOIN_THE_REVOLUTION"
-        ];
-        
-        function updateTerminal() {
-            const terminal = document.querySelector('.terminal-text');
-            const randomMessage = terminalMessages[Math.floor(Math.random() * terminalMessages.length)];
-            const newLine = document.createElement('div');
-            newLine.textContent = randomMessage;
-            newLine.style.opacity = '0';
-            newLine.style.transition = 'opacity 0.5s';
-            
-            terminal.appendChild(newLine);
-            
-            // Remove old lines if too many
-            if (terminal.children.length > 8) {
-                terminal.removeChild(terminal.children[0]);
-            }
-            
-            setTimeout(() => {
-                newLine.style.opacity = '1';
-            }, 100);
-        }
-        
-        // Initialize effects
-        createMatrixRain();
-        setInterval(updateTerminal, 3000);
-        
-        // Add cursor trail effect
-        document.addEventListener('mousemove', function(e) {
-            const trail = document.createElement('div');
-            trail.style.position = 'fixed';
-            trail.style.left = e.clientX + 'px';
-            trail.style.top = e.clientY + 'px';
-            trail.style.width = '4px';
-            trail.style.height = '4px';
-            trail.style.background = 'var(--neon-blue)';
-            trail.style.borderRadius = '50%';
-            trail.style.pointerEvents = 'none';
-            trail.style.zIndex = '9999';
-            trail.style.opacity = '0.7';
-            document.body.appendChild(trail);
-            
-            setTimeout(() => {
-                trail.style.transition = 'all 0.5s ease-out';
-                trail.style.opacity = '0';
-                trail.style.transform = 'scale(2)';
-                setTimeout(() => {
-                    document.body.removeChild(trail);
-                }, 500);
-            }, 50);
+
+        langEn.addEventListener('click', (e) => {
+            e.preventDefault();
+            setLanguage('en');
+        });
+
+        // Set initial language
+        const savedLang = localStorage.getItem('yourchess_lang') || 'cs';
+        setLanguage(savedLang);
+
+        // Scroll animations
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Set current year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
 </body>
