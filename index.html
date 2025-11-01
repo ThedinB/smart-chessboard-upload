@@ -32,8 +32,8 @@
             --bg-light-slate: #2A303C; 
             --text-primary: #E8EAF0;   
             --text-secondary: #A0AEC0; 
-            --accent-blue: #4F8AFF;    
-            --accent-gold: #FACC15;    
+            --accent-blue: #4F8AFF;   
+            --accent-gold: #FACC15;   
             --discord-blurple: #5865F2; 
             --youtube-red: #FF0000;
             --border-color: rgba(107, 114, 128, 0.25); 
@@ -49,11 +49,6 @@
             --desktop-section-padding-y: 5.5rem; 
             --desktop-section-padding-x: 8%; 
             --desktop-card-padding: 3rem;
-            
-            /* === NOVÉ PROMĚNNÉ PRO KURZOR === */
-            --cursor-size: 10px;
-            --cursor-size-outer: 40px;
-            --cursor-ease: cubic-bezier(0.19, 1, 0.22, 1);
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; } 
@@ -65,63 +60,37 @@
             line-height: 1.7;
             font-size: 16px; 
             position: relative; 
+            cursor: none;
         }
-
-        /* === NOVÉ STYLY: Skrytí výchozího kurzoru (OPRAVENO) === */
-        /* Toto teď aplikujeme na VŠECHNY interaktivní prvky */
-        @media (pointer: fine) {
-            html, body, a, button, [role="button"],
-            .cta-button, .btn-discord, .btn-youtube, 
-            .nav-menu a, .logo, .lang-switcher a, .nav-toggle-btn,
-            #chess-easter-egg, #chess-modal-close, .chess-piece {
-                cursor: none !important;
-            }
-        }
-
-        /* === NOVÉ STYLY: Vlastní kurzor (zpět z v1) === */
-        .cursor-dot, .cursor-outer {
+        .custom-cursor {
             position: fixed;
-            top: 0;
-            left: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-blue) 0%, rgba(79, 138, 255, 0.3) 70%);
             pointer-events: none;
             z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition-property: transform, width, height, background-color, opacity;
-            transition-duration: 0.2s;
-            transition-timing-function: var(--cursor-ease);
+            mix-blend-mode: difference;
+            transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
         }
-        .cursor-dot {
-            width: var(--cursor-size);
-            height: var(--cursor-size);
-            background-color: var(--accent-gold);
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-        }
-        .cursor-outer {
-            width: var(--cursor-size-outer);
-            height: var(--cursor-size-outer);
-            border: 2px solid var(--accent-blue);
-            border-radius: 50%;
-            transition-duration: 0.3s;
-        }
-        /* Skrytí na dotykových zařízeních */
-        @media (pointer: coarse) {
-            .cursor-dot, .cursor-outer {
-                display: none;
-            }
-        }
-        /* Hover stavy pro kurzor */
-        body.cursor-hover .cursor-dot {
+            background: var(--accent-gold);
+            pointer-events: none;
+            z-index: 9998;
+            mix-blend-mode: difference;
             opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        body.cursor-hover .cursor-outer {
-            width: 65px; /* Mírně větší pro lepší efekt "přicucnutí" */
-            height: 65px;
-            background-color: var(--glow-blue-soft);
-            border-color: var(--accent-blue);
-        }
-        /* === /Konec stylů kurzoru === */
-
-
         #scroll-progress-bar {
             position: fixed; top: 0; left: 0; height: 4px; 
             background: var(--accent-blue); width: 0%; 
@@ -134,19 +103,6 @@
         h1, h2, h3, .logo, .nav-menu a, .cta-button, .btn-discord, .btn-youtube { font-family: 'Manrope', sans-serif; font-weight: 800; }
         h1 { font-size: clamp(2.2rem, 5.5vw, var(--desktop-h1-font-size-max)); line-height: 1.25; margin-bottom: 1rem; color: var(--text-primary); }
         h1 .highlight { color: var(--accent-blue); }
-        
-        /* === NOVÉ STYLY: Typewriter Efekt (z v2) === */
-        .typewriter-cursor {
-            color: var(--accent-blue);
-            font-weight: 400;
-            animation: blink 0.7s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        /* === /KONEC Typewriter === */
-
         h2 { font-size: clamp(1.8rem, 4.8vw, var(--desktop-h2-font-size-max)); margin-bottom: 1.8rem; padding-bottom: 0.7rem; border-bottom: 3px solid var(--accent-blue); display: inline-block;}
         h3 { font-size: clamp(1.3rem, 4.2vw, var(--desktop-h3-font-size-max)); color: var(--text-primary); margin-bottom: 1rem; }
         h3 .icon { color: var(--accent-gold); margin-right: 0.7rem; vertical-align: middle; font-size: 1em; display: inline-block; transition: transform 0.3s ease;}
@@ -166,12 +122,7 @@
         .nav-cluster { display: flex; align-items: center; gap: 2rem; } 
         .nav-menu { list-style: none; display: flex; gap: 2rem; }
         .nav-menu a { font-size: 1rem; font-weight:700; color: var(--text-secondary); transition: color 0.2s ease, transform 0.2s ease;}
-        /* Aktivní link (pro JS) */
-        .nav-menu a:hover, .nav-menu a.active-link { 
-            color: var(--text-primary); 
-            transform: translateY(-2px); 
-            text-shadow: 0 0 8px var(--glow-blue-soft);
-        }
+        .nav-menu a:hover, .nav-menu a.active-link { color: var(--text-primary); transform: translateY(-2px); }
         .lang-switcher a { font-size: 0.95rem; font-weight: 700; color:var(--text-secondary); margin-left:0.3rem;}
         .lang-switcher a.active { color: var(--accent-gold); text-decoration: none; border-bottom:2px solid var(--accent-gold);}
         .nav-toggle-btn { display: none; } 
@@ -181,30 +132,8 @@
             max-width: 1400px; margin: 0 auto; 
         }
         .hero-content { max-width: 800px; } 
-
-        /* === Animace načtení Hero (z v2) === */
-        .hero-content > * {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: hero-fade-in-up 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-        }
-        .hero-content .greeting { animation-delay: 0.1s; }
-        .hero-content h1 { animation-delay: 0.25s; }
-        .hero-content .subheadline { animation-delay: 0.4s; }
-        .hero-content .cta-button { animation-delay: 0.55s; }
-
-        @keyframes hero-fade-in-up {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        /* === /KONEC Animací === */
-
         .hero .greeting { font-size: 1.3rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 0.6rem; display: block; }
         .hero .subheadline { font-size: 1.25rem; color: var(--text-secondary); margin-top: 1.5rem; margin-bottom: 3rem; }
-        
-        /* === Původní CTA tlačítko (z v1) === */
         .cta-button {
             display: inline-block; background: var(--accent-blue); color: #fff; 
             padding: 1.1rem 2.8rem; border-radius: 8px; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.8px;
@@ -217,16 +146,8 @@
             50% { transform: scale(1.025); box-shadow: 0 9px 28px rgba(79, 138, 255, 0.45); }
             100% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
         }
-        .cta-button:hover { 
-            animation-play-state: paused; 
-            transform: translateY(-4px) scale(1.025) ; 
-            box-shadow: 0 10px 30px rgba(79, 138, 255, 0.55); 
-        }
-
+        .cta-button:hover { animation-play-state: paused; transform: translateY(-4px) scale(1.025) ; box-shadow: 0 10px 30px rgba(79, 138, 255, 0.55); }
         .section { padding: 4.5rem 5%; max-width: 1100px; margin: 0 auto; } 
-
-        /* === Původní .content-card (z v1) === */
-        /* Žádný 3D tilt, jen jednoduchý a čistý hover */
         .content-card {
             background: var(--card-bg-glass, rgba(42, 48, 58, 0.75)); 
             backdrop-filter: blur(12px); 
@@ -242,8 +163,6 @@
             transform: translateY(-8px) scale(1.01); 
             box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0px rgba(255,255,255,0.07);
         }
-        /* === /KONEC .content-card === */
-
         .prototype-story-card {
             background: var(--bg-prototype-card, rgba(37,42,52,0.9)); 
             border: 1px solid var(--border-prototype); 
@@ -322,130 +241,180 @@
         }
         .footer { text-align: center; padding: 3.5rem 5% 2.5rem; border-top: 1px solid var(--border-color); background: var(--bg-light-slate);}
         
-        /* === NOVÉ STYLY: Easter Egg (Tlačítko) === */
-        #chess-easter-egg {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--accent-gold);
-            color: var(--bg-dark-slate);
-            border: none;
-            border-radius: 50%;
-            font-size: 2.2rem;
-            line-height: 60px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(250, 204, 21, 0.4);
-            z-index: 998;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        #chess-easter-egg:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 8px 30px rgba(250, 204, 21, 0.5);
-        }
-
-        /* === NOVÉ STYLY: Šachový Modál === */
-        .chess-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(24, 30, 41, 0.8);
-            backdrop-filter: blur(8px);
-            z-index: 1050;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .chess-overlay.visible {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        #chess-modal {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(0.95);
-            background: var(--bg-light-slate);
-            border-radius: 12px;
-            box-shadow: 0 10px 40px var(--shadow-color);
-            z-index: 1051;
-            width: 90%;
-            max-width: 500px; /* Max šířka šachovnice */
-            padding: 1.5rem;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .chess-overlay.visible #chess-modal {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-            pointer-events: all;
-        }
-
-        #chess-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        #chess-modal-header h3 {
-            margin-bottom: 0;
-            color: var(--accent-gold);
-        }
-
-        #chess-modal-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 2rem;
-            font-weight: bold;
-            line-height: 1;
-            transition: color 0.2s ease, transform 0.2s ease;
-        }
-        #chess-modal-close:hover {
-            color: var(--text-primary);
-            transform: scale(1.1);
-        }
-
-        .chessboard {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
+        /* Nové prvky - skutečně funkční šachovnice */
+        .chess-game-container {
+            position: relative;
             width: 100%;
-            aspect-ratio: 1 / 1; /* Vždy čtvercové */
-            border: 2px solid var(--bg-dark-slate);
-        }
-        .chess-square {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .chess-square.light {
-            background-color: #E8EAF0; /* Světlá barva z palety */
-        }
-        .chess-square.dark {
-            background-color: #7289DA; /* Něco jako Discord blurple, ale světlejší */
+            max-width: 500px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--bg-dark-slate);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
-        .chess-piece {
-            font-size: clamp(24px, 8.5vmin, 48px); /* Responzivní figurky */
-            -webkit-user-select: none; /* Zamezení výběru textu */
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            transition: transform 0.1s ease;
+        .chess-board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            width: 100%;
+            aspect-ratio: 1 / 1;
         }
-        /* Třída přidaná při tažení */
-        .chess-piece.dragging {
-            opacity: 0.5;
-            transform: scale(1.2);
+        
+        .chess-square {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.2s ease;
+            font-size: 2.5rem;
+            cursor: pointer;
         }
-
-        /* === /KONEC Šachových stylů === */
-
-
+        
+        .chess-square.light {
+            background-color: #f0d9b5;
+        }
+        
+        .chess-square.dark {
+            background-color: #b58863;
+        }
+        
+        .chess-square.highlight {
+            background-color: rgba(79, 138, 255, 0.5) !important;
+        }
+        
+        .chess-square.possible-move::after {
+            content: '';
+            position: absolute;
+            width: 25%;
+            height: 25%;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .chess-square.selected {
+            background-color: rgba(250, 204, 21, 0.5) !important;
+        }
+        
+        .chess-controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--bg-light-slate);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .chess-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .chess-turn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .turn-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #f0d9b5;
+        }
+        
+        .turn-indicator.black {
+            background: #b58863;
+        }
+        
+        .chess-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .chess-btn {
+            padding: 0.5rem 1rem;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .chess-btn:hover {
+            background: #3a7cff;
+        }
+        
+        .chess-btn.reset {
+            background: var(--accent-gold);
+            color: var(--bg-dark-slate);
+        }
+        
+        .chess-btn.reset:hover {
+            background: #e6b800;
+        }
+        
+        /* 3D efekt pro šachovnici */
+        .chess-3d-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%);
+            border-radius: 10px;
+            z-index: 1;
+        }
+        
+        /* Floating chess pieces */
+        .floating-piece {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        /* Particle effect */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0;
+        }
+        
+        /* Chess notation */
+        .chess-notation {
+            position: absolute;
+            font-size: 0.7rem;
+            color: rgba(0, 0, 0, 0.7);
+            pointer-events: none;
+        }
+        
+        .notation-file {
+            bottom: 2px;
+            right: 4px;
+        }
+        
+        .notation-rank {
+            top: 2px;
+            left: 4px;
+        }
+        
+        /* Media queries */
         @media (min-width: 1024px) { 
             body { font-size: var(--desktop-font-size); line-height: var(--desktop-line-height); }
             p { font-size: var(--desktop-p-font-size); }
@@ -467,7 +436,8 @@
              .content-with-image.reverse { flex-direction: row-reverse;}
         }
         @media (max-width: 900px) { 
-            body { font-size: 15.8px; } 
+            body { font-size: 15.8px; cursor: auto; } 
+            .custom-cursor, .cursor-trail { display: none; }
             h1 {font-size: clamp(2rem, 7vw, 3rem); } 
             h2 {font-size: clamp(1.6rem, 6vw, 2.2rem); }
             .section { padding: 3.5rem 5%; max-width:100%; }
@@ -495,25 +465,24 @@
             .nav-toggle-btn.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
             .nav-toggle-btn.active .bar:nth-child(2) { opacity: 0; }
             .nav-toggle-btn.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-            /* Easter egg menší na mobilu */
-            #chess-easter-egg {
-                width: 50px; height: 50px; line-height: 50px; font-size: 1.8rem;
-                bottom: 15px; right: 15px;
-            }
-            #chess-modal { padding: 1rem; }
-            #chess-modal-header { margin-bottom: 1rem; }
         }
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
-    <div class="cursor-dot"></div>
-    <div class="cursor-outer"></div>
-
+    <div class="custom-cursor"></div>
+    <div class="cursor-trail"></div>
     <div id="scroll-progress-bar"></div>
     <canvas id="canvas-background"></canvas> 
+    
+    <!-- Plovoucí šachové figurky -->
+    <div class="floating-piece" style="top: 10%; left: 5%;">♛</div>
+    <div class="floating-piece" style="top: 20%; right: 10%;">♜</div>
+    <div class="floating-piece" style="bottom: 15%; left: 15%;">♞</div>
+    <div class="floating-piece" style="bottom: 25%; right: 5%;">♝</div>
+    <div class="floating-piece" style="top: 40%; left: 8%;">♟</div>
+    <div class="floating-piece" style="top: 60%; right: 15%;">♚</div>
     
     <nav class="navbar">
         <a href="#" class="logo">YourChess</a>
@@ -524,7 +493,7 @@
                 <li><a href="#support" data-lang-key="nav_support">Podpora</a></li>
                 <li><a href="#video-promo" data-lang-key="nav_video">Video</a></li>
                 <li><a href="#vision" data-lang-key="nav_vision">Vize</a></li>
-            </ul>
+                </ul>
             <div class="lang-switcher">
                 <a href="#" id="lang-cz" class="active">CZ</a> | <a href="#" id="lang-en">EN</a>
             </div>
@@ -534,9 +503,9 @@
     
     <main>
         <header class="hero">
-            <div class="hero-content">
+            <div class="hero-content reveal">
                 <span class="greeting" data-lang-key="hero_greeting">Ahoj, jsem Tadeáš.</span>
-                <h1 data-lang-key="hero_title">Víc než Hra.<br><span class="highlight" id="typewriter-target">Váš Vlastní High-Tech Projekt.</span></h1>
+                <h1 data-lang-key="hero_title">Víc než Hra.<br><span class="highlight">Váš Vlastní High-Tech Projekt.</span></h1>
                 <p data-lang-key="hero_subtitle" class="subheadline">Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.</p>
                 <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button" data-lang-key="hero_cta">Získat na Gumroad</a>
             </div>
@@ -546,6 +515,26 @@
             <div class="content-card reveal">
                 <p data-lang-key="intro_p1" style="font-size:1.2em; color:var(--text-primary); font-weight:500;">Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.</p>
                 <p data-lang-key="intro_p2">Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong></p>
+                
+                <!-- Funkční šachovnice -->
+                <div class="chess-game-container">
+                    <div class="chess-board" id="chess-board">
+                        <!-- Šachovnice se vygeneruje JavaScriptem -->
+                    </div>
+                    <div class="chess-3d-effect"></div>
+                    <div class="chess-controls">
+                        <div class="chess-status">
+                            <div class="chess-turn">
+                                <span>Na tahu:</span>
+                                <div class="turn-indicator" id="turn-indicator"></div>
+                            </div>
+                            <div id="game-status">Hra probíhá</div>
+                        </div>
+                        <div class="chess-buttons">
+                            <button class="chess-btn reset" id="reset-game">Nový zápas</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -633,7 +622,7 @@
         <section id="prototype" class="section darker-surface">
             <div class="content-card prototype-story-card reveal"> 
                 <div class="content-with-image"> 
-                    <div class="text-content">
+                     <div class="text-content">
                         <h2 data-lang-key="prototype_title">Cesta Prototypu: <span class="highlight">Upřímnost a Inovace</span></h2>
                         <p data-lang-key="prototype_p1">Tento projekt je ve fázi funkčního prototypu. Vznikl jako ambiciózní studentský projekt a nese stopy autentického vývoje. Je postaven robustně, ale s vědomím, že některé věci jdou udělat lépe. Je to důkaz, že koncept funguje, a zároveň odrazový můstek pro něco mnohem většího.</p>
                         <p data-lang-key="prototype_p2">Chceme být naprosto transparentní: současná verze je skvělá, ale my sníme ještě dál.</p>
@@ -683,38 +672,390 @@
        <section id="join" class="section">
             <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="join_title">Staňte se <span class="highlight">součástí naší cesty</span></h2>
-                <p data-lang-key="join_p1" style="max-width: 650px; margin-left:auto; margin-right:auto;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.</p>
+                <p data-lang-key="join_p1" style="max-width: 650px; margin-left:auto; margin-right:auto;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomožte nám přetavit sen v realitu.</p>
                 <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Získejte YourChess na Gumroad!</a> 
             </div>
        </section>
        
-    </main>
+       </main>
     
     <footer class="footer">
         <p class="reveal" style="font-size:0.95rem;">© <span id="current-year"></span> Tadeáš Bendák - YourChess</p>
     </footer>
 
-    <button id="chess-easter-egg" role="button" aria-label="Otevřít mini šachovnici">♞</button>
-
-    <div class="chess-overlay" id="chess-overlay">
-        <div id="chess-modal" role="dialog" aria-modal="true" aria-labelledby="chess-modal-title">
-            <div id="chess-modal-header">
-                <h3 id="chess-modal-title">Mini Šachovnice</h3>
-                <button id="chess-modal-close" aria-label="Zavřít">&times;</button>
-            </div>
-            <div id="chessboard-container">
-                <div class="chessboard" id="chessboard">
-                    </div>
-            </div>
-        </div>
-    </div>
-
-
     <script>
+    // Vlastní kurzor s inteligentním chováním
+    const cursor = document.querySelector('.custom-cursor');
+    const cursorTrail = document.querySelector('.cursor-trail');
+    let mouseX = 0, mouseY = 0;
+    let trailX = 0, trailY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        if (cursor) {
+            cursor.style.left = `${mouseX - 12}px`;
+            cursor.style.top = `${mouseY - 12}px`;
+            
+            // Inteligentní změna kurzoru podle elementu pod ním
+            const element = document.elementFromPoint(e.clientX, e.clientY);
+            if (element && (element.tagName === 'A' || element.tagName === 'BUTTON' || element.classList.contains('chess-square'))) {
+                cursor.style.width = '30px';
+                cursor.style.height = '30px';
+                cursor.style.background = 'radial-gradient(circle, var(--accent-gold) 0%, rgba(250, 204, 21, 0.3) 70%)';
+                cursor.textContent = '→';
+            } else {
+                cursor.style.width = '24px';
+                cursor.style.height = '24px';
+                cursor.style.background = 'radial-gradient(circle, var(--accent-blue) 0%, rgba(79, 138, 255, 0.3) 70%)';
+                cursor.textContent = '';
+            }
+        }
+        
+        // Trail efekt
+        if (cursorTrail) {
+            setTimeout(() => {
+                trailX = e.clientX;
+                trailY = e.clientY;
+                cursorTrail.style.left = `${trailX - 4}px`;
+                cursorTrail.style.top = `${trailY - 4}px`;
+                cursorTrail.style.opacity = '1';
+                
+                setTimeout(() => {
+                    cursorTrail.style.opacity = '0';
+                }, 300);
+            }, 100);
+        }
+    });
+    
+    document.addEventListener('mousedown', () => {
+        if (cursor) {
+            cursor.style.transform = 'scale(0.8)';
+            cursor.style.background = 'radial-gradient(circle, var(--accent-gold) 0%, rgba(250, 204, 21, 0.5) 70%)';
+        }
+    });
+    
+    document.addEventListener('mouseup', () => {
+        if (cursor) cursor.style.transform = 'scale(1)';
+    });
+    
+    // Funkční šachovnice
+    const chessBoard = document.getElementById('chess-board');
+    const turnIndicator = document.getElementById('turn-indicator');
+    const gameStatus = document.getElementById('game-status');
+    const resetButton = document.getElementById('reset-game');
+    
+    let currentPlayer = 'white';
+    let selectedPiece = null;
+    let boardState = [];
+    
+    // Inicializace šachovnice
+    function initializeBoard() {
+        chessBoard.innerHTML = '';
+        boardState = Array(8).fill().map(() => Array(8).fill(null));
+        currentPlayer = 'white';
+        
+        // Vytvoření šachovnice
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                const square = document.createElement('div');
+                square.classList.add('chess-square');
+                square.classList.add((row + col) % 2 === 0 ? 'light' : 'dark');
+                square.dataset.row = row;
+                square.dataset.col = col;
+                
+                // Přidání notace
+                if (row === 7) {
+                    const fileNotation = document.createElement('div');
+                    fileNotation.classList.add('chess-notation', 'notation-file');
+                    fileNotation.textContent = String.fromCharCode(97 + col);
+                    square.appendChild(fileNotation);
+                }
+                
+                if (col === 0) {
+                    const rankNotation = document.createElement('div');
+                    rankNotation.classList.add('chess-notation', 'notation-rank');
+                    rankNotation.textContent = 8 - row;
+                    square.appendChild(rankNotation);
+                }
+                
+                // Umístění figurek
+                let piece = null;
+                if (row === 0) {
+                    // Černé figurky
+                    if (col === 0 || col === 7) piece = { type: 'rook', color: 'black', symbol: '♜' };
+                    else if (col === 1 || col === 6) piece = { type: 'knight', color: 'black', symbol: '♞' };
+                    else if (col === 2 || col === 5) piece = { type: 'bishop', color: 'black', symbol: '♝' };
+                    else if (col === 3) piece = { type: 'queen', color: 'black', symbol: '♛' };
+                    else if (col === 4) piece = { type: 'king', color: 'black', symbol: '♚' };
+                } else if (row === 1) {
+                    // Černé pěšci
+                    piece = { type: 'pawn', color: 'black', symbol: '♟' };
+                } else if (row === 6) {
+                    // Bílé pěšci
+                    piece = { type: 'pawn', color: 'white', symbol: '♙' };
+                } else if (row === 7) {
+                    // Bílé figurky
+                    if (col === 0 || col === 7) piece = { type: 'rook', color: 'white', symbol: '♖' };
+                    else if (col === 1 || col === 6) piece = { type: 'knight', color: 'white', symbol: '♘' };
+                    else if (col === 2 || col === 5) piece = { type: 'bishop', color: 'white', symbol: '♗' };
+                    else if (col === 3) piece = { type: 'queen', color: 'white', symbol: '♕' };
+                    else if (col === 4) piece = { type: 'king', color: 'white', symbol: '♔' };
+                }
+                
+                if (piece) {
+                    square.textContent = piece.symbol;
+                    boardState[row][col] = piece;
+                }
+                
+                square.addEventListener('click', () => handleSquareClick(row, col));
+                chessBoard.appendChild(square);
+            }
+        }
+        
+        updateGameStatus();
+    }
+    
+    // Zpracování kliknutí na políčko
+    function handleSquareClick(row, col) {
+        const piece = boardState[row][col];
+        
+        // Pokud je vybrána figurka a klikneme na jiné políčko
+        if (selectedPiece) {
+            const [selectedRow, selectedCol] = selectedPiece;
+            
+            // Pokud klikneme na stejné políčko, zrušíme výběr
+            if (selectedRow === row && selectedCol === col) {
+                clearSelection();
+                return;
+            }
+            
+            // Pokud je tah platný, provedeme ho
+            if (isValidMove(selectedRow, selectedCol, row, col)) {
+                movePiece(selectedRow, selectedCol, row, col);
+                switchPlayer();
+            }
+            
+            clearSelection();
+        } 
+        // Pokud klikneme na figurku aktuálního hráče
+        else if (piece && piece.color === currentPlayer) {
+            selectPiece(row, col);
+        }
+    }
+    
+    // Výběr figurky
+    function selectPiece(row, col) {
+        clearSelection();
+        
+        selectedPiece = [row, col];
+        const square = document.querySelector(`.chess-square[data-row="${row}"][data-col="${col}"]`);
+        square.classList.add('selected');
+        
+        // Zvýraznění možných tahů
+        highlightPossibleMoves(row, col);
+    }
+    
+    // Zvýraznění možných tahů
+    function highlightPossibleMoves(row, col) {
+        const piece = boardState[row][col];
+        if (!piece) return;
+        
+        // Jednoduchá logika pro možné tahy (zjednodušená)
+        for (let r = 0; r < 8; r++) {
+            for (let c = 0; c < 8; c++) {
+                if (isValidMove(row, col, r, c)) {
+                    const square = document.querySelector(`.chess-square[data-row="${r}"][data-col="${c}"]`);
+                    square.classList.add('possible-move');
+                }
+            }
+        }
+    }
+    
+    // Kontrola platnosti tahu (zjednodušená)
+    function isValidMove(fromRow, fromCol, toRow, toCol) {
+        const piece = boardState[fromRow][fromCol];
+        const targetPiece = boardState[toRow][toCol];
+        
+        // Nemůžeme sebrat vlastní figurku
+        if (targetPiece && targetPiece.color === piece.color) {
+            return false;
+        }
+        
+        // Jednoduchá pravidla pohybu (zjednodušená)
+        if (piece.type === 'pawn') {
+            // Pěšci se pohybují pouze vpřed
+            const direction = piece.color === 'white' ? -1 : 1;
+            
+            // Přímý pohyb
+            if (fromCol === toCol && !targetPiece) {
+                // První tah může být o dvě pole
+                if ((piece.color === 'white' && fromRow === 6) || (piece.color === 'black' && fromRow === 1)) {
+                    return toRow === fromRow + direction || toRow === fromRow + 2 * direction;
+                }
+                return toRow === fromRow + direction;
+            }
+            
+            // Braní šikmo
+            if (Math.abs(fromCol - toCol) === 1 && toRow === fromRow + direction && targetPiece) {
+                return true;
+            }
+        }
+        
+        // Věž se pohybuje po řádcích a sloupcích
+        if (piece.type === 'rook') {
+            return fromRow === toRow || fromCol === toCol;
+        }
+        
+        // Jezdec se pohybuje ve tvaru L
+        if (piece.type === 'knight') {
+            const rowDiff = Math.abs(fromRow - toRow);
+            const colDiff = Math.abs(fromCol - toCol);
+            return (rowDiff === 2 && colDiff === 1) || (rowDiff === 1 && colDiff === 2);
+        }
+        
+        // Střelec se pohybuje diagonálně
+        if (piece.type === 'bishop') {
+            return Math.abs(fromRow - toRow) === Math.abs(fromCol - toCol);
+        }
+        
+        // Královna se pohybuje jako věž nebo střelec
+        if (piece.type === 'queen') {
+            return (fromRow === toRow || fromCol === toCol) || 
+                   (Math.abs(fromRow - toRow) === Math.abs(fromCol - toCol));
+        }
+        
+        // Král se pohybuje o jedno pole v libovolném směru
+        if (piece.type === 'king') {
+            return Math.abs(fromRow - toRow) <= 1 && Math.abs(fromCol - toCol) <= 1;
+        }
+        
+        return false;
+    }
+    
+    // Přesun figurky
+    function movePiece(fromRow, fromCol, toRow, toCol) {
+        const piece = boardState[fromRow][fromCol];
+        boardState[fromRow][fromCol] = null;
+        boardState[toRow][toCol] = piece;
+        
+        // Aktualizace UI
+        const fromSquare = document.querySelector(`.chess-square[data-row="${fromRow}"][data-col="${fromCol}"]`);
+        const toSquare = document.querySelector(`.chess-square[data-row="${toRow}"][data-col="${toCol}"]`);
+        
+        toSquare.textContent = piece.symbol;
+        fromSquare.textContent = '';
+        
+        // Přidání notací zpět (pokud byly odstraněny)
+        if (toRow === 7) {
+            const fileNotation = document.createElement('div');
+            fileNotation.classList.add('chess-notation', 'notation-file');
+            fileNotation.textContent = String.fromCharCode(97 + toCol);
+            toSquare.appendChild(fileNotation);
+        }
+        
+        if (toCol === 0) {
+            const rankNotation = document.createElement('div');
+            rankNotation.classList.add('chess-notation', 'notation-rank');
+            rankNotation.textContent = 8 - toRow;
+            toSquare.appendChild(rankNotation);
+        }
+        
+        // Efekt při pohybu figurky
+        createParticleEffect(fromSquare, toSquare);
+        
+        // Kontrola šachu a matu (zjednodušená)
+        checkGameStatus();
+    }
+    
+    // Vytvoření částicového efektu při pohybu
+    function createParticleEffect(fromElement, toElement) {
+        const fromRect = fromElement.getBoundingClientRect();
+        const toRect = toElement.getBoundingClientRect();
+        
+        const fromX = fromRect.left + fromRect.width / 2;
+        const fromY = fromRect.top + fromRect.height / 2;
+        const toX = toRect.left + toRect.width / 2;
+        const toY = toRect.top + toRect.height / 2;
+        
+        for (let i = 0; i < 10; i++) {
+            createParticle(fromX, fromY, toX, toY);
+        }
+    }
+    
+    // Vytvoření částice
+    function createParticle(fromX, fromY, toX, toY) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        document.body.appendChild(particle);
+        
+        const size = Math.random() * 8 + 4;
+        const delay = Math.random() * 200;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${fromX}px`;
+        particle.style.top = `${fromY}px`;
+        particle.style.background = `hsl(${Math.random() * 90 + 190}, 70%, 60%)`;
+        
+        const animation = particle.animate([
+            {
+                transform: `translate(0, 0)`,
+                opacity: 1
+            },
+            {
+                transform: `translate(${toX - fromX}px, ${toY - fromY}px)`,
+                opacity: 0
+            }
+        ], {
+            duration: Math.random() * 500 + 500,
+            easing: 'cubic-bezier(0, .9, .57, 1)',
+            delay: delay
+        });
+        
+        animation.onfinish = () => {
+            particle.remove();
+        };
+    }
+    
+    // Přepnutí hráče
+    function switchPlayer() {
+        currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+        updateGameStatus();
+    }
+    
+    // Aktualizace stavu hry
+    function updateGameStatus() {
+        turnIndicator.className = 'turn-indicator';
+        turnIndicator.classList.add(currentPlayer);
+        gameStatus.textContent = 'Hra probíhá';
+    }
+    
+    // Kontrola stavu hry (zjednodušená)
+    function checkGameStatus() {
+        // Zde by byla komplexní logika pro kontrolu šachu a matu
+        // Pro demonstraci ponecháme zjednodušenou verzi
+    }
+    
+    // Zrušení výběru
+    function clearSelection() {
+        selectedPiece = null;
+        document.querySelectorAll('.chess-square').forEach(square => {
+            square.classList.remove('selected', 'highlight', 'possible-move');
+        });
+    }
+    
+    // Reset hry
+    resetButton.addEventListener('click', initializeBoard);
+    
+    // Inicializace šachovnice při načtení stránky
+    initializeBoard();
+    
     // JS pro animaci pozadí zůstává stejný
     const canvasBg = document.getElementById('canvas-background'); 
     if (canvasBg) {
-        // ... (stejný kód jako předtím)
+        // ... (kód pro animaci pozadí)
         const ctxBg = canvasBg.getContext('2d');
         let widthBg, heightBg, bgParticles = [];
         let animationFrameIdBg;
@@ -812,9 +1153,9 @@
             en: {
                 nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support', nav_video: 'Video', nav_vision: 'Vision',
                 hero_greeting: "Hi, I'm Tadeáš.",
-                hero_title: "More Than a Game.<br><span class='highlight' id='typewriter-target'>Your Own High-Tech Project.</span>",
+                hero_title: "More Than a Game.<br><span class='highlight'>Your Own High-Tech Project.</span>",
                 hero_subtitle: "For the past year, I've poured myself into a project born from my passion for electronics and love for chess. Today, a functional prototype stands before you, and I invite you to become part of its continuing journey.",
-                hero_cta: "Get it on Gumroad",
+                hero_cta: "Get it on Gumroad", // ZMĚNA
                 intro_p1: "This isn't a shop for a finished product. This is an invitation for you – for enthusiasts, DIYers, and tech fans who want to participate in creating something unique.",
                 intro_p2: "We offer you a unique opportunity to assemble your own fully functional prototype of an intelligent chessboard. We've put in hundreds of hours of development and debugging to provide you with the perfect instructions and software. You will enjoy the best feeling – <strong>the pride when a device you built with your own hands, comes to life for the first time.</strong>",
                 who_title: "Who Is This Project For?",
@@ -854,14 +1195,14 @@
                 vision_item3: "<strong>Elegantní Hardware:</strong> A single, professional PCB will replace cables.",
                 join_title: "Become <span class='highlight'>Part of Our Journey</span>",
                 join_p1: "If this project has caught your interest, I'll be grateful for any support. Get your package, build your own intelligent chessboard, and help us turn a dream into reality.",
-                join_cta: "Get YourChess on Gumroad!",
+                join_cta: "Get YourChess on Gumroad!", // ZMĚNA
             },
             cs: { 
                 nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_video: 'Video', nav_vision: 'Vize',
                 hero_greeting: "Ahoj, jsem Tadeáš.",
-                hero_title: "Víc než Hra.<br><span class='highlight' id='typewriter-target'>Váš Vlastní High-Tech Projekt.</span>",
+                hero_title: "Víc než Hra.<br><span class='highlight'>Váš Vlastní High-Tech Projekt.</span>",
                 hero_subtitle: "Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.",
-                hero_cta: "Získat na Gumroad",
+                hero_cta: "Získat na Gumroad", // ZMĚNA
                 intro_p1: "Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.",
                 intro_p2: "Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong>",
                 who_title: "Pro Koho Je Tento Projekt?",
@@ -900,12 +1241,11 @@
                 vision_item2: "<strong>Pokročilá AI:</strong> Implementace silnějšího šachového engine s volitelným ELO.",
                 vision_item3: "<strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely.",
                 join_title: "Staňte se <span class='highlight'>součástí naší cesty</span>",
-                join_p1: "Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.",
-                join_cta: "Získejte YourChess na Gumroad!",
+                join_p1: "Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomožte nám přetavit sen v realitu.",
+                join_cta: "Získejte YourChess na Gumroad!", // ZMĚNA
             }
         };
 
-        // --- PŮVODNÍ KÓD ---
         const navToggleBtn = document.getElementById('nav-toggle');
         const navCluster = document.getElementById('nav-cluster');
         if (navToggleBtn && navCluster) { 
@@ -925,12 +1265,10 @@
 
         const langCz = document.getElementById('lang-cz');
         const langEn = document.getElementById('lang-en');
-        let currentLang = 'cs'; // Sledujeme aktuální jazyk
 
         const setLanguage = (lang) => { 
             const currentTranslations = translations[lang]; 
             if (!currentTranslations) return;
-            currentLang = lang; // Aktualizujeme globální stav
 
             document.querySelectorAll('[data-lang-key]').forEach(el => {
                 const key = el.dataset.langKey;
@@ -943,9 +1281,6 @@
                 langCz.classList.toggle('active', lang === 'cs');
                 langEn.classList.toggle('active', lang === 'en');
             }
-            
-            // === Znovu spustit typewriter po změně jazyka ===
-            initTypewriter();
         };
 
         if(langCz && langEn){
@@ -975,208 +1310,6 @@
                 scrollProgressBar.style.width = scrolled + "%";
             });
         }
-
-        /* === NOVÁ LOGIKA: Typewriter Efekt (z v2) === */
-        let typewriterTimeout; 
-        function initTypewriter() {
-            clearTimeout(typewriterTimeout); 
-            const target = document.getElementById('typewriter-target');
-            if (!target) return;
-
-            const fullTextKey = "hero_title";
-            let fullText = translations[currentLang][fullTextKey] || "";
-            
-            const match = fullText.match(/<span.*>(.*)<\/span>/);
-            if (!match || !match[1]) return;
-            
-            const textToType = match[1];
-            const baseText = fullText.substring(0, match.index);
-            
-            target.parentElement.innerHTML = baseText + '<span class="highlight" id="typewriter-target"></span>';
-            const newTarget = document.getElementById('typewriter-target');
-            
-            let i = 0;
-            newTarget.innerHTML = '<span class="typewriter-cursor">|</span>'; 
-
-            function type() {
-                if (i < textToType.length) {
-                    newTarget.innerHTML = textToType.substring(0, i + 1) + '<span class="typewriter-cursor">|</span>';
-                    i++;
-                    typewriterTimeout = setTimeout(type, 80); 
-                } else {
-                    newTarget.innerHTML = textToType + '<span class="typewriter-cursor" style="animation: blink 0.7s infinite;">|</span>';
-                }
-            }
-            typewriterTimeout = setTimeout(type, 1000); 
-        }
-        // initTypewriter() se volá uvnitř setLanguage()
-        /* === /KONEC Typewriter === */
-
-
-        /* === NOVÁ LOGIKA: Vlastní kurzor (z v1, vylepšeno) === */
-        const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-
-        if (hasFinePointer) {
-            const cursorDot = document.querySelector('.cursor-dot');
-            const cursorOuter = document.querySelector('.cursor-outer');
-            
-            window.addEventListener('mousemove', e => {
-                const { clientX: x, clientY: y } = e;
-                cursorDot.style.transform = `translate(${x}px, ${y}px)`;
-                cursorOuter.style.transform = `translate(${x}px, ${y}px)`;
-            });
-
-            // Seznam VŠECH interaktivních prvků
-            const interactiveElements = document.querySelectorAll(
-                'a, button, [role="button"], .cta-button, .btn-discord, .btn-youtube, .nav-toggle-btn, .nav-menu a, .logo, .lang-switcher a, #chess-easter-egg, #chess-modal-close, .chess-piece'
-            );
-
-            interactiveElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    document.body.classList.add('cursor-hover');
-                });
-                el.addEventListener('mouseleave', () => {
-                    document.body.classList.remove('cursor-hover');
-                });
-            });
-            
-            // Aktualizujeme seznam interaktivních prvků i pro šachovnici
-            // (Musíme to udělat, až bude šachovnice vygenerovaná)
-        }
-        /* === /KONEC LOGIKY KURZORU === */
-
-
-        /* === NOVÁ LOGIKA: Easter Egg - Šachovnice === */
-
-        const easterEggButton = document.getElementById('chess-easter-egg');
-        const chessOverlay = document.getElementById('chess-overlay');
-        const chessModalClose = document.getElementById('chess-modal-close');
-        const chessboard = document.getElementById('chessboard');
-
-        // Funkce pro otevření/zavření modálu
-        function openChessModal() { chessOverlay.classList.add('visible'); }
-        function closeChessModal() { chessOverlay.classList.remove('visible'); }
-
-        easterEggButton.addEventListener('click', openChessModal);
-        chessModalClose.addEventListener('click', closeChessModal);
-        chessOverlay.addEventListener('click', (e) => {
-            if (e.target === chessOverlay) { // Zavřít jen při kliknutí na pozadí
-                closeChessModal();
-            }
-        });
-
-        // Počáteční rozestavení figurek (Unicode)
-        const initialBoard = [
-            '♜','♞','♝','♛','♚','♝','♞','♜',
-            '♟','♟','♟','♟','♟','♟','♟','♟',
-            '','','','','','','','',
-            '','','','','','','','',
-            '','','','','','','','',
-            '','','','','','','','',
-            '♙','♙','♙','♙','♙','♙','♙','♙',
-            '♖','♘','♗','♕','♔','♗','♘','♖'
-        ];
-
-        // Vygenerování šachovnice
-        for (let i = 0; i < 64; i++) {
-            const square = document.createElement('div');
-            square.classList.add('chess-square');
-            const isDark = (Math.floor(i / 8) + i) % 2 === 1;
-            square.classList.add(isDark ? 'dark' : 'light');
-            
-            if (initialBoard[i]) {
-                const piece = document.createElement('span');
-                piece.classList.add('chess-piece');
-                piece.setAttribute('draggable', true);
-                piece.innerHTML = initialBoard[i];
-                square.appendChild(piece);
-            }
-            chessboard.appendChild(square);
-        }
-
-        // Drag & Drop logika
-        let draggedPiece = null;
-
-        chessboard.addEventListener('dragstart', (e) => {
-            if (e.target.classList.contains('chess-piece')) {
-                draggedPiece = e.target;
-                setTimeout(() => e.target.classList.add('dragging'), 0);
-            }
-        });
-
-        chessboard.addEventListener('dragend', (e) => {
-            if (draggedPiece) {
-                draggedPiece.classList.remove('dragging');
-                draggedPiece = null;
-            }
-        });
-
-        chessboard.addEventListener('dragover', (e) => {
-            e.preventDefault(); // Nutné pro povolení dropu
-        });
-
-        chessboard.addEventListener('drop', (e) => {
-            e.preventDefault();
-            if (!draggedPiece) return;
-
-            let targetSquare = e.target;
-            // Pokud jsme přistáli na figurce, cílem je její rodič (políčko)
-            if (targetSquare.classList.contains('chess-piece')) {
-                targetSquare = targetSquare.parentNode;
-            }
-
-            if (targetSquare.classList.contains('chess-square')) {
-                // Pokud už na políčku je figurka, vyhodíme ji (nahradíme)
-                if (targetSquare.hasChildNodes()) {
-                    targetSquare.innerHTML = ''; // Vyprázdnit políčko
-                }
-                targetSquare.appendChild(draggedPiece);
-            }
-            draggedPiece.classList.remove('dragging');
-            draggedPiece = null;
-        });
-
-        // Po vygenerování šachovnice znovu aplikujeme hover efekt na nové prvky
-        if (hasFinePointer) {
-             document.querySelectorAll('.chess-piece, #chess-modal-close').forEach(el => {
-                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-            });
-        }
-        /* === /KONEC LOGIKY ŠACHOVNICE === */
-
-
-        /* === ZVÝRAZNĚNÍ AKTIVNÍ SEKCE V MENU (z v1) === */
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-menu a');
-
-        const sectionObserverOptions = {
-            root: null, rootMargin: '0px', threshold: 0.4
-        };
-
-        const highlightNavLink = (id) => {
-            navLinks.forEach(link => {
-                link.classList.remove('active-link');
-                if (link.getAttribute('href') === `#${id}`) {
-                    link.classList.add('active-link');
-                }
-            });
-        };
-
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    highlightNavLink(entry.target.id);
-                }
-            });
-        }, sectionObserverOptions);
-
-        sections.forEach(section => {
-            sectionObserver.observe(section);
-        });
-        /* === /KONEC AKTIVNÍ SEKCE === */
-
-
     });
     </script>
 </body>
