@@ -32,8 +32,8 @@
             --bg-light-slate: #2A303C; 
             --text-primary: #E8EAF0;   
             --text-secondary: #A0AEC0; 
-            --accent-blue: #4F8AFF;   
-            --accent-gold: #FACC15;   
+            --accent-blue: #4F8AFF;    
+            --accent-gold: #FACC15;    
             --discord-blurple: #5865F2; 
             --youtube-red: #FF0000;
             --border-color: rgba(107, 114, 128, 0.25); 
@@ -49,6 +49,11 @@
             --desktop-section-padding-y: 5.5rem; 
             --desktop-section-padding-x: 8%; 
             --desktop-card-padding: 3rem;
+
+            /* === NOVÉ PROMĚNNÉ PRO KURZOR === */
+            --cursor-size: 10px;
+            --cursor-size-outer: 40px;
+            --cursor-ease: cubic-bezier(0.19, 1, 0.22, 1);
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; } 
@@ -61,6 +66,58 @@
             font-size: 16px; 
             position: relative; 
         }
+
+        /* === NOVÉ STYLY: SKRYTÍ VÝCHOZÍHO KURZORU NA DESKTOPU === */
+        @media (pointer: fine) {
+            html, body, a, button, .cta-button, .btn-discord, .btn-youtube, .nav-menu a, .logo, .lang-switcher a {
+                cursor: none;
+            }
+        }
+
+        /* === NOVÉ STYLY: VLASTNÍ KURZOR === */
+        .cursor-dot, .cursor-outer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition-property: transform, width, height, background-color, opacity;
+            transition-duration: 0.2s;
+            transition-timing-function: var(--cursor-ease);
+        }
+        .cursor-dot {
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            background-color: var(--accent-gold);
+            border-radius: 50%;
+        }
+        .cursor-outer {
+            width: var(--cursor-size-outer);
+            height: var(--cursor-size-outer);
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            transition-duration: 0.3s;
+        }
+        /* Skrytí na dotykových zařízeních */
+        @media (pointer: coarse) {
+            .cursor-dot, .cursor-outer {
+                display: none;
+            }
+        }
+        /* Stavy hover pro kurzor */
+        body.cursor-hover .cursor-dot {
+            opacity: 0;
+        }
+        body.cursor-hover .cursor-outer {
+            width: 60px;
+            height: 60px;
+            background-color: var(--glow-blue-soft);
+            border-color: var(--accent-blue);
+        }
+        /* / Konec stylů kurzoru / */
+
+
         #scroll-progress-bar {
             position: fixed; top: 0; left: 0; height: 4px; 
             background: var(--accent-blue); width: 0%; 
@@ -92,7 +149,15 @@
         .nav-cluster { display: flex; align-items: center; gap: 2rem; } 
         .nav-menu { list-style: none; display: flex; gap: 2rem; }
         .nav-menu a { font-size: 1rem; font-weight:700; color: var(--text-secondary); transition: color 0.2s ease, transform 0.2s ease;}
-        .nav-menu a:hover, .nav-menu a.active-link { color: var(--text-primary); transform: translateY(-2px); }
+        
+        /* ZDE BYL STYL PRO .active-link, KTERÝ SE TEĎ BUDE POUŽÍVAT */
+        .nav-menu a:hover, .nav-menu a.active-link { 
+            color: var(--text-primary); 
+            transform: translateY(-2px); 
+            /* === NOVÝ EFEKT: PŘIDÁNÍ GLOW === */
+            text-shadow: 0 0 8px var(--glow-blue-soft);
+        }
+
         .lang-switcher a { font-size: 0.95rem; font-weight: 700; color:var(--text-secondary); margin-left:0.3rem;}
         .lang-switcher a.active { color: var(--accent-gold); text-decoration: none; border-bottom:2px solid var(--accent-gold);}
         .nav-toggle-btn { display: none; } 
@@ -102,6 +167,27 @@
             max-width: 1400px; margin: 0 auto; 
         }
         .hero-content { max-width: 800px; } 
+
+        /* === NOVÉ STYLY: ANIMACE NAČTENÍ HERO === */
+        .hero-content > * {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: hero-fade-in-up 0.8s var(--cursor-ease) forwards;
+        }
+        .hero-content .greeting { animation-delay: 0.1s; }
+        .hero-content h1 { animation-delay: 0.25s; }
+        .hero-content .subheadline { animation-delay: 0.4s; }
+        .hero-content .cta-button { animation-delay: 0.55s; }
+
+        @keyframes hero-fade-in-up {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* / Konec animací / */
+
+
         .hero .greeting { font-size: 1.3rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 0.6rem; display: block; }
         .hero .subheadline { font-size: 1.25rem; color: var(--text-secondary); margin-top: 1.5rem; margin-bottom: 3rem; }
         .cta-button {
@@ -110,6 +196,9 @@
             box-shadow: 0 6px 20px rgba(79, 138, 255, 0.4);
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease; border:none;
             animation: pulse-cta 2.8s infinite ease-in-out;
+            
+            /* === PŘIDÁNO: Pro plynulejší parallax === */
+            will-change: transform; 
         }
         @keyframes pulse-cta { 
             0% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
@@ -265,6 +354,9 @@
     </style>
 </head>
 <body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outer"></div>
+
     <div id="scroll-progress-bar"></div>
     <canvas id="canvas-background"></canvas> 
     
@@ -277,7 +369,7 @@
                 <li><a href="#support" data-lang-key="nav_support">Podpora</a></li>
                 <li><a href="#video-promo" data-lang-key="nav_video">Video</a></li>
                 <li><a href="#vision" data-lang-key="nav_vision">Vize</a></li>
-                </ul>
+            </ul>
             <div class="lang-switcher">
                 <a href="#" id="lang-cz" class="active">CZ</a> | <a href="#" id="lang-en">EN</a>
             </div>
@@ -287,7 +379,7 @@
     
     <main>
         <header class="hero">
-            <div class="hero-content reveal">
+            <div class="hero-content">
                 <span class="greeting" data-lang-key="hero_greeting">Ahoj, jsem Tadeáš.</span>
                 <h1 data-lang-key="hero_title">Víc než Hra.<br><span class="highlight">Váš Vlastní High-Tech Projekt.</span></h1>
                 <p data-lang-key="hero_subtitle" class="subheadline">Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.</p>
@@ -386,7 +478,7 @@
         <section id="prototype" class="section darker-surface">
             <div class="content-card prototype-story-card reveal"> 
                 <div class="content-with-image"> 
-                     <div class="text-content">
+                    <div class="text-content">
                         <h2 data-lang-key="prototype_title">Cesta Prototypu: <span class="highlight">Upřímnost a Inovace</span></h2>
                         <p data-lang-key="prototype_p1">Tento projekt je ve fázi funkčního prototypu. Vznikl jako ambiciózní studentský projekt a nese stopy autentického vývoje. Je postaven robustně, ale s vědomím, že některé věci jdou udělat lépe. Je to důkaz, že koncept funguje, a zároveň odrazový můstek pro něco mnohem většího.</p>
                         <p data-lang-key="prototype_p2">Chceme být naprosto transparentní: současná verze je skvělá, ale my sníme ještě dál.</p>
@@ -441,7 +533,7 @@
             </div>
        </section>
        
-       </main>
+    </main>
     
     <footer class="footer">
         <p class="reveal" style="font-size:0.95rem;">© <span id="current-year"></span> Tadeáš Bendák - YourChess</p>
@@ -642,6 +734,7 @@
             }
         };
 
+        // --- PŮVODNÍ KÓD ---
         const navToggleBtn = document.getElementById('nav-toggle');
         const navCluster = document.getElementById('nav-cluster');
         if (navToggleBtn && navCluster) { 
@@ -706,8 +799,107 @@
                 scrollProgressBar.style.width = scrolled + "%";
             });
         }
+
+        // --- KONEC PŮVODNÍHO KÓDU ---
+
+
+        /* === NOVÁ LOGIKA: VLASTNÍ KURZOR === */
+        const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+        if (hasFinePointer) {
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOuter = document.querySelector('.cursor-outer');
+            
+            let lastX = 0;
+            let lastY = 0;
+            let isStuck = false;
+
+            window.addEventListener('mousemove', e => {
+                const { clientX: x, clientY: y } = e;
+                
+                // Přímý pohyb pro tečku
+                cursorDot.style.transform = `translate(${x}px, ${y}px)`;
+                
+                // Zpožděný pohyb pro prstenec
+                if (!isStuck) {
+                    lastX = x;
+                    lastY = y;
+                    cursorOuter.style.transform = `translate(${x}px, ${y}px)`;
+                }
+            });
+
+            // Seznam všech interaktivních prvků
+            const interactiveElements = document.querySelectorAll(
+                'a, button, .cta-button, .btn-discord, .btn-youtube, .nav-toggle-btn'
+            );
+
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    document.body.classList.add('cursor-hover');
+                });
+                el.addEventListener('mouseleave', () => {
+                    document.body.classList.remove('cursor-hover');
+                });
+            });
+        }
+        /* === KONEC LOGIKY KURZORU === */
+
+
+
+        /* === NOVÁ LOGIKA: PARALLAX V HERO SEKCI === */
+        const heroGreeting = document.querySelector('.hero .greeting');
+        const heroH1 = document.querySelector('.hero h1');
+        const heroSubheadline = document.querySelector('.hero .subheadline');
+        const heroCta = document.querySelector('.hero .cta-button');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            
+            // Kontrola, aby se efekt děl jen na desktopu a jen na začátku
+            if (scrollY < window.innerHeight && window.innerWidth > 900) {
+                heroGreeting.style.transform = `translateY(${scrollY * 0.5}px)`;
+                heroH1.style.transform = `translateY(${scrollY * 0.4}px)`;
+                heroSubheadline.style.transform = `translateY(${scrollY * 0.25}px)`;
+                heroCta.style.transform = `translateY(${scrollY * 0.15}px)`;
+            }
+        });
+        /* === KONEC LOGIKY PARALLAXU === */
+        
+
+
+        /* === NOVÁ LOGIKA: ZVÝRAZNĚNÍ AKTIVNÍ SEKCE V MENU === */
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+
+        const sectionObserverOptions = {
+            root: null, // viewport
+            rootMargin: '0px',
+            threshold: 0.4 // 40% sekce musí být vidět
+        };
+
+        const highlightNavLink = (id) => {
+            navLinks.forEach(link => {
+                link.classList.remove('active-link');
+                if (link.getAttribute('href') === `#${id}`) {
+                    link.classList.add('active-link');
+                }
+            });
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    highlightNavLink(entry.target.id);
+                }
+            });
+        }, sectionObserverOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+        /* === KONEC LOGIKY AKTIVNÍ SEKCE === */
+
     });
     </script>
 </body>
 </html>
-
