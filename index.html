@@ -32,8 +32,8 @@
             --bg-light-slate: #2A303C; 
             --text-primary: #E8EAF0;   
             --text-secondary: #A0AEC0; 
-            --accent-blue: #4F8AFF;    
-            --accent-gold: #FACC15;    
+            --accent-blue: #4F8AFF;   
+            --accent-gold: #FACC15;   
             --discord-blurple: #5865F2; 
             --youtube-red: #FF0000;
             --border-color: rgba(107, 114, 128, 0.25); 
@@ -49,11 +49,6 @@
             --desktop-section-padding-y: 5.5rem; 
             --desktop-section-padding-x: 8%; 
             --desktop-card-padding: 3rem;
-
-            /* === NOVÉ PROMĚNNÉ PRO KURZOR === */
-            --cursor-size: 10px;
-            --cursor-size-outer: 40px;
-            --cursor-ease: cubic-bezier(0.19, 1, 0.22, 1);
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; } 
@@ -65,59 +60,31 @@
             line-height: 1.7;
             font-size: 16px; 
             position: relative; 
+            cursor: none;
         }
-
-        /* === NOVÉ STYLY: SKRYTÍ VÝCHOZÍHO KURZORU NA DESKTOPU === */
-        @media (pointer: fine) {
-            html, body, a, button, .cta-button, .btn-discord, .btn-youtube, .nav-menu a, .logo, .lang-switcher a {
-                cursor: none;
-            }
-        }
-
-        /* === NOVÉ STYLY: VLASTNÍ KURZOR === */
-        .cursor-dot, .cursor-outer {
+        .custom-cursor {
             position: fixed;
-            top: 0;
-            left: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-blue);
             pointer-events: none;
             z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition-property: transform, width, height, background-color, opacity;
-            transition-duration: 0.2s;
-            transition-timing-function: var(--cursor-ease);
+            mix-blend-mode: difference;
+            transition: transform 0.15s ease;
         }
-        .cursor-dot {
-            width: var(--cursor-size);
-            height: var(--cursor-size);
-            background-color: var(--accent-gold);
+        .cursor-trail {
+            position: fixed;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-        }
-        .cursor-outer {
-            width: var(--cursor-size-outer);
-            height: var(--cursor-size-outer);
-            border: 2px solid var(--accent-blue);
-            border-radius: 50%;
-            transition-duration: 0.3s;
-        }
-        /* Skrytí na dotykových zařízeních */
-        @media (pointer: coarse) {
-            .cursor-dot, .cursor-outer {
-                display: none;
-            }
-        }
-        /* Stavy hover pro kurzor */
-        body.cursor-hover .cursor-dot {
+            background: var(--accent-gold);
+            pointer-events: none;
+            z-index: 9998;
+            mix-blend-mode: difference;
             opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        body.cursor-hover .cursor-outer {
-            width: 60px;
-            height: 60px;
-            background-color: var(--glow-blue-soft);
-            border-color: var(--accent-blue);
-        }
-        /* / Konec stylů kurzoru / */
-
-
         #scroll-progress-bar {
             position: fixed; top: 0; left: 0; height: 4px; 
             background: var(--accent-blue); width: 0%; 
@@ -149,15 +116,7 @@
         .nav-cluster { display: flex; align-items: center; gap: 2rem; } 
         .nav-menu { list-style: none; display: flex; gap: 2rem; }
         .nav-menu a { font-size: 1rem; font-weight:700; color: var(--text-secondary); transition: color 0.2s ease, transform 0.2s ease;}
-        
-        /* ZDE BYL STYL PRO .active-link, KTERÝ SE TEĎ BUDE POUŽÍVAT */
-        .nav-menu a:hover, .nav-menu a.active-link { 
-            color: var(--text-primary); 
-            transform: translateY(-2px); 
-            /* === NOVÝ EFEKT: PŘIDÁNÍ GLOW === */
-            text-shadow: 0 0 8px var(--glow-blue-soft);
-        }
-
+        .nav-menu a:hover, .nav-menu a.active-link { color: var(--text-primary); transform: translateY(-2px); }
         .lang-switcher a { font-size: 0.95rem; font-weight: 700; color:var(--text-secondary); margin-left:0.3rem;}
         .lang-switcher a.active { color: var(--accent-gold); text-decoration: none; border-bottom:2px solid var(--accent-gold);}
         .nav-toggle-btn { display: none; } 
@@ -167,27 +126,6 @@
             max-width: 1400px; margin: 0 auto; 
         }
         .hero-content { max-width: 800px; } 
-
-        /* === NOVÉ STYLY: ANIMACE NAČTENÍ HERO === */
-        .hero-content > * {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: hero-fade-in-up 0.8s var(--cursor-ease) forwards;
-        }
-        .hero-content .greeting { animation-delay: 0.1s; }
-        .hero-content h1 { animation-delay: 0.25s; }
-        .hero-content .subheadline { animation-delay: 0.4s; }
-        .hero-content .cta-button { animation-delay: 0.55s; }
-
-        @keyframes hero-fade-in-up {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        /* / Konec animací / */
-
-
         .hero .greeting { font-size: 1.3rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 0.6rem; display: block; }
         .hero .subheadline { font-size: 1.25rem; color: var(--text-secondary); margin-top: 1.5rem; margin-bottom: 3rem; }
         .cta-button {
@@ -196,9 +134,6 @@
             box-shadow: 0 6px 20px rgba(79, 138, 255, 0.4);
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease; border:none;
             animation: pulse-cta 2.8s infinite ease-in-out;
-            
-            /* === PŘIDÁNO: Pro plynulejší parallax === */
-            will-change: transform; 
         }
         @keyframes pulse-cta { 
             0% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
@@ -299,6 +234,160 @@
             fill: currentColor;
         }
         .footer { text-align: center; padding: 3.5rem 5% 2.5rem; border-top: 1px solid var(--border-color); background: var(--bg-light-slate);}
+        
+        /* Nové prvky */
+        .chess-piece {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.15;
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+        
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 var(--accent-blue);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 var(--accent-gold);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            5% { clip: rect(12px, 9999px, 59px, 0); }
+            10% { clip: rect(48px, 9999px, 29px, 0); }
+            15% { clip: rect(42px, 9999px, 73px, 0); }
+            20% { clip: rect(63px, 9999px, 27px, 0); }
+            25% { clip: rect(34px, 9999px, 55px, 0); }
+            30% { clip: rect(86px, 9999px, 73px, 0); }
+            35% { clip: rect(20px, 9999px, 20px, 0); }
+            40% { clip: rect(26px, 9999px, 60px, 0); }
+            45% { clip: rect(25px, 9999px, 66px, 0); }
+            50% { clip: rect(57px, 9999px, 98px, 0); }
+            55% { clip: rect(5px, 9999px, 46px, 0); }
+            60% { clip: rect(82px, 9999px, 31px, 0); }
+            65% { clip: rect(54px, 9999px, 27px, 0); }
+            70% { clip: rect(28px, 9999px, 99px, 0); }
+            75% { clip: rect(45px, 9999px, 69px, 0); }
+            80% { clip: rect(23px, 9999px, 85px, 0); }
+            85% { clip: rect(54px, 9999px, 84px, 0); }
+            90% { clip: rect(45px, 9999px, 47px, 0); }
+            95% { clip: rect(37px, 9999px, 20px, 0); }
+            100% { clip: rect(4px, 9999px, 91px, 0); }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            5% { clip: rect(52px, 9999px, 74px, 0); }
+            10% { clip: rect(79px, 9999px, 85px, 0); }
+            15% { clip: rect(75px, 9999px, 5px, 0); }
+            20% { clip: rect(67px, 9999px, 61px, 0); }
+            25% { clip: rect(14px, 9999px, 79px, 0); }
+            30% { clip: rect(1px, 9999px, 66px, 0); }
+            35% { clip: rect(86px, 9999px, 30px, 0); }
+            40% { clip: rect(23px, 9999px, 98px, 0); }
+            45% { clip: rect(85px, 9999px, 72px, 0); }
+            50% { clip: rect(71px, 9999px, 75px, 0); }
+            55% { clip: rect(2px, 9999px, 48px, 0); }
+            60% { clip: rect(30px, 9999px, 16px, 0); }
+            65% { clip: rect(59px, 9999px, 50px, 0); }
+            70% { clip: rect(41px, 9999px, 62px, 0); }
+            75% { clip: rect(2px, 9999px, 82px, 0); }
+            80% { clip: rect(47px, 9999px, 73px, 0); }
+            85% { clip: rect(3px, 9999px, 27px, 0); }
+            90% { clip: rect(26px, 9999px, 55px, 0); }
+            95% { clip: rect(42px, 9999px, 97px, 0); }
+            100% { clip: rect(38px, 9999px, 49px, 0); }
+        }
+        
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            opacity: 0.05;
+        }
+        
+        .interactive-board {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin: 2rem 0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--bg-dark-slate);
+            border: 1px solid var(--border-color);
+        }
+        
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            width: 100%;
+            height: 100%;
+        }
+        
+        .board-square {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .board-square.light {
+            background-color: #f0d9b5;
+        }
+        
+        .board-square.dark {
+            background-color: #b58863;
+        }
+        
+        .board-square:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+            z-index: 1;
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+        
         @media (min-width: 1024px) { 
             body { font-size: var(--desktop-font-size); line-height: var(--desktop-line-height); }
             p { font-size: var(--desktop-p-font-size); }
@@ -320,7 +409,8 @@
              .content-with-image.reverse { flex-direction: row-reverse;}
         }
         @media (max-width: 900px) { 
-            body { font-size: 15.8px; } 
+            body { font-size: 15.8px; cursor: auto; } 
+            .custom-cursor, .cursor-trail { display: none; }
             h1 {font-size: clamp(2rem, 7vw, 3rem); } 
             h2 {font-size: clamp(1.6rem, 6vw, 2.2rem); }
             .section { padding: 3.5rem 5%; max-width:100%; }
@@ -354,11 +444,19 @@
     </style>
 </head>
 <body>
-    <div class="cursor-dot"></div>
-    <div class="cursor-outer"></div>
-
+    <div class="custom-cursor"></div>
+    <div class="cursor-trail"></div>
     <div id="scroll-progress-bar"></div>
     <canvas id="canvas-background"></canvas> 
+    <canvas class="matrix-rain"></canvas>
+    
+    <!-- Plovoucí šachové figurky -->
+    <div class="chess-piece" style="top: 10%; left: 5%;">♛</div>
+    <div class="chess-piece" style="top: 20%; right: 10%;">♜</div>
+    <div class="chess-piece" style="bottom: 15%; left: 15%;">♞</div>
+    <div class="chess-piece" style="bottom: 25%; right: 5%;">♝</div>
+    <div class="chess-piece" style="top: 40%; left: 8%;">♟</div>
+    <div class="chess-piece" style="top: 60%; right: 15%;">♚</div>
     
     <nav class="navbar">
         <a href="#" class="logo">YourChess</a>
@@ -369,7 +467,7 @@
                 <li><a href="#support" data-lang-key="nav_support">Podpora</a></li>
                 <li><a href="#video-promo" data-lang-key="nav_video">Video</a></li>
                 <li><a href="#vision" data-lang-key="nav_vision">Vize</a></li>
-            </ul>
+                </ul>
             <div class="lang-switcher">
                 <a href="#" id="lang-cz" class="active">CZ</a> | <a href="#" id="lang-en">EN</a>
             </div>
@@ -379,9 +477,9 @@
     
     <main>
         <header class="hero">
-            <div class="hero-content">
+            <div class="hero-content reveal">
                 <span class="greeting" data-lang-key="hero_greeting">Ahoj, jsem Tadeáš.</span>
-                <h1 data-lang-key="hero_title">Víc než Hra.<br><span class="highlight">Váš Vlastní High-Tech Projekt.</span></h1>
+                <h1 data-lang-key="hero_title" class="glitch-text" data-text="Víc než Hra. Váš Vlastní High-Tech Projekt.">Víc než Hra.<br><span class="highlight">Váš Vlastní High-Tech Projekt.</span></h1>
                 <p data-lang-key="hero_subtitle" class="subheadline">Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.</p>
                 <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button" data-lang-key="hero_cta">Získat na Gumroad</a>
             </div>
@@ -391,6 +489,13 @@
             <div class="content-card reveal">
                 <p data-lang-key="intro_p1" style="font-size:1.2em; color:var(--text-primary); font-weight:500;">Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.</p>
                 <p data-lang-key="intro_p2">Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong></p>
+                
+                <!-- Interaktivní šachovnice -->
+                <div class="interactive-board">
+                    <div class="board-grid">
+                        <!-- Toto se vygeneruje JavaScriptem -->
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -478,7 +583,7 @@
         <section id="prototype" class="section darker-surface">
             <div class="content-card prototype-story-card reveal"> 
                 <div class="content-with-image"> 
-                    <div class="text-content">
+                     <div class="text-content">
                         <h2 data-lang-key="prototype_title">Cesta Prototypu: <span class="highlight">Upřímnost a Inovace</span></h2>
                         <p data-lang-key="prototype_p1">Tento projekt je ve fázi funkčního prototypu. Vznikl jako ambiciózní studentský projekt a nese stopy autentického vývoje. Je postaven robustně, ale s vědomím, že některé věci jdou udělat lépe. Je to důkaz, že koncept funguje, a zároveň odrazový můstek pro něco mnohem většího.</p>
                         <p data-lang-key="prototype_p2">Chceme být naprosto transparentní: současná verze je skvělá, ale my sníme ještě dál.</p>
@@ -528,18 +633,163 @@
        <section id="join" class="section">
             <div class="content-card reveal" style="text-align:center;">
                 <h2 data-lang-key="join_title">Staňte se <span class="highlight">součástí naší cesty</span></h2>
-                <p data-lang-key="join_p1" style="max-width: 650px; margin-left:auto; margin-right:auto;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.</p>
+                <p data-lang-key="join_p1" style="max-width: 650px; margin-left:auto; margin-right:auto;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomožte nám přetavit sen v realitu.</p>
                 <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Získejte YourChess na Gumroad!</a> 
             </div>
        </section>
        
-    </main>
+       </main>
     
     <footer class="footer">
         <p class="reveal" style="font-size:0.95rem;">© <span id="current-year"></span> Tadeáš Bendák - YourChess</p>
     </footer>
 
     <script>
+    // Vlastní kurzor
+    const cursor = document.querySelector('.custom-cursor');
+    const cursorTrail = document.querySelector('.cursor-trail');
+    let mouseX = 0, mouseY = 0;
+    let trailX = 0, trailY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        if (cursor) {
+            cursor.style.left = `${mouseX - 10}px`;
+            cursor.style.top = `${mouseY - 10}px`;
+        }
+        
+        // Trail efekt
+        if (cursorTrail) {
+            setTimeout(() => {
+                trailX = e.clientX;
+                trailY = e.clientY;
+                cursorTrail.style.left = `${trailX - 3}px`;
+                cursorTrail.style.top = `${trailY - 3}px`;
+                cursorTrail.style.opacity = '1';
+                
+                setTimeout(() => {
+                    cursorTrail.style.opacity = '0';
+                }, 300);
+            }, 100);
+        }
+    });
+    
+    document.addEventListener('mousedown', () => {
+        if (cursor) cursor.style.transform = 'scale(0.8)';
+    });
+    
+    document.addEventListener('mouseup', () => {
+        if (cursor) cursor.style.transform = 'scale(1)';
+    });
+    
+    // Matrix efekt
+    const matrixCanvas = document.querySelector('.matrix-rain');
+    if (matrixCanvas) {
+        const ctx = matrixCanvas.getContext('2d');
+        matrixCanvas.width = window.innerWidth;
+        matrixCanvas.height = window.innerHeight;
+        
+        const chars = "01";
+        const charArray = chars.split("");
+        const fontSize = 14;
+        const columns = matrixCanvas.width / fontSize;
+        const drops = [];
+        
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+            ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            
+            ctx.fillStyle = "#0F0";
+            ctx.font = fontSize + "px arial";
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 35);
+    }
+    
+    // Interaktivní šachovnice
+    const boardGrid = document.querySelector('.board-grid');
+    if (boardGrid) {
+        const pieces = ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'];
+        
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                const square = document.createElement('div');
+                square.classList.add('board-square');
+                square.classList.add((row + col) % 2 === 0 ? 'light' : 'dark');
+                
+                // Umístění figurek
+                if (row === 0 || row === 7) {
+                    square.textContent = pieces[col];
+                } else if (row === 1 || row === 6) {
+                    square.textContent = '♟';
+                }
+                
+                boardGrid.appendChild(square);
+            }
+        }
+    }
+    
+    // Částicový efekt při kliknutí
+    document.addEventListener('click', (e) => {
+        for (let i = 0; i < 15; i++) {
+            createParticle(e.clientX, e.clientY);
+        }
+    });
+    
+    function createParticle(x, y) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        document.body.appendChild(particle);
+        
+        const size = Math.random() * 10 + 5;
+        const destinationX = x + (Math.random() - 0.5) * 2 * 100;
+        const destinationY = y + (Math.random() - 0.5) * 2 * 100;
+        const rotation = Math.random() * 520;
+        const delay = Math.random() * 200;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        particle.style.background = `hsl(${Math.random() * 90 + 190}, 70%, 60%)`;
+        
+        const animation = particle.animate([
+            {
+                transform: `translate(0, 0) rotate(0deg)`,
+                opacity: 1
+            },
+            {
+                transform: `translate(${destinationX - x}px, ${destinationY - y}px) rotate(${rotation}deg)`,
+                opacity: 0
+            }
+        ], {
+            duration: Math.random() * 1000 + 1000,
+            easing: 'cubic-bezier(0, .9, .57, 1)',
+            delay: delay
+        });
+        
+        animation.onfinish = () => {
+            particle.remove();
+        };
+    }
+    
     // JS pro animaci pozadí zůstává stejný
     const canvasBg = document.getElementById('canvas-background'); 
     if (canvasBg) {
@@ -729,12 +979,11 @@
                 vision_item2: "<strong>Pokročilá AI:</strong> Implementace silnějšího šachového engine s volitelným ELO.",
                 vision_item3: "<strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely.",
                 join_title: "Staňte se <span class='highlight'>součástí naší cesty</span>",
-                join_p1: "Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.",
+                join_p1: "Pokud vás tento projekt zaujal, budo vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomožte nám přetavit sen v realitu.",
                 join_cta: "Získejte YourChess na Gumroad!", // ZMĚNA
             }
         };
 
-        // --- PŮVODNÍ KÓD ---
         const navToggleBtn = document.getElementById('nav-toggle');
         const navCluster = document.getElementById('nav-cluster');
         if (navToggleBtn && navCluster) { 
@@ -799,106 +1048,6 @@
                 scrollProgressBar.style.width = scrolled + "%";
             });
         }
-
-        // --- KONEC PŮVODNÍHO KÓDU ---
-
-
-        /* === NOVÁ LOGIKA: VLASTNÍ KURZOR === */
-        const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-
-        if (hasFinePointer) {
-            const cursorDot = document.querySelector('.cursor-dot');
-            const cursorOuter = document.querySelector('.cursor-outer');
-            
-            let lastX = 0;
-            let lastY = 0;
-            let isStuck = false;
-
-            window.addEventListener('mousemove', e => {
-                const { clientX: x, clientY: y } = e;
-                
-                // Přímý pohyb pro tečku
-                cursorDot.style.transform = `translate(${x}px, ${y}px)`;
-                
-                // Zpožděný pohyb pro prstenec
-                if (!isStuck) {
-                    lastX = x;
-                    lastY = y;
-                    cursorOuter.style.transform = `translate(${x}px, ${y}px)`;
-                }
-            });
-
-            // Seznam všech interaktivních prvků
-            const interactiveElements = document.querySelectorAll(
-                'a, button, .cta-button, .btn-discord, .btn-youtube, .nav-toggle-btn'
-            );
-
-            interactiveElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    document.body.classList.add('cursor-hover');
-                });
-                el.addEventListener('mouseleave', () => {
-                    document.body.classList.remove('cursor-hover');
-                });
-            });
-        }
-        /* === KONEC LOGIKY KURZORU === */
-
-
-
-        /* === NOVÁ LOGIKA: PARALLAX V HERO SEKCI === */
-        const heroGreeting = document.querySelector('.hero .greeting');
-        const heroH1 = document.querySelector('.hero h1');
-        const heroSubheadline = document.querySelector('.hero .subheadline');
-        const heroCta = document.querySelector('.hero .cta-button');
-
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            
-            // Kontrola, aby se efekt děl jen na desktopu a jen na začátku
-            if (scrollY < window.innerHeight && window.innerWidth > 900) {
-                heroGreeting.style.transform = `translateY(${scrollY * 0.5}px)`;
-                heroH1.style.transform = `translateY(${scrollY * 0.4}px)`;
-                heroSubheadline.style.transform = `translateY(${scrollY * 0.25}px)`;
-                heroCta.style.transform = `translateY(${scrollY * 0.15}px)`;
-            }
-        });
-        /* === KONEC LOGIKY PARALLAXU === */
-        
-
-
-        /* === NOVÁ LOGIKA: ZVÝRAZNĚNÍ AKTIVNÍ SEKCE V MENU === */
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-menu a');
-
-        const sectionObserverOptions = {
-            root: null, // viewport
-            rootMargin: '0px',
-            threshold: 0.4 // 40% sekce musí být vidět
-        };
-
-        const highlightNavLink = (id) => {
-            navLinks.forEach(link => {
-                link.classList.remove('active-link');
-                if (link.getAttribute('href') === `#${id}`) {
-                    link.classList.add('active-link');
-                }
-            });
-        };
-
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    highlightNavLink(entry.target.id);
-                }
-            });
-        }, sectionObserverOptions);
-
-        sections.forEach(section => {
-            sectionObserver.observe(section);
-        });
-        /* === KONEC LOGIKY AKTIVNÍ SEKCE === */
-
     });
     </script>
 </body>
