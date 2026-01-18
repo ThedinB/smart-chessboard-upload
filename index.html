@@ -7,707 +7,1143 @@
     <title>YourChess: Postavte si Vlastní Inteligentní Šachovnici</title>
     <meta name="description" content="Staňte se součástí vývoje YourChess! Získejte exkluzivní digitální podklady a postavte si vlastní inteligentní šachovnici. Podpořte budoucnost šachu.">
 
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://VASEJMENO.github.io/"> 
+    <meta property="og:url" content="https://VASEJMENO.github.io/">
     <meta property="og:title" content="YourChess: Postavte si Vlastní Inteligentní Šachovnici">
     <meta property="og:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
-    <meta property="og:image" content="https://VASEJMENO.github.io/image/prototype3.jpg"> 
+    <meta property="og:image" content="https://VASEJMENO.github.io/images/prototype3.jpg">
 
+    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://VASEJMENO.github.io/"> 
+    <meta property="twitter:url" content="https://VASEJMENO.github.io/">
     <meta property="twitter:title" content="YourChess: Postavte si Vlastní Inteligentní Šachovnici">
     <meta property="twitter:description" content="Získejte exkluzivní přístup k digitálním podkladům a softwaru pro stavbu funkčního prototypu inteligentní šachovnice.">
-    <meta property="twitter:image" content="https://VASEJMENO.github.io/image/prototype1.jpg">
+    <meta property="twitter:image" content="https://VASEJMENO.github.io/images/prototype1.jpg">
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> 
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* ===== CSS VARIABLES ===== */
         :root {
-            --bg-dark-slate: #181E29; 
-            --bg-light-slate: #2A303C; 
-            --text-primary: #E8EAF0;   
-            --text-secondary: #A0AEC0; 
-            --accent-blue: #4F8AFF;   
-            --accent-gold: #FACC15;   
-            --discord-blurple: #5865F2; 
-            --youtube-red: #FF0000;
-            --border-color: rgba(107, 114, 128, 0.25); 
-            --shadow-color: rgba(0, 0, 0, 0.25);
-            --glow-blue-soft: rgba(79, 138, 255, 0.25);
-            --glow-gold-soft: rgba(250, 204, 21, 0.3);
-            --desktop-font-size: 17.5px;
-            --desktop-line-height: 1.75;
-            --desktop-p-font-size: 1.15rem;
-            --desktop-h1-font-size-max: 3.7rem;
-            --desktop-h2-font-size-max: 2.7rem;
-            --desktop-h3-font-size-max: 1.7rem;
-            --desktop-section-padding-y: 5.5rem; 
-            --desktop-section-padding-x: 8%; 
-            --desktop-card-padding: 3rem;
+            /* Colors */
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-light: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-blue-hover: #2563eb;
+            --accent-gold: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --discord-blurple: #5865f2;
+            --youtube-red: #ff0000;
+            --success: #10b981;
+            
+            /* Shadows & Glows */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --glow-blue: 0 0 20px rgba(59, 130, 246, 0.5);
+            --glow-gold: 0 0 20px rgba(245, 158, 11, 0.4);
+            
+            /* Borders */
+            --border-radius: 12px;
+            --border-color: rgba(255,255,255,0.1);
+            
+            /* Spacing */
+            --section-padding: 5rem 1.5rem;
+            --container-width: 1200px;
+            
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
         }
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; } 
+        
+        /* ===== RESET & BASE STYLES ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+        
         body {
-            background-color: var(--bg-dark-slate); 
-            color: var(--text-primary);
             font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
             overflow-x: hidden;
-            line-height: 1.7;
-            font-size: 16px; 
-            position: relative; 
         }
-        #scroll-progress-bar {
-            position: fixed; top: 0; left: 0; height: 4px; 
-            background: var(--accent-blue); width: 0%; 
-            z-index: 1001; transition: width 0.1s ease-out;
+        
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4 {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
         }
-        #canvas-background {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; 
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
         }
-        h1, h2, h3, .logo, .nav-menu a, .cta-button, .btn-discord, .btn-youtube { font-family: 'Manrope', sans-serif; font-weight: 800; }
-        h1 { font-size: clamp(2.2rem, 5.5vw, var(--desktop-h1-font-size-max)); line-height: 1.25; margin-bottom: 1rem; color: var(--text-primary); }
-        h1 .highlight { color: var(--accent-blue); }
-        h2 { font-size: clamp(1.8rem, 4.8vw, var(--desktop-h2-font-size-max)); margin-bottom: 1.8rem; padding-bottom: 0.7rem; border-bottom: 3px solid var(--accent-blue); display: inline-block;}
-        h3 { font-size: clamp(1.3rem, 4.2vw, var(--desktop-h3-font-size-max)); color: var(--text-primary); margin-bottom: 1rem; }
-        h3 .icon { color: var(--accent-gold); margin-right: 0.7rem; vertical-align: middle; font-size: 1em; display: inline-block; transition: transform 0.3s ease;}
-        p { color: var(--text-secondary); margin-bottom: 1.5rem; max-width: 70ch; font-size: 1.05rem;}
-        a { color: var(--accent-blue); text-decoration: none; font-weight: 500; }
-        a:hover { text-decoration: underline; filter: brightness(1.15); }
-        strong { color: var(--text-primary); font-weight: 700; }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 2px;
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 65ch;
+        }
+        
+        .highlight {
+            color: var(--accent-blue);
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-center h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* ===== LAYOUT ===== */
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        section {
+            padding: var(--section-padding);
+        }
+        
+        .section-dark {
+            background-color: rgba(30, 41, 59, 0.5);
+        }
+        
+        /* ===== NAVBAR ===== */
         .navbar {
-            position: fixed; top: 0; width: 100%;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1.3rem 5%; z-index: 1000; 
-            background: rgba(26, 29, 36, 0.85); 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            transition: var(--transition-normal);
         }
-        .logo { font-size: 1.7rem; letter-spacing: 0.5px; }
-        .nav-cluster { display: flex; align-items: center; gap: 2rem; } 
-        .nav-menu { list-style: none; display: flex; gap: 2rem; }
-        .nav-menu a { font-size: 1rem; font-weight:700; color: var(--text-secondary); transition: color 0.2s ease, transform 0.2s ease;}
-        .nav-menu a:hover, .nav-menu a.active-link { color: var(--text-primary); transform: translateY(-2px); }
-        .lang-switcher a { font-size: 0.95rem; font-weight: 700; color:var(--text-secondary); margin-left:0.3rem;}
-        .lang-switcher a.active { color: var(--accent-gold); text-decoration: none; border-bottom:2px solid var(--accent-gold);}
-        .nav-toggle-btn { display: none; } 
+        
+        .navbar.scrolled {
+            padding: 0.7rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo i {
+            color: var(--accent-gold);
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--text-primary);
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-blue);
+            transition: var(--transition-normal);
+        }
+        
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .lang-switcher a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+        }
+        
+        .lang-switcher a.active {
+            color: var(--accent-gold);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* ===== HERO SECTION ===== */
         .hero {
-            padding: 10rem 5% 6rem; text-align: left; 
-            min-height: 85vh; display: flex; align-items: center; 
-            max-width: 1400px; margin: 0 auto; 
+            padding-top: 10rem;
+            padding-bottom: 6rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
-        .hero-content { max-width: 800px; } 
-        .hero .greeting { font-size: 1.3rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 0.6rem; display: block; }
-        .hero .subheadline { font-size: 1.25rem; color: var(--text-secondary); margin-top: 1.5rem; margin-bottom: 3rem; }
-        .cta-button {
-            display: inline-block; background: var(--accent-blue); color: #fff; 
-            padding: 1.1rem 2.8rem; border-radius: 8px; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.8px;
-            box-shadow: 0 6px 20px rgba(79, 138, 255, 0.4);
-            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease; border:none;
-            animation: pulse-cta 2.8s infinite ease-in-out;
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
-        @keyframes pulse-cta { 
-            0% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
-            50% { transform: scale(1.025); box-shadow: 0 9px 28px rgba(79, 138, 255, 0.45); }
-            100% { transform: scale(1); box-shadow: 0 6px 20px rgba(79, 138, 255, 0.3); }
+        
+        .hero-content {
+            max-width: 800px;
         }
-        .cta-button:hover { animation-play-state: paused; transform: translateY(-4px) scale(1.025) ; box-shadow: 0 10px 30px rgba(79, 138, 255, 0.55); }
-        .section { padding: 4.5rem 5%; max-width: 1100px; margin: 0 auto; } 
-        .content-card {
-            background: var(--card-bg-glass, rgba(42, 48, 58, 0.75)); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px); 
-            padding: 2.5rem; 
-            border-radius: 16px; 
-            box-shadow: 0 12px 45px var(--shadow-color), inset 0 1px 0px rgba(255,255,255,0.05);
-            border: 1px solid var(--card-border-glass);
-            margin-bottom: 3rem;
-            transition: transform 0.35s ease-out, box-shadow 0.35s ease-out; 
+        
+        .hero-badge {
+            display: inline-block;
+            background-color: rgba(245, 158, 11, 0.2);
+            color: var(--accent-gold);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
         }
-        .content-card:hover { 
-            transform: translateY(-8px) scale(1.01); 
-            box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0px rgba(255,255,255,0.07);
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
         }
-        .prototype-story-card {
-            background: var(--bg-prototype-card, rgba(37,42,52,0.9)); 
-            border: 1px solid var(--border-prototype); 
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15), 0 0 0 1px rgba(245, 158, 11, 0.15); 
-        }
-        .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top:2.5rem;}
-        .grid-item {
-            background: var(--bg-dark-slate); border: 1px solid var(--border-color);
-            padding: 2rem; border-radius: 10px;
-            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-        }
-        .grid-item:hover { transform: translateY(-5px); border-color: var(--accent-blue); box-shadow: 0 6px 20px rgba(79,138,255,0.15);}
-        .grid-item h3 .icon { transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
-        .grid-item:hover h3 .icon { transform: rotate(10deg) scale(1.15); } 
-        .image-container { 
-            background: var(--bg-dark-slate); border-radius: 10px;
-            padding: 0.75rem; margin: 2.5rem 0;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 5px 15px var(--shadow-color);
-            position: relative; overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        .image-container:hover { transform: scale(1.02); } 
-        .image-container::after { 
-            content: ''; position:absolute; top:0; left:0; width:100%; height:100%;
-            background: rgba(79,138,255,0.08); opacity:0; transition: opacity 0.3s ease;
-        }
-        .image-container:hover::after { opacity:1; }
-        .image-container img { width: 100%; height: auto; display: block; border-radius: 6px; } 
-        .video-showcase { margin: 2.5rem 0; }
-        .video-container {
-            position: relative; width: 100%; padding-bottom: 56.25%; height: 0;
-            overflow: hidden; border-radius: 10px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 5px 15px var(--shadow-color);
-        }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .video-cta-container {
+        
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            padding: 1rem 2.2rem;
+            border-radius: 8px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            border: none;
             text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl), var(--glow-blue);
+        }
+        
+        .btn-secondary {
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--bg-light);
+            transform: translateY(-3px);
+        }
+        
+        .btn-discord {
+            background-color: var(--discord-blurple);
+            color: white;
+        }
+        
+        .btn-discord:hover {
+            background-color: #4752c4;
+            transform: translateY(-3px);
+        }
+        
+        .btn-youtube {
+            background-color: var(--youtube-red);
+            color: white;
+        }
+        
+        .btn-youtube:hover {
+            background-color: #cc0000;
+            transform: translateY(-3px);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
             margin-top: 2rem;
         }
-        .bullet-list { list-style: none; padding-left: 0;}
-        .bullet-list li { padding-left: 2em; position:relative; margin-bottom:0.9em; font-size:1.05rem;}
-        .bullet-list li::before {
-            content: '✓'; color: var(--accent-gold); font-weight: bold;
-            position: absolute; left: 0; font-size: 1.1em;
-            text-shadow: 0 0 5px var(--glow-gold-soft);
+        
+        /* ===== CARDS ===== */
+        .card {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-normal);
+            height: 100%;
         }
-        .btn-discord { 
-            display: inline-flex; align-items: center; justify-content: center;
-            background-color: var(--discord-blurple); color: #fff;
-            padding: 1rem 2.2rem; border-radius: 8px; font-size: 1.1rem;
-            text-transform: uppercase; letter-spacing: 0.6px;
-            box-shadow: 0 5px 18px rgba(88, 101, 242, 0.35);
-            transition: transform 0.2s ease, box-shadow 0.2s ease; border: none;
-            margin-top: 2rem; 
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(59, 130, 246, 0.3);
         }
-        .btn-discord:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 8px 25px rgba(88, 101, 242, 0.45); }
-        .btn-youtube {
-            display: inline-flex; align-items: center; justify-content: center; gap: 0.8rem;
-            background-color: var(--youtube-red); color: #fff;
-            padding: 1rem 2.2rem; border-radius: 8px; font-size: 1.1rem;
-            text-transform: uppercase; letter-spacing: 0.6px;
-            box-shadow: 0 5px 18px rgba(255, 0, 0, 0.35);
-            transition: transform 0.2s ease, box-shadow 0.2s ease; border: none;
-            margin-top: 1.5rem;
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-blue);
         }
-        .btn-youtube:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.45);
+        
+        /* ===== FEATURE GRID ===== */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
-        .btn-youtube svg {
-            width: 1.5em;
-            height: 1.5em;
-            fill: currentColor;
+        
+        /* ===== CONTENT WITH IMAGE ===== */
+        .content-with-image {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
-        .footer { text-align: center; padding: 3.5rem 5% 2.5rem; border-top: 1px solid var(--border-color); background: var(--bg-light-slate);}
-        @media (min-width: 1024px) { 
-            body { font-size: var(--desktop-font-size); line-height: var(--desktop-line-height); }
-            p { font-size: var(--desktop-p-font-size); }
-            .section { padding: var(--desktop-section-padding-y) var(--desktop-section-padding-x); }
-            .hero { padding: calc(var(--desktop-section-padding-y) + 3rem) var(--desktop-section-padding-x) var(--desktop-section-padding-y) ; }
-            .content-card { padding: var(--desktop-card-padding); margin-bottom: 4rem; }
+        
+        .content-with-image.reverse {
+            direction: rtl;
         }
-        @media (min-width: 901px) and (max-width: 1023px) { 
-            body { font-size: 16.8px; } 
-            p { font-size: 1.1rem; }
-            .section { padding: 5rem 6%;}
-            .hero { padding: 9rem 6% 5rem;}
-            .content-card { padding: 2.8rem; }
+        
+        .content-with-image.reverse > * {
+            direction: ltr;
         }
-        @media (min-width: 901px) { 
-             .content-with-image { display:flex; flex-direction: row; align-items:center; gap:3.5rem;} 
-             .content-with-image .text-content { flex:1.1; } 
-             .content-with-image .image-container { flex:0.9; max-width:500px; margin:0;}
-             .content-with-image.reverse { flex-direction: row-reverse;}
+        
+        .image-container {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            position: relative;
         }
-        @media (max-width: 900px) { 
-            body { font-size: 15.8px; } 
-            h1 {font-size: clamp(2rem, 7vw, 3rem); } 
-            h2 {font-size: clamp(1.6rem, 6vw, 2.2rem); }
-            .section { padding: 3.5rem 5%; max-width:100%; }
-            .content-card { padding: 2.2rem 1.8rem; margin-bottom: 2.5rem; }
-            .hero { padding: 8rem 5% 4rem; text-align:center; } 
-            .hero-content { margin: 0 auto; }
-            .cta-button, .cta-secondary, .btn-discord, .btn-youtube { width:100%; max-width:380px; margin-left:auto; margin-right:auto; display:flex; } 
-            .cta-button {margin-bottom:1.2rem;}
-            .cta-secondary { margin-left:auto; margin-bottom:1.2rem;} 
-            .content-with-image .image-container { order: -1; margin-bottom: 2.5rem; }
-            .nav-toggle-btn { display: block; background:none; border:none; padding:0.5rem; cursor:pointer; z-index:1001;}
-            .nav-toggle-btn .bar { display: block; width: 25px; height: 2px; margin: 5px 0; background-color: var(--text-primary); transition: all 0.3s ease-in-out; }
-            .nav-cluster {
-                position: fixed; top: 0; right: -100%;
-                width: 80%; max-width:300px; height: 100vh; background: var(--bg-dark-slate);
-                flex-direction: column; justify-content: center; align-items: center;
-                gap: 2.5rem; padding-top:4rem;
-                transition: right 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-                border-left: 1px solid var(--border-color); box-shadow: -5px 0 20px var(--shadow-color);
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition-slow);
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* ===== VIDEO SECTION ===== */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-top: 2rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* ===== LIST STYLES ===== */
+        .feature-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .feature-list li {
+            padding-left: 2rem;
+            position: relative;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+        
+        /* ===== PRICE TAG ===== */
+        .price-tag {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent-gold), #fbbf24);
+            color: #1e293b;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* ===== FOOTER ===== */
+        .footer {
+            background-color: var(--bg-card);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            .nav-cluster.active { right: 0; }
-            .nav-menu { flex-direction: column; text-align: center; gap: 2rem; }
-            .nav-menu a { font-size: 1.1rem; }
-            .lang-switcher { margin-top: 1.5rem; }
-            .nav-toggle-btn.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-            .nav-toggle-btn.active .bar:nth-child(2) { opacity: 0; }
-            .nav-toggle-btn.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            .content-with-image {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .content-with-image.reverse {
+                direction: ltr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-dark);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition-normal);
+                border-bottom: 1px solid var(--border-color);
+                box-shadow: var(--shadow-lg);
+            }
+            
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero {
+                padding-top: 8rem;
+                text-align: center;
+            }
+            
+            .hero h1, .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            :root {
+                --section-padding: 3rem 1rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div id="scroll-progress-bar"></div>
-    <canvas id="canvas-background"></canvas> 
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
     
-    <nav class="navbar">
-        <a href="#" class="logo">YourChess</a>
-        <div class="nav-cluster" id="nav-cluster">
-            <ul class="nav-menu">
-                <li><a href="#who-for" data-lang-key="nav_who_for">Pro Koho</a></li>
-                <li><a href="#package" data-lang-key="nav_package">Balíček</a></li>
-                <li><a href="#support" data-lang-key="nav_support">Podpora</a></li>
-                <li><a href="#video-promo" data-lang-key="nav_video">Video</a></li>
-                <li><a href="#vision" data-lang-key="nav_vision">Vize</a></li>
-                </ul>
-            <div class="lang-switcher">
-                <a href="#" id="lang-cz" class="active">CZ</a> | <a href="#" id="lang-en">EN</a>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-chess-knight"></i>
+                YourChess
+            </a>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#about">Pro Koho</a></li>
+                <li><a href="#package">Co Získám</a></li>
+                <li><a href="#prototype">Prototyp</a></li>
+                <li><a href="#vision">Vize</a></li>
+                <li><a href="#support">Podpora</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <div class="lang-switcher">
+                    <a href="#" class="active" id="lang-cz">CZ</a>
+                    <span>|</span>
+                    <a href="#" id="lang-en">EN</a>
+                </div>
+                
+                <button class="mobile-toggle" id="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
-        <button class="nav-toggle-btn" id="nav-toggle"> <span class="bar"></span> <span class="bar"></span> <span class="bar"></span> </button>
     </nav>
     
-    <main>
-        <header class="hero">
-            <div class="hero-content reveal">
-                <span class="greeting" data-lang-key="hero_greeting">Ahoj, jsem Tadeáš.</span>
-                <h1 data-lang-key="hero_title">Víc než Hra.<br><span class="highlight">Váš Vlastní High-Tech Projekt.</span></h1>
-                <p data-lang-key="hero_subtitle" class="subheadline">Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.</p>
-                <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button" data-lang-key="hero_cta">Získat na Gumroad</a>
-            </div>
-        </header>
-
-        <section id="intro" class="section">
-            <div class="content-card reveal">
-                <p data-lang-key="intro_p1" style="font-size:1.2em; color:var(--text-primary); font-weight:500;">Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.</p>
-                <p data-lang-key="intro_p2">Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong></p>
-            </div>
-        </section>
-
-        <section id="who-for" class="section darker-surface">
-            <div class="content-card reveal">
-                <div class="content-with-image">
-                    <div class="text-content">
-                        <h2 data-lang-key="who_title">Pro Koho Je Tento Projekt?</h2>
-                        <p data-lang-key="who_intro">Tento projekt je pro vás, pokud:</p>
-                        <ul class="bullet-list">
-                            <li data-lang-key="who_1">Milujete stavět, pájet a oživovat elektroniku.</li>
-                            <li data-lang-key="who_2">Jste vášnivý šachista, který sní o interaktivním herním zážitku.</li>
-                            <li data-lang-key="who_3">Chcete podpořit inovativní projekt a být u jeho zrodu od samého začátku.</li>
-                            <li data-lang-key="who_4">Nebojíte se výzvy a láká vás hrdost z vlastnoručně postaveného zařízení.</li>
-                        </ul>
-                    </div>
-                    <div class="image-container">
-                        <img src="image/prototype4.jpg" alt="Prototyp šachovnice YourChess - sestavování">
-                    </div>
-                </div>
-            </div>
-       </section>
-        
-        <section id="video-promo" class="section">
-            <div class="content-card reveal">
-                <h2 data-lang-key="video_title">YourChess v <span class="highlight">Akci</span></h2>
-                <p data-lang-key="video_intro">Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.</p>
-                <div class="video-showcase">
-                    <div class="video-container">
-                        <iframe src="https://youtube.com/embed/03WkcMXqUA4?si=jJC3mrTeufQrpWy5" title="Ukázka YourChess Prototypu" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-                <div class="video-cta-container">
-                    <p data-lang-key="video_cta_text">Zaujala vás vize? Staňte se její součástí a sledujte náš postup!</p>
-                    
-                    <a href="https://www.youtube.com/@YourChessOfficial" target="_blank" class="btn-youtube">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM9.5 16.5V7.5L16.5 12L9.5 16.5Z" fill="currentColor"/>
-                        </svg>
-                        <span data-lang-key="video_youtube_btn">Sledovat na YouTube</span>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content animate-fade-in-up">
+                <span class="hero-badge animate-fade-in-up delay-1">
+                    <i class="fas fa-bolt"></i> Exkluzivní Early Access
+                </span>
+                
+                <h1>Postavte si vlastní <span class="highlight">inteligentní šachovnici</span></h1>
+                
+                <p class="hero-subtitle animate-fade-in-up delay-2">
+                    Rok vývoje, funkční prototyp a stovky hodin práce. Teď je tu příležitost stát se součástí projektu, který spojuje vášeň pro šachy s moderní technologií.
+                </p>
+                
+                <div class="btn-group animate-fade-in-up delay-3">
+                    <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Získat na Gumroad
+                    </a>
+                    <a href="#video" class="btn btn-secondary">
+                        <i class="fas fa-play-circle"></i> Podívat se na video
                     </a>
                 </div>
             </div>
-        </section>
-        
-        <section id="package" class="section darker-surface">
-            <div class="content-card reveal">
-                <h2 data-lang-key="package_title">Co Získáte v <span class="highlight">Exkluzivním Balíčku</span>?</h2>
-                <p data-lang-key="package_intro">Vaší podporou si nekupujete jen soubory. Kupujete si vstupenku do světa YourChess.</p>
-                <div class="item-grid">
-                    <div class="grid-item">
-                        <h3 data-lang-key="package_item1_title"><span class="icon">💻</span>Mozek Šachovnice</h3>
-                        <p data-lang-key="package_item1_desc">Exkluzivní "YourChess Uploader" (Windows) s firmwarem a přístupem k souborům.</p>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="section-dark">
+        <div class="container">
+            <h2 class="text-center">Pro Koho Je <span class="highlight">YourChess</span>?</h2>
+            
+            <div class="feature-grid">
+                <div class="card animate-fade-in-up">
+                    <div class="card-icon">
+                        <i class="fas fa-microchip"></i>
                     </div>
-                    <div class="grid-item">
-                        <h3 data-lang-key="package_item2_title"><span class="icon">🏗️</span>Kompletní Digitální Plány</h3>
-                        <p data-lang-key="package_item2_desc">STL modely pro 3D tisk a Gerber data pro výrobu profesionálních PCB.</p>
+                    <h3>Elektronický nadšenec</h3>
+                    <p>Pro kutily, kteří milují stavět, pájet a oživovat elektronické projekty. Zažijte radost z vlastnoručně postaveného zařízení.</p>
+                </div>
+                
+                <div class="card animate-fade-in-up delay-1">
+                    <div class="card-icon">
+                        <i class="fas fa-chess-board"></i>
                     </div>
-                    <div class="grid-item">
-                        <h3 data-lang-key="package_item3_title"><span class="icon">📖</span>Podrobný Návod</h3>
-                        <p data-lang-key="package_item3_desc">Detailní průvodce (PDF) stavbou, zapojením a zprovozněním.</p>
+                    <h3>Vášnivý šachista</h3>
+                    <p>Pro hráče, kteří sní o interaktivním herním zážitku. Hrajte proti počítači nebo přes internet s fyzickými figurkami.</p>
+                </div>
+                
+                <div class="card animate-fade-in-up delay-2">
+                    <div class="card-icon">
+                        <i class="fas fa-rocket"></i>
                     </div>
+                    <h3>Inovační průkopník</h3>
+                    <p>Pro ty, kteří chtějí být u zrodu nové technologie a podpořit český projekt s globálním potenciálem.</p>
                 </div>
             </div>
-        </section>
-        
-        <section id="support" class="section"> 
-             <div class="content-card reveal">
-                <h2 data-lang-key="support_title">Víc než jen Soubory: <span class="highlight">Naše Podpora a Komunita</span></h2>
-                <p data-lang-key="support_p1">Nenecháme vás v tom samotné. Chceme, aby se vám stavba podařila a abyste z ní měli radost. Proto je součástí balíčku i náš závazek vůči vám:</p>
-                <ul class="bullet-list">
-                    <li data-lang-key="support_item1"><strong>Pravidelné Aktualizace Softwaru:</strong> Vylepšení firmware prototypu získáte zdarma přes Uploader.</li>
-                    <li data-lang-key="support_item2"><strong>Exkluzivní Komunitní Skupina:</strong> Všichni backeři získají přístup do soukromé skupiny (Discord). Zde budu poskytovat online podporu, řešit problémy, sdílet tipy a společně brainstormovat.</li>
-                </ul>
-                <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="btn-discord">
-                    <span data-lang-key="support_discord_btn">Připojit se k Discord komunitě</span>
+        </div>
+    </section>
+    
+    <!-- Package Section -->
+    <section id="package">
+        <div class="container">
+            <h2 class="text-center">Co <span class="highlight">Získáte</span>?</h2>
+            
+            <div class="content-with-image">
+                <div>
+                    <h3>Kompletní digitální balíček</h3>
+                    <p>S naším balíčkem získáte vše potřebné k sestavení vlastní inteligentní šachovnice:</p>
+                    
+                    <ul class="feature-list">
+                        <li><strong>Exkluzivní "YourChess Uploader"</strong> pro Windows s nejnovějším firmwarem</li>
+                        <li><strong>STL modely</strong> pro 3D tisk všech dílů</li>
+                        <li><strong>Gerber soubory</strong> pro výrobu profesionálních PCB desek</li>
+                        <li><strong>Podrobný návod</strong> (PDF) krok za krokem v češtině</li>
+                        <li><strong>Kompletní zdrojové kódy</strong> a dokumentace</li>
+                    </ul>
+                    
+                    <div class="price-tag">1 490 Kč</div>
+                    
+                    <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-shopping-cart"></i> Získat balíček
+                    </a>
+                </div>
+                
+                <div class="image-container">
+                    <img src="images/prototype4.jpg" alt="YourChess balíček - digitální podklady" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Video Section -->
+    <section id="video" class="section-dark">
+        <div class="container">
+            <h2 class="text-center">YourChess <span class="highlight">v akci</span></h2>
+            
+            <div class="video-container animate-fade-in-up">
+                <iframe 
+                    src="https://www.youtube.com/embed/03WkcMXqUA4" 
+                    title="YourChess - inteligentní šachovnice v akci" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            
+            <div class="text-center" style="margin-top: 2rem;">
+                <a href="https://www.youtube.com/@YourChessOfficial" target="_blank" class="btn btn-youtube">
+                    <i class="fab fa-youtube"></i> Sledovat na YouTube
                 </a>
             </div>
-        </section>
-        
-        <section id="prototype" class="section darker-surface">
-            <div class="content-card prototype-story-card reveal"> 
-                <div class="content-with-image"> 
-                     <div class="text-content">
-                        <h2 data-lang-key="prototype_title">Cesta Prototypu: <span class="highlight">Upřímnost a Inovace</span></h2>
-                        <p data-lang-key="prototype_p1">Tento projekt je ve fázi funkčního prototypu. Vznikl jako ambiciózní studentský projekt a nese stopy autentického vývoje. Je postaven robustně, ale s vědomím, že některé věci jdou udělat lépe. Je to důkaz, že koncept funguje, a zároveň odrazový můstek pro něco mnohem většího.</p>
-                        <p data-lang-key="prototype_p2">Chceme být naprosto transparentní: současná verze je skvělá, ale my sníme ještě dál.</p>
-                    </div>
-                    <div class="image-container">
-                        <img src="image/prototype1.jpg" alt="Surový prototyp YourChess"> 
-                    </div>
-                </div>
-            </div>
-       </section>
-       
-       <section id="transparency" class="section">
-            <div class="content-card reveal">
-                <div class="content-with-image reverse"> 
-                    <div class="text-content">
-                        <h2 data-lang-key="transparency_title">Plná Transparence: <span class="highlight">Co Budete Potřebovat?</span></h2>
-                        <p data-lang-key="transparency_p1">Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.</p>
-                        <p data-lang-key="transparency_p2" style="font-size: 1.2em; line-height:1.5;">Dle mých propočtů se celková cena za všechny součástky pohybuje okolo <strong style="color:var(--accent-gold); font-size:1.1em;">4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který vaši investici promění ve funkční dílo.</p>
-                    </div>
-                     <div class="image-container"> 
-                        <img src="image/prototype3.jpg" alt="Ukázka komponent nebo detailu">
-                    </div>
-                </div>
-            </div>
-       </section>
-       
-       <section id="vision" class="section darker-surface">
-           <div class="content-card reveal">
-                <div class="content-with-image"> 
-                    <div class="text-content">
-                        <h2 data-lang-key="vision_title">Naše Vize: <span class="highlight">Budoucnost YourChess</span></h2>
-                        <p data-lang-key="vision_p1">Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>.</p>
-                         <p data-lang-key="vision_p2">Co plánujeme pro v2.0:</p>
-                        <ul class="bullet-list">
-                            <li data-lang-key="vision_item1"><strong>Online Hra:</strong> Přechod na ESP32 umožní připojení na Lichess.</li>
-                            <li data-lang-key="vision_item2"><strong>Pokročilá AI:</strong> Implementace silnějšího šachového engine s volitelným ELO.</li>
-                            <li data-lang-key="vision_item3"><strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely.</li>
-                        </ul>
-                    </div>
-                    <div class="image-container">
-                        <img src="image/prototype2.jpg" alt="Vize YourChess v2.0">
-                    </div>
-                </div>
-           </div>
-       </section>
-       
-       <section id="join" class="section">
-            <div class="content-card reveal" style="text-align:center;">
-                <h2 data-lang-key="join_title">Staňte se <span class="highlight">součástí naší cesty</span></h2>
-                <p data-lang-key="join_p1" style="max-width: 650px; margin-left:auto; margin-right:auto;">Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.</p>
-                <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="cta-button" data-lang-key="join_cta" style="margin-top:1.5rem;">Získejte YourChess na Gumroad!</a> 
-            </div>
-       </section>
-       
-       </main>
+        </div>
+    </section>
     
+    <!-- Prototype Story -->
+    <section id="prototype">
+        <div class="container">
+            <div class="content-with-image reverse">
+                <div>
+                    <h2>Cesta <span class="highlight">prototypu</span></h2>
+                    <p>Tento projekt začal jako studentská práce a během roku vyrostl v plně funkční prototyp. Nese stopy autentického vývoje - je postaven robustně, ale s vědomím, že jde o první krok k něčemu většímu.</p>
+                    <p><strong>Chceme být transparentní:</strong> současná verze je skvělá a plně funkční, ale my sníme ještě dál. Vaše podpora nám umožní posunout YourChess na další úroveň.</p>
+                </div>
+                
+                <div class="image-container">
+                    <img src="images/prototype1.jpg" alt="Vývoj prototypu YourChess" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Transparency Section -->
+    <section id="transparency" class="section-dark">
+        <div class="container">
+            <h2 class="text-center">Plná <span class="highlight">transparentnost</span></h2>
+            
+            <div class="content-with-image">
+                <div>
+                    <h3>Co budete potřebovat navíc?</h3>
+                    <p>Náš balíček obsahuje pouze digitální podklady. Fyzické součástky si budete muset zakoupit sami.</p>
+                    
+                    <ul class="feature-list">
+                        <li>Elektronické součástky (Arduino, senzory, LED, atd.)</li>
+                        <li>3D tištěné díly (můžete tisknout sami nebo objednat)</li>
+                        <li>PCB desky (můžete nechat vyrobit)</li>
+                        <li>Šachové figurky a základní nástroje</li>
+                    </ul>
+                    
+                    <p><strong>Odhadovaná cena součástek:</strong></p>
+                    <div class="price-tag">~ 4 400 Kč</div>
+                    <p><small>(Cena se může lišit podle zdroje nákupu)</small></p>
+                </div>
+                
+                <div class="image-container">
+                    <img src="images/prototype3.jpg" alt="Součástky pro YourChess" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Vision Section -->
+    <section id="vision">
+        <div class="container">
+            <h2 class="text-center">Naše <span class="highlight">vize</span></h2>
+            
+            <div class="content-with-image">
+                <div class="image-container">
+                    <img src="images/prototype2.jpg" alt="Vize YourChess v2.0" loading="lazy">
+                </div>
+                
+                <div>
+                    <h3>YourChess <span class="highlight">v2.0</span></h3>
+                    <p>Díky vaší podpoře můžeme financovat vývoj vylepšené verze:</p>
+                    
+                    <ul class="feature-list">
+                        <li><strong>Online hra:</strong> Přechod na ESP32 pro připojení na Lichess a Chess.com</li>
+                        <li><strong>Pokročilá AI:</strong> Silnější šachový engine s volitelným ELO</li>
+                        <li><strong>Elegantní design:</strong> Jedna profesionální PCB deska místo propojovacích kabelů</li>
+                        <li><strong>Mobilní aplikace:</strong> Ovládání a statistiky přímo z telefonu</li>
+                    </ul>
+                    
+                    <p>Každý nákup nás přibližuje k realizaci této vize.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Support Section -->
+    <section id="support" class="section-dark">
+        <div class="container">
+            <h2 class="text-center">Naše <span class="highlight">podpora</span></h2>
+            
+            <div class="feature-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Pravidelné aktualizace</h3>
+                    <p>Všichni kupující získají zdarma aktualizace firmware a vylepšené podklady.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Komunitní podpora</h3>
+                    <p>Připojte se k naší Discord komunitě, kde řešíme problémy a sdílíme nápady.</p>
+                    <a href="https://discord.gg/ZkV3BXafp7" target="_blank" class="btn btn-discord" style="margin-top: 1rem;">
+                        <i class="fab fa-discord"></i> Připojit se
+                    </a>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Osobní přístup</h3>
+                    <p>Já, Tadeáš, osobně odpovídám na dotazy a pomáhám s řešením problémů.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Final CTA -->
+    <section>
+        <div class="container">
+            <div class="text-center">
+                <h2>Staňte se součástí <span class="highlight">naší cesty</span></h2>
+                <p style="max-width: 700px; margin: 0 auto 2rem;">Přidejte se k rostoucí komunitě nadšenců a pomozte nám vytvořit budoucnost šachu.</p>
+                
+                <div class="btn-group" style="justify-content: center;">
+                    <a href="https://yourchess.gumroad.com/l/yourchess" target="_blank" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.2rem 3rem;">
+                        <i class="fas fa-gem"></i> Získat YourChešs na Gumroad
+                    </a>
+                </div>
+                
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted);">
+                    <i class="fas fa-shield-alt"></i> Platba přes zabezpečený platební systém Gumroad<br>
+                    <i class="fas fa-download"></i> Okamžitý přístup po zaplacení
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
     <footer class="footer">
-        <p class="reveal" style="font-size:0.95rem;">© <span id="current-year"></span> Tadeáš Bendák - YourChess</p>
+        <div class="container">
+            <p>
+                <i class="fas fa-chess-knight"></i> © <span id="current-year"></span> Tadeáš Bendák - YourChess<br>
+                Všechna práva vyhrazena
+            </p>
+        </div>
     </footer>
-
-    <script>
-    // JS pro animaci pozadí zůstává stejný
-    const canvasBg = document.getElementById('canvas-background'); 
-    if (canvasBg) {
-        // ... (kód pro animaci pozadí)
-        const ctxBg = canvasBg.getContext('2d');
-        let widthBg, heightBg, bgParticles = [];
-        let animationFrameIdBg;
-        const bgConfig = {
-            particleColor: "rgba(79, 138, 255, 0.3)",
-            defaultSpeed: 0.3, variantSpeed: 0.3,
-            defaultRadius: 1.5, variantRadius: 1.2,
-            linkRadius: 160, avoidMouseRadius: 80
-        };
-        let mouse = { x: undefined, y: undefined}; 
-        function updateMousePosition(event) {
-            const rect = canvasBg.getBoundingClientRect();
-            mouse.x = event.clientX - rect.left;
-            mouse.y = event.clientY - rect.top;
-        }
-        window.addEventListener('mousemove', updateMousePosition);
-        window.addEventListener('mouseleave', () => { mouse.x = undefined; mouse.y = undefined; });
-        class BgParticle {
-            constructor() { 
-                this.x = Math.random() * widthBg; this.y = Math.random() * heightBg; 
-                this.angle = Math.random() * Math.PI * 2;
-                this.speed = bgConfig.defaultSpeed + Math.random() * bgConfig.variantSpeed; 
-                this.radius = bgConfig.defaultRadius + Math.random() * bgConfig.variantRadius;
-                this.color = bgConfig.particleColor;
-                this.vx = Math.cos(this.angle) * this.speed;
-                this.vy = Math.sin(this.angle) * this.speed;
-            }
-            update() {
-                if (mouse.x !== undefined && mouse.y !== undefined) {
-                    let dxMouse = this.x - mouse.x; let dyMouse = this.y - mouse.y;
-                    let distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-                    if (distanceMouse < bgConfig.avoidMouseRadius && distanceMouse > 0) {
-                        const force = (bgConfig.avoidMouseRadius - distanceMouse) / bgConfig.avoidMouseRadius;
-                        this.vx += (dxMouse / distanceMouse) * force * 0.5;
-                        this.vy += (dyMouse / distanceMouse) * force * 0.5;
-                    }
-                }
-                let baseVx = Math.cos(this.angle) * this.speed;
-                let baseVy = Math.sin(this.angle) * this.speed;
-                this.vx += (baseVx - this.vx) * 0.01; this.vy += (baseVy - this.vy) * 0.01;
-                if (this.x + this.radius > widthBg || this.x - this.radius < 0) {
-                    this.vx *= -1; this.angle = Math.atan2(this.vy, this.vx);
-                }
-                if (this.y + this.radius > heightBg || this.y - this.radius < 0) {
-                    this.vy *= -1; this.angle = Math.atan2(this.vy, this.vx);
-                }
-                this.x += this.vx; this.y += this.vy;
-            }
-            draw() { 
-                ctxBg.beginPath(); ctxBg.arc(this.x, this.y, this.radius, 0, Math.PI * 2); 
-                ctxBg.closePath(); ctxBg.fillStyle = this.color; ctxBg.fill();
-            }
-        }
-        function setupBg() { 
-            widthBg = window.innerWidth; heightBg = window.innerHeight;
-            canvasBg.width = widthBg; canvasBg.height = heightBg;
-            bgConfig.particleAmount = Math.floor(widthBg * heightBg / 25000); 
-            bgParticles = [];
-            for (let i = 0; i < bgConfig.particleAmount; i++) { bgParticles.push(new BgParticle()); }
-        }
-        function loopBg() { 
-            ctxBg.clearRect(0,0,widthBg,heightBg);
-            for(let particle of bgParticles){ particle.update(); particle.draw(); }
-            for(let i=0; i<bgParticles.length; i++){ 
-                for(let j=i+1; j<bgParticles.length; j++){ 
-                    const distance = Math.hypot(bgParticles[i].x - bgParticles[j].x, bgParticles[i].y - bgParticles[j].y);
-                    if(distance < bgConfig.linkRadius){ 
-                        ctxBg.beginPath(); 
-                        const opacity = 1 - (distance / bgConfig.linkRadius);
-                        ctxBg.strokeStyle = `rgba(79, 138, 255, ${opacity * 0.25})`;
-                        ctxBg.lineWidth = 0.8;
-                        ctxBg.moveTo(bgParticles[i].x, bgParticles[i].y); 
-                        ctxBg.lineTo(bgParticles[j].x, bgParticles[j].y); 
-                        ctxBg.stroke();
-                    }
-                }
-            }
-            animationFrameIdBg = window.requestAnimationFrame(loopBg);
-        }
-        let resizeTimeoutBg;
-        window.addEventListener("resize", () => { 
-            clearTimeout(resizeTimeoutBg); 
-            resizeTimeoutBg = setTimeout(() => { 
-                if(animationFrameIdBg) cancelAnimationFrame(animationFrameIdBg); 
-                setupBg(); loopBg();
-            }, 200); 
-        });
-        setupBg();
-        loopBg();
-    }
     
-    document.addEventListener('DOMContentLoaded', () => {
-
-        const translations = {
-            en: {
-                nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support', nav_video: 'Video', nav_vision: 'Vision',
-                hero_greeting: "Hi, I'm Tadeáš.",
-                hero_title: "More Than a Game.<br><span class='highlight'>Your Own High-Tech Project.</span>",
-                hero_subtitle: "For the past year, I've poured myself into a project born from my passion for electronics and love for chess. Today, a functional prototype stands before you, and I invite you to become part of its continuing journey.",
-                hero_cta: "Get it on Gumroad", // ZMĚNA
-                intro_p1: "This isn't a shop for a finished product. This is an invitation for you – for enthusiasts, DIYers, and tech fans who want to participate in creating something unique.",
-                intro_p2: "We offer you a unique opportunity to assemble your own fully functional prototype of an intelligent chessboard. We've put in hundreds of hours of development and debugging to provide you with the perfect instructions and software. You will enjoy the best feeling – <strong>the pride when a device you built with your own hands, comes to life for the first time.</strong>",
-                who_title: "Who Is This Project For?",
-                who_intro: "This project is for you if:",
-                who_1: "You love building, soldering, and bringing electronics to life.",
-                who_2: "You're a passionate chess player dreaming of an interactive gaming experience.",
-                who_3: "You want to support an innovative project and be there from its very inception.",
-                who_4: "You're not afraid of a challenge and are drawn to the pride of a self-built device.",
-                video_title: "YourChess in <span class='highlight'>Action</span>",
-                video_intro: "Take a look at a short demonstration of the prototype and the possibilities YourChess offers.",
-                video_cta_text: "Intrigued by the vision? Become a part of it and follow our progress!",
-                video_youtube_btn: "Follow on YouTube",
-                package_title: "What Do You Get in the <span class='highlight'>Exclusive Package</span>?",
-                package_intro: "With your support, you're not just buying files. You're buying a ticket into the world of YourChess.",
-                package_item1_title: "<span class='icon'>💻</span>The Chessboard's Brain",
-                package_item1_desc: "Exclusive \"YourChess Uploader\" (Windows) with firmware and file access.",
-                package_item2_title: "<span class='icon'>🏗️</span>Complete Digital Plans",
-                package_item2_desc: "STL models for 3D printing and Gerber data for professional PCB manufacturing.",
-                package_item3_title: "<span class='icon'>📖</span>Detailed Manual",
-                package_item3_desc: "A comprehensive guide (PDF) for building, wiring, and setup.",
-                support_title: "More Than Just Files: <span class='highlight'>Our Support & Community</span>",
-                support_p1: "We won't leave you on your own. We want you to succeed and enjoy the process. That's why the package also includes our commitment to you:",
-                support_item1: "<strong>Regular Software Updates:</strong> Get prototype firmware improvements free via the Uploader.",
-                support_item2: "<strong>Exclusive Community Group:</strong> All backers get access to a private group (Discord). Here, I'll provide online support, solve issues, share tips, and brainstorm together.",
-                support_discord_btn: "Join the Discord Community",
-                prototype_title: "Prototype's Journey: <span class='highlight'>Honesty & Innovation</span>",
-                prototype_p1: "This project is at the functional prototype stage. It originated as an ambitious student project and bears the marks of authentic development. It's built robustly, but with the knowledge that some things can be done better. It's proof that the concept works, and at the same time, a stepping stone for something much bigger.",
-                prototype_p2: "We want to be completely transparent: the current version is great, but we dream even bigger.",
-                transparency_title: "Full Transparency: <span class='highlight'>What Will You Need?</span>",
-                transparency_p1: "Our digital package does not include physical components. You'll need to purchase those yourself. The manual will provide a detailed list.",
-                transparency_p2: "According to my calculations, the total cost for all components is around <strong style='color:var(--accent-gold); font-size:1.1em;'>4400 CZK (approx. 180 EUR)</strong>. Our package is therefore the key that turns your investment into a functional piece of work.",
-                vision_title: "Our Vision: <span class='highlight'>The Future of YourChess</span>",
-                vision_p1: "This prototype is amazing, but it's just the first step. Your support will allow us to fund the development of <strong>YourChess v2.0</strong>.",
-                vision_p2: "What we plan for v2.0:",
-                vision_item1: "<strong>Online Play:</strong> Transitioning to ESP32 will enable Lichess connectivity.",
-                vision_item2: "<strong>Advanced AI:</strong> Implementing a stronger chess engine with selectable ELO.",
-                vision_item3: "<strong>Elegantní Hardware:</strong> A single, professional PCB will replace cables.",
-                join_title: "Become <span class='highlight'>Part of Our Journey</span>",
-                join_p1: "If this project has caught your interest, I'll be grateful for any support. Get your package, build your own intelligent chessboard, and help us turn a dream into reality.",
-                join_cta: "Get YourChess on Gumroad!", // ZMĚNA
-            },
-            cs: { 
-                nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_video: 'Video', nav_vision: 'Vize',
-                hero_greeting: "Ahoj, jsem Tadeáš.",
-                hero_title: "Víc než Hra.<br><span class='highlight'>Váš Vlastní High-Tech Projekt.</span>",
-                hero_subtitle: "Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.",
-                hero_cta: "Získat na Gumroad", // ZMĚNA
-                intro_p1: "Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.",
-                intro_p2: "Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong>",
-                who_title: "Pro Koho Je Tento Projekt?",
-                who_intro: "Tento projekt je pro vás, pokud:",
-                who_1: "Milujete stavět, pájet a oživovat elektroniku.",
-                who_2: "Jste vášnivý šachista, který sní o interaktivním herním zážitku.",
-                who_3: "Chcete podpořit inovativní projekt a být u jeho zrodu od samého začátku.",
-                who_4: "Nebojíte se výzvy a láká vás hrdost z vlastnoručně postaveného zařízení.",
-                video_title: "YourChess v <span class='highlight'>Akci</span>",
-                video_intro: "Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.",
-                video_cta_text: "Zaujala vás vize? Staňte se její součástí a sledujte náš postup!",
-                video_youtube_btn: "Sledovat na YouTube",
-                package_title: "Co Získáte v <span class='highlight'>Exkluzivním Balíčku</span>?",
-                package_intro: "Vaší podporou si nekupujete jen soubory. Kupujete si vstupenku do světa YourChess.",
-                package_item1_title: "<span class='icon'>💻</span>Mozek Šachovnice",
-                package_item1_desc: "Exkluzivní \"YourChess Uploader\" (Windows) s firmwarem a přístupem k souborům.",
-                package_item2_title: "<span class='icon'>🏗️</span>Kompletní Digitální Plány",
-                package_item2_desc: "STL modely pro 3D tisk a Gerber data pro výrobu profesionálních PCB.",
-                package_item3_title: "<span class='icon'>📖</span>Podrobný Návod",
-                package_item3_desc: "Detailní průvodce (PDF) stavbou, zapojením a zprovozněním.",
-                support_title: "Víc než jen Soubory: <span class='highlight'>Naše Podpora a Komunita</span>",
-                support_p1: "Nenecháme vás v tom samotné. Chceme, aby se vám stavba podařila a abyste z ní měli radost. Proto je součástí balíčku i náš závazek vůči vám:",
-                support_item1: "<strong>Pravidelné Aktualizace Softwaru:</strong> Vylepšení firmware prototypu získáte zdarma přes Uploader.",
-                support_item2: "<strong>Exkluzivní Komunitní Skupina:</strong> Všichni backeři získají přístup do soukromé skupiny (Discord). Zde budu poskytovat online podporu, řešit problémy, sdílet tipy a společně brainstormovat.",
-                support_discord_btn: "Připojit se k Discord komunitě",
-                prototype_title: "Cesta Prototypu: <span class='highlight'>Upřímnost a Inovace</span>",
-                prototype_p1: "Tento projekt je ve fázi funkčního prototypu. Vznikl jako ambiciózní studentský projekt a nese stopy autentického vývoje. Je postaven robustně, ale s vědomím, že některé věci jdou udělat lépe. Je to důkaz, že koncept funguje, a zároveň odrazový můstek pro něco mnohem většího.",
-                prototype_p2: "Chceme být naprosto transparentní: současná verze je skvělá, ale my sníme ještě dál.",
-                transparency_title: "Plná Transparence: <span class='highlight'>Co Budete Potřebovat?</span>",
-                transparency_p1: "Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.",
-                transparency_p2: "Dle mých propočtů se celková cena za všechny součástky pohybuje okolo <strong style='color:var(--accent-gold); font-size:1.1em;'>4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který vaši investici promění ve funkční dílo.",
-                vision_title: "Naše Vize: <span class='highlight'>Budoucnost YourChess</span>",
-                vision_p1: "Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>.",
-                vision_p2: "Co plánujeme pro v2.0:",
-                vision_item1: "<strong>Online Hra:</strong> Přechod na ESP32 umožní připojení na Lichess.",
-                vision_item2: "<strong>Pokročilá AI:</strong> Implementace silnějšího šachového engine s volitelným ELO.",
-                vision_item3: "<strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely.",
-                join_title: "Staňte se <span class='highlight'>součástí naší cesty</span>",
-                join_p1: "Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.",
-                join_cta: "Získejte YourChess na Gumroad!", // ZMĚNA
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Mobile menu toggle
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            
+            if (mobileToggle && navMenu) {
+                mobileToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    mobileToggle.innerHTML = navMenu.classList.contains('active') 
+                        ? '<i class="fas fa-times"></i>' 
+                        : '<i class="fas fa-bars"></i>';
+                });
+                
+                // Close menu when clicking on a link
+                const navLinks = navMenu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navMenu.classList.remove('active');
+                        mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    });
+                });
             }
-        };
-
-        const navToggleBtn = document.getElementById('nav-toggle');
-        const navCluster = document.getElementById('nav-cluster');
-        if (navToggleBtn && navCluster) { 
-            navToggleBtn.addEventListener('click', () => {
-                navCluster.classList.toggle('active');
-                navToggleBtn.classList.toggle('active');
-            });
-             navCluster.querySelectorAll('.nav-menu a').forEach(link => {
-                 link.addEventListener('click', () => {
-                     if (navCluster.classList.contains('active')) {
-                         navCluster.classList.remove('active');
-                         navToggleBtn.classList.remove('active');
-                     }
-                 });
-             });
-        }
-
-        const langCz = document.getElementById('lang-cz');
-        const langEn = document.getElementById('lang-en');
-
-        const setLanguage = (lang) => { 
-            const currentTranslations = translations[lang]; 
-            if (!currentTranslations) return;
-
-            document.querySelectorAll('[data-lang-key]').forEach(el => {
-                const key = el.dataset.langKey;
-                if (currentTranslations[key]) { 
-                    el.innerHTML = currentTranslations[key]; 
+            
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
                 }
             });
-            localStorage.setItem('yourchess_lang', lang);
-            if(langCz && langEn){
-                langCz.classList.toggle('active', lang === 'cs');
-                langEn.classList.toggle('active', lang === 'en');
+            
+            // Scroll progress indicator
+            const scrollProgress = document.getElementById('scroll-progress');
+            if (scrollProgress) {
+                window.addEventListener('scroll', function() {
+                    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scrolled = (window.scrollY / windowHeight) * 100;
+                    scrollProgress.style.width = scrolled + '%';
+                });
             }
-        };
-
-        if(langCz && langEn){
-            langCz.addEventListener('click', (e) => { e.preventDefault(); setLanguage('cs'); });
-            langEn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
-        }
-        
-        const savedLang = localStorage.getItem('yourchess_lang') || 'cs';
-        setLanguage(savedLang);
-        
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries, observer) => { 
-            entries.forEach(entry => {
-                if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+            
+            // Language switcher
+            const translations = {
+                en: {
+                    nav: ['For Whom', 'What I Get', 'Prototype', 'Vision', 'Support'],
+                    heroBadge: '<i class="fas fa-bolt"></i> Exclusive Early Access',
+                    heroTitle: 'Build your own <span class="highlight">intelligent chessboard</span>',
+                    heroSubtitle: 'A year of development, a functional prototype, and hundreds of hours of work. Now is the opportunity to become part of a project that combines passion for chess with modern technology.',
+                    heroButtons: ['Get on Gumroad', 'Watch the video'],
+                    aboutTitle: 'Who is <span class="highlight">YourChess</span> for?',
+                    aboutCards: ['Electronics Enthusiast', 'Passionate Chess Player', 'Innovation Pioneer'],
+                    packageTitle: 'What will you <span class="highlight">get</span>?',
+                    packageList: ['Exclusive "YourChess Uploader" for Windows with the latest firmware', 'STL models for 3D printing all parts', 'Gerber files for manufacturing professional PCB boards', 'Detailed step-by-step guide (PDF) in English', 'Complete source codes and documentation'],
+                    videoTitle: 'YourChess <span class="highlight">in action</span>',
+                    prototypeTitle: 'Prototype <span class="highlight">journey</span>',
+                    transparencyTitle: 'Full <span class="highlight">transparency</span>',
+                    transparencyList: ['Electronic components (Arduino, sensors, LEDs, etc.)', '3D printed parts (you can print yourself or order)', 'PCB boards (can be manufactured)', 'Chess pieces and basic tools'],
+                    visionTitle: 'Our <span class="highlight">vision</span>',
+                    visionList: ['Online play: Transition to ESP32 for connection to Lichess and Chess.com', 'Advanced AI: Stronger chess engine with selectable ELO', 'Elegant design: One professional PCB board instead of connecting cables', 'Mobile app: Control and statistics directly from your phone'],
+                    supportTitle: 'Our <span class="highlight">support</span>',
+                    supportCards: ['Regular updates', 'Community support', 'Personal approach'],
+                    finalTitle: 'Become part of <span class="highlight">our journey</span>',
+                    finalText: 'Join the growing community of enthusiasts and help us create the future of chess.',
+                    footerText: '<i class="fas fa-chess-knight"></i> © YEAR Tadeáš Bendák - YourChess<br>All rights reserved'
+                },
+                cz: {
+                    nav: ['Pro Koho', 'Co Získám', 'Prototyp', 'Vize', 'Podpora'],
+                    heroBadge: '<i class="fas fa-bolt"></i> Exkluzivní Early Access',
+                    heroTitle: 'Postavte si vlastní <span class="highlight">inteligentní šachovnici</span>',
+                    heroSubtitle: 'Rok vývoje, funkční prototyp a stovky hodin práce. Teď je tu příležitost stát se součástí projektu, který spojuje vášeň pro šachy s moderní technologií.',
+                    heroButtons: ['Získat na Gumroad', 'Podívat se na video'],
+                    aboutTitle: 'Pro Koho Je <span class="highlight">YourChess</span>?',
+                    aboutCards: ['Elektronický nadšenec', 'Vášnivý šachista', 'Inovační průkopník'],
+                    packageTitle: 'Co <span class="highlight">Získáte</span>?',
+                    packageList: ['Exkluzivní "YourChess Uploader" pro Windows s nejnovějším firmwarem', 'STL modely pro 3D tisk všech dílů', 'Gerber soubory pro výrobu profesionálních PCB desek', 'Podrobný návod krok za krokem v češtině', 'Kompletní zdrojové kódy a dokumentace'],
+                    videoTitle: 'YourChess <span class="highlight">v akci</span>',
+                    prototypeTitle: 'Cesta <span class="highlight">prototypu</span>',
+                    transparencyTitle: 'Plná <span class="highlight">transparentnost</span>',
+                    transparencyList: ['Elektronické součástky (Arduino, senzory, LED, atd.)', '3D tištěné díly (můžete tisknout sami nebo objednat)', 'PCB desky (můžete nechat vyrobit)', 'Šachové figurky a základní nástroje'],
+                    visionTitle: 'Naše <span class="highlight">vize</span>',
+                    visionList: ['Online hra: Přechod na ESP32 pro připojení na Lichess a Chess.com', 'Pokročilá AI: Silnější šachový engine s volitelným ELO', 'Elegantní design: Jedna profesionální PCB deska místo propojovacích kabelů', 'Mobilní aplikace: Ovládání a statistiky přímo z telefonu'],
+                    supportTitle: 'Naše <span class="highlight">podpora</span>',
+                    supportCards: ['Pravidelné aktualizace', 'Komunitní podpora', 'Osobní přístup'],
+                    finalTitle: 'Staňte se součástí <span class="highlight">naší cesty</span>',
+                    finalText: 'Přidejte se k rostoucí komunitě nadšenců a pomozte nám vytvořit budoucnost šachu.',
+                    footerText: '<i class="fas fa-chess-knight"></i> © YEAR Tadeáš Bendák - YourChess<br>Všechna práva vyhrazena'
+                }
+            };
+            
+            const langCz = document.getElementById('lang-cz');
+            const langEn = document.getElementById('lang-en');
+            
+            function setLanguage(lang) {
+                const t = translations[lang];
+                
+                // Update navigation
+                const navLinks = document.querySelectorAll('.nav-menu a');
+                navLinks.forEach((link, index) => {
+                    link.textContent = t.nav[index];
+                });
+                
+                // Update hero section
+                document.querySelector('.hero-badge').innerHTML = t.heroBadge;
+                document.querySelector('.hero h1').innerHTML = t.heroTitle;
+                document.querySelector('.hero-subtitle').textContent = t.heroSubtitle;
+                
+                const heroButtons = document.querySelectorAll('.hero .btn');
+                heroButtons[0].innerHTML = `<i class="fas fa-download"></i> ${t.heroButtons[0]}`;
+                heroButtons[1].innerHTML = `<i class="fas fa-play-circle"></i> ${t.heroButtons[1]}`;
+                
+                // Update about section
+                document.querySelector('#about h2').innerHTML = t.aboutTitle;
+                const aboutCards = document.querySelectorAll('#about .card h3');
+                aboutCards.forEach((card, index) => {
+                    card.textContent = t.aboutCards[index];
+                });
+                
+                // Update package section
+                document.querySelector('#package h2').innerHTML = t.packageTitle;
+                const packageItems = document.querySelectorAll('#package .feature-list li');
+                packageItems.forEach((item, index) => {
+                    item.innerHTML = `<strong>${t.packageList[index].split(':')[0]}:</strong> ${t.packageList[index].split(':')[1] || t.packageList[index]}`;
+                });
+                
+                // Update video section
+                document.querySelector('#video h2').innerHTML = t.videoTitle;
+                
+                // Update prototype section
+                document.querySelector('#prototype h2').innerHTML = t.prototypeTitle;
+                
+                // Update transparency section
+                document.querySelector('#transparency h2').innerHTML = t.transparencyTitle;
+                const transparencyItems = document.querySelectorAll('#transparency .feature-list li');
+                transparencyItems.forEach((item, index) => {
+                    item.textContent = t.transparencyList[index];
+                });
+                
+                // Update vision section
+                document.querySelector('#vision h2').innerHTML = t.visionTitle;
+                const visionItems = document.querySelectorAll('#vision .feature-list li');
+                visionItems.forEach((item, index) => {
+                    item.innerHTML = `<strong>${t.visionList[index].split(':')[0]}:</strong> ${t.visionList[index].split(':')[1] || t.visionList[index]}`;
+                });
+                
+                // Update support section
+                document.querySelector('#support h2').innerHTML = t.supportTitle;
+                const supportCards = document.querySelectorAll('#support .card h3');
+                supportCards.forEach((card, index) => {
+                    card.textContent = t.supportCards[index];
+                });
+                
+                // Update final section
+                document.querySelector('#final h2').innerHTML = t.finalTitle;
+                document.querySelector('#final p').textContent = t.finalText;
+                
+                // Update footer
+                document.querySelector('.footer p').innerHTML = t.footerText.replace('YEAR', new Date().getFullYear());
+                
+                // Update language switcher
+                if (lang === 'cz') {
+                    langCz.classList.add('active');
+                    langEn.classList.remove('active');
+                } else {
+                    langEn.classList.add('active');
+                    langCz.classList.remove('active');
+                }
+                
+                // Save language preference
+                localStorage.setItem('yourchess_lang', lang);
+            }
+            
+            // Load saved language or default to Czech
+            const savedLang = localStorage.getItem('yourchess_lang') || 'cz';
+            setLanguage(savedLang);
+            
+            // Language switcher events
+            if (langCz && langEn) {
+                langCz.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setLanguage('cz');
+                });
+                
+                langEn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setLanguage('en');
+                });
+            }
+            
+            // Scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in-up');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all cards and sections
+            document.querySelectorAll('.card, .content-with-image > div, .video-container').forEach(el => {
+                observer.observe(el);
             });
-        }, { threshold: 0.05 }); 
-        revealElements.forEach(el => revealObserver.observe(el));
-        
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        const scrollProgressBar = document.getElementById('scroll-progress-bar');
-        if (scrollProgressBar) {
-            window.addEventListener('scroll', () => {
-                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0; 
-                scrollProgressBar.style.width = scrolled + "%";
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href === '#') return;
+                    
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
-        }
-    });
+        });
     </script>
 </body>
 </html>
-
