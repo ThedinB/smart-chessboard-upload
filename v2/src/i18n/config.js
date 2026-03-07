@@ -1,0 +1,116 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+const resources = {
+  en: {
+    translation: {
+        nav_who_for: 'For Whom', nav_package: 'The Kit', nav_support: 'Support', nav_video: 'Video', nav_vision: 'Vision',
+        hero_greeting: "Hi, I'm Tadeáš.",
+        hero_title: "More Than a Game.<br><span class='highlight'>Your Own High-Tech Project.</span>",
+        hero_subtitle: "For the past year, I've poured myself into a project born from my passion for electronics and love for chess. Today, a functional prototype stands before you, and I invite you to become part of its continuing journey.",
+        hero_cta: "Get it on Gumroad", 
+        intro_p1: "This isn't a shop for a finished product. This is an invitation for you – for enthusiasts, DIYers, and tech fans who want to participate in creating something unique.",
+        intro_p2: "We offer you a unique opportunity to assemble your own fully functional prototype of an intelligent chessboard. We've put in hundreds of hours of development and debugging to provide you with the perfect instructions and software. You will enjoy the best feeling – <strong>the pride when a device you built with your own hands, comes to life for the first time.</strong>",
+        who_title: "Who Is This Project For?",
+        who_intro: "This project is for you if:",
+        who_1: "You love building, soldering, and bringing electronics to life.",
+        who_2: "You're a passionate chess player dreaming of an interactive gaming experience.",
+        who_3: "You want to support an innovative project and be there from its very inception.",
+        who_4: "You're not afraid of a challenge and are drawn to the pride of a self-built device.",
+        video_title: "YourChess in <span class='highlight'>Action</span>",
+        video_intro: "Take a look at a short demonstration of the prototype and the possibilities YourChess offers.",
+        video_cta_text: "Intrigued by the vision? Become a part of it and follow our progress!",
+        video_youtube_btn: "Follow on YouTube",
+        package_title: "What Do You Get in the <span class='highlight'>Exclusive Package</span>?",
+        package_intro: "With your support, you're not just buying files. You're buying a ticket into the world of YourChess.",
+        package_item1_title: "<span class='icon'>💻</span>The Chessboard's Brain",
+        package_item1_desc: "Exclusive \"YourChess Uploader\" (Windows) with firmware and file access.",
+        package_item2_title: "<span class='icon'>🏗️</span>Complete Digital Plans",
+        package_item2_desc: "STL models for 3D printing and Gerber data for professional PCB manufacturing.",
+        package_item3_title: "<span class='icon'>📖</span>Detailed Manual",
+        package_item3_desc: "A comprehensive guide (PDF) for building, wiring, and setup.",
+        support_title: "More Than Just Files: <span class='highlight'>Our Support & Community</span>",
+        support_p1: "We won't leave you on your own. We want you to succeed and enjoy the process. That's why the package also includes our commitment to you:",
+        support_item1: "<strong>Regular Software Updates:</strong> Get prototype firmware improvements free via the Uploader.",
+        support_item2: "<strong>Exclusive Community Group:</strong> All backers get access to a private group (Discord). Here, I'll provide online support, solve issues, share tips, and brainstorm together.",
+        support_discord_btn: "Join the Discord Community",
+        prototype_title: "Prototype's Journey: <span class='highlight'>Honesty & Innovation</span>",
+        prototype_p1: "This project is at the functional prototype stage. It originated as an ambitious student project and bears the marks of authentic development. It's built robustly, but with the knowledge that some things can be done better. It's proof that the concept works, and at the same time, a stepping stone for something much bigger.",
+        prototype_p2: "We want to be completely transparent: the current version is great, but we dream even bigger.",
+        transparency_title: "Full Transparency: <span class='highlight'>What Will You Need?</span>",
+        transparency_p1: "Our digital package does not include physical components. You'll need to purchase those yourself. The manual will provide a detailed list.",
+        transparency_p2: "According to my calculations, the total cost for all components is around <strong style='color:var(--accent-gold); font-size:1.1em;'>4400 CZK (approx. 180 EUR)</strong>. Our package is therefore the key that turns your investment into a functional piece of work.",
+        vision_title: "Our Vision: <span class='highlight'>The Future of YourChess</span>",
+        vision_p1: "This prototype is amazing, but it's just the first step. Your support will allow us to fund the development of <strong>YourChess v2.0</strong>.",
+        vision_p2: "What we plan for v2.0:",
+        vision_item1: "<strong>Online Play:</strong> Transitioning to ESP32 will enable Lichess connectivity.",
+        vision_item2: "<strong>Advanced AI:</strong> Implementing a stronger chess engine with selectable ELO.",
+        vision_item3: "<strong>Elegantní Hardware:</strong> A single, professional PCB will replace cables.",
+        join_title: "Become <span class='highlight'>Part of Our Journey</span>",
+        join_p1: "If this project has caught your interest, I'll be grateful for any support. Get your package, build your own intelligent chessboard, and help us turn a dream into reality.",
+        join_cta: "Get YourChess on Gumroad!",
+    }
+  },
+  cs: {
+    translation: {
+        nav_who_for: 'Pro Koho', nav_package: 'Balíček', nav_support: 'Podpora', nav_video: 'Video', nav_vision: 'Vize',
+        hero_greeting: "Ahoj, jsem Tadeáš.",
+        hero_title: "Víc než Hra.<br><span class='highlight'>Váš Vlastní High-Tech Projekt.</span>",
+        hero_subtitle: "Poslední rok jsem strávil nad projektem, který se zrodil z mé vášně pro elektroniku a lásky k šachu. Dnes před vámi stojí funkční prototyp a já vás zvu, abyste se stali součástí jeho další cesty.",
+        hero_cta: "Získat na Gumroad",
+        intro_p1: "Toto není obchod s hotovým produktem. Toto je pozvánka pro vás – pro nadšence, kutily a fanoušky technologií, kteří se chtějí podílet na vzniku něčeho unikátního.",
+        intro_p2: "Nabízíme vám jedinečnou příležitost sestavit si vlastní, plně funkční prototyp inteligentní šachovnice. My jsme odvedli stovky hodin práce na vývoji a ladění, abychom vám mohli poskytnout dokonalý návod a software. Vy si užijete ten nejlepší pocit – <strong>hrdost, když zařízení, které jste sestavili vlastníma rukama, poprvé ožije.</strong>",
+        who_title: "Pro Koho Je Tento Projekt?",
+        who_intro: "Tento projekt je pro vás, pokud:",
+        who_1: "Milujete stavět, pájet a oživovat elektroniku.",
+        who_2: "Jste vášnivý šachista, který sní o interaktivním herním zážitku.",
+        who_3: "Chcete podpořit inovativní projekt a být u jeho zrodu od samého začátku.",
+        who_4: "Nebojíte se výzvy a láká vás hrdost z vlastnoručně postaveného zařízení.",
+        video_title: "YourChess v <span class='highlight'>Akci</span>",
+        video_intro: "Podívejte se na krátkou ukázku prototypu a možností, které YourChess nabízí.",
+        video_cta_text: "Zaujala vás vize? Staňte se její součástí a sledujte náš postup!",
+        video_youtube_btn: "Sledovat na YouTube",
+        package_title: "Co Získáte v <span class='highlight'>Exkluzivním Balíčku</span>?",
+        package_intro: "Vaší podporou si nekupujete jen soubory. Kupujete si vstupenku do světa YourChess.",
+        package_item1_title: "<span class='icon'>💻</span>Mozek Šachovnice",
+        package_item1_desc: "Exkluzivní \"YourChess Uploader\" (Windows) s firmwarem a přístupem k souborům.",
+        package_item2_title: "<span class='icon'>🏗️</span>Kompletní Digitální Plány",
+        package_item2_desc: "STL modely pro 3D tisk a Gerber data pro výrobu profesionálních PCB.",
+        package_item3_title: "<span class='icon'>📖</span>Podrobný Návod",
+        package_item3_desc: "Detailní průvodce (PDF) stavbou, zapojením a zprovozněním.",
+        support_title: "Víc než jen Soubory: <span class='highlight'>Naše Podpora a Komunita</span>",
+        support_p1: "Nenecháme vás v tom samotné. Chceme, aby se vám stavba podařila a abyste z ní měli radost. Proto je součástí balíčku i náš závazek vůči vám:",
+        support_item1: "<strong>Pravidelné Aktualizace Softwaru:</strong> Vylepšení firmware prototypu získáte zdarma přes Uploader.",
+        support_item2: "<strong>Exkluzivní Komunitní Skupina:</strong> Všichni backeři získají přístup do soukromé skupiny (Discord). Zde budu poskytovat online podporu, řešit problémy, sdílet tipy a společně brainstormovat.",
+        support_discord_btn: "Připojit se k Discord komunitě",
+        prototype_title: "Cesta Prototypu: <span class='highlight'>Upřímnost a Inovace</span>",
+        prototype_p1: "Tento projekt je ve fázi funkčního prototypu. Vznikl jako ambiciózní studentský projekt a nese stopy autentického vývoje. Je postaven robustně, ale s vědomím, že některé věci jdou udělat lépe. Je to důkaz, že koncept funguje, a zároveň odrazový můstek pro něco mnohem většího.",
+        prototype_p2: "Chceme být naprosto transparentní: současná verze je skvělá, ale my sníme ještě dál.",
+        transparency_title: "Plná Transparence: <span class='highlight'>Co Budete Potřebovat?</span>",
+        transparency_p1: "Náš digitální balíček neobsahuje fyzické součástky. Ty si budete muset pořídit sami. V manuálu najdete detailní seznam.",
+        transparency_p2: "Dle mých propočtů se celková cena za všechny součástky pohybuje okolo <strong style='color:var(--accent-gold); font-size:1.1em;'>4400 Kč (cca 180 EUR)</strong>. Náš balíček je tedy klíčem, který vaši investici promění ve funkční dílo.",
+        vision_title: "Naše Vize: <span class='highlight'>Budoucnost YourChess</span>",
+        vision_p1: "Tento prototyp je úžasný, ale je to jen první krok. Vaše podpora nám umožní financovat vývoj <strong>YourChess v2.0</strong>.",
+        vision_p2: "Co plánujeme pro v2.0:",
+        vision_item1: "<strong>Online Hra:</strong> Přechod na ESP32 umožní připojení na Lichess.",
+        vision_item2: "<strong>Pokročilá AI:</strong> Implementace silnějšího šachového engine s volitelným ELO.",
+        vision_item3: "<strong>Elegantní Hardware:</strong> Jeden velký, profesionální PCB nahradí kabely.",
+        join_title: "Staňte se <span class='highlight'>součástí naší cesty</span>",
+        join_p1: "Pokud vás tento projekt zaujal, budu vděčný za jakoukoliv podporu. Získejte svůj balíček, postavte si vlastní inteligentní šachovnici a pomozte nám přetavit sen v realitu.",
+        join_cta: "Získejte YourChess na Gumroad!",
+    }
+  }
+};
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: "cs",
+    fallbackLng: "en",
+    interpolation: {
+      escapeValue: false 
+    }
+  });
+
+export default i18n;
